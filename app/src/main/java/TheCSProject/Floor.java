@@ -1,5 +1,7 @@
 package app.src.main.java.TheCSProject;
 
-public class Floor {
+import java.util.Vector;
 
+public class Floor {
+    private Vector<Room> rooms;
 }
