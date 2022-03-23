@@ -13,5 +13,6 @@ public class Actor {
     private int wisdom;
     private int charisma;
     private int noise;
+    private int carryWeight;
     private String[] inventory;
 }
