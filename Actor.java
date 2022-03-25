@@ -18,7 +18,7 @@ public class Actor {
     private int carryWeight;
     private ArrayList<String> effects;
     private String name;
-    private ArrayList<String> inventory;
+    private ArrayList<String> inventory = new ArrayList<String>();
     private int shield;
     private Random rand = new Random();
 
@@ -188,15 +188,21 @@ public class Actor {
 
     public void takeDamage(int damage, String name) {
         health -= damage;
+        System.out.printf("%d damage%n", damage);
         if (health <= 0) {
             if (name == "player") {
-
+                System.out.println("You have been killed");
+            } else {
+                System.out.printf("%s is defeated");
             }
         }
     }
 
-    public void heal(int heal) {
+    public void heal(int heal, String name) {
         health += heal;
+        if (name == "player") {
+            System.out.printf("you just healed %d amount of health new health is", heal, health);
+        }
     }
 
     public void moveNorth() {
@@ -226,14 +232,13 @@ public class Actor {
      * make it harder to hit. If anyone reading this wants a better explination
      * speak to Xander in person because it is easier to describe that way.
      */
-    public void magic(int spellCost, int minDamage, int maxDamage, int targetHealth, int BS, int negativeModdifier,
+    public void magic(int spellCost, int minDamage, int maxDamage, int targetHealth, String targetName, int BS,
+            int negativeModdifier,
             int possitveModdifier) {
+        int finalDamage = rand.nextInt(minDamage, maxDamage);
         if (spellCost <= mana) {
             if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
-                int finalDamage = rand.nextInt(minDamage, maxDamage);
-
-                targetHealth -= finalDamage;
-                System.out.printf("%d Damage%n", finalDamage);
+                takeDamage(finalDamage, targetName);
             } else {
                 System.out.println("Miss");
             }
@@ -241,19 +246,27 @@ public class Actor {
         }
     }
 
-    public void ranged(int arrowCount, int damageMin, int damageMax, int targetHealth, int BS, int negativeModdifier,
+    public void ranged(int arrowCount, int damageMin, int damageMax, int targetHealth, String targetName, int BS,
+            int negativeModdifier,
             int possitiveModdifier) {
         int finalDamage = rand.nextInt(damageMin, damageMax);
         if (arrowCount > 0) {
             if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= BS) {
-                targetHealth -= finalDamage;
-                System.out.printf("%d Damage%n", finalDamage);
+                takeDamage(finalDamage, targetName);
+            } else {
+                System.out.println("Miss");
             }
         }
     }
 
-    public void closeCombat() {
-
+    public void closeCombat(int damageMin, int damageMax, int targetHealth, String targetName, int WS,
+            int negativeModdifier, int possitiveModdifier) {
+        int finalDamage = rand.nextInt(damageMin, damageMax);
+        if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= WS) {
+            takeDamage(finalDamage, targetName);
+        } else {
+            System.out.println("Miss");
+        }
     }
 
     public void openInventory() {

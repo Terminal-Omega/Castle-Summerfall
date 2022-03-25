@@ -1,25 +1,18 @@
 import java.util.Random;
 
 public class NPC extends Actor {
-    private String allience;
-    private String weakness;
+    String allience;
 
     public NPC() {
 
     }
 
-    public NPC(String allience, String weakness) {
+    public NPC(String allience) {
         setAllience(allience);
-
-        setWeakness(weakness);
     }
 
     public void setAllience(String allience) {
         this.allience = allience;
-    }
-
-    public void setWeakness(String weakness) {
-        this.weakness = weakness;
     }
 
 }
