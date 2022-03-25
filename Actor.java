@@ -1,3 +1,5 @@
+import java.util.Random;
+import java.util.ArrayList;
 
 public class Actor {
     private int xCoord;
@@ -14,33 +16,36 @@ public class Actor {
     private int charisma;
     private int noise;
     private int carryWeight;
-    private String[] inventory;
+    private ArrayList<String> effects;
+    private String name;
+    private ArrayList<String> inventory;
     private int shield;
+    private Random rand = new Random();
 
     public Actor() {
-
     }
 
     public Actor(int xCoord, int yCoord, int health, int AC, int speed, int mana, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
-            int noise, int carryWeight, String[] inventory, int sheild) {
-        super();
-        setXCoord(xCoord);
-        setYCoord(yCoord);
-        setHealth(health);
-        setAC(AC);
-        setSpeed(speed);
-        setMana(mana);
+            int noise, int carryWeight, ArrayList<String> inventory, int sheild, String name) {
+
         setStrength(strength);
         setDexterity(dexterity);
         setConstitution(constitution);
         setIntelligence(intelligence);
         setWisdom(wisdom);
         setCharisma(charisma);
+        setXCoord(xCoord);
+        setYCoord(yCoord);
+        setAC(AC);
+        setSpeed(speed);
+        setMana();
         setNoise(noise);
-        setCarryWeight(carryWeight);
-        setInventory(inventory);
+        setCarryWeight();
+        setInventory();
         setShield(sheild);
+        setHealth();
+        setName(name);
 
     }
 
@@ -48,12 +53,16 @@ public class Actor {
         this.xCoord = xCoord;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setHealth() {
+        health = constitution * 2;
     }
 
     public void setAC(int AC) {
@@ -64,8 +73,8 @@ public class Actor {
         this.speed = speed;
     }
 
-    public void setMana(int mana) {
-        this.mana = mana;
+    public void setMana() {
+        mana = intelligence * 2;
     }
 
     public void setStrength(int strength) {
@@ -96,71 +105,163 @@ public class Actor {
         this.noise = noise;
     }
 
-    public void setCarryWeight(int carryWeight) {
-        this.carryWeight = carryWeight;
+    public void setCarryWeight() {
+        carryWeight = strength * 2;
     }
 
-    public void setInventory(String[] inventory) {
-        this.inventory = inventory;
+    public void setInventory() {
+        inventory = new ArrayList<String>();
+
     }
 
     public void setShield(int sheild) {
         this.shield = sheild;
     }
 
-    public static void moveRoom() {
+    public int getXCoord() {
+        return xCoord;
+    }
+
+    public int getYCoord() {
+        return yCoord;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getAC() {
+        return AC;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public int getCharisma() {
+        return charisma;
+    }
+
+    public int getNoise() {
+        return noise;
+    }
+
+    public int getCarryWeight() {
+        return carryWeight;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<String> getInventory() {
+        return inventory;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
+    public void takeDamage(int damage, String name) {
+        health -= damage;
+        if (health <= 0) {
+            if (name == "player") {
+
+            }
+        }
+    }
+
+    public void heal(int heal) {
+        health += heal;
+    }
+
+    public void moveNorth() {
+        yCoord++;
+    }
+
+    public void moveSouth() {
+        yCoord--;
+    }
+
+    public void moveWest() {
+        xCoord--;
+    }
+
+    public void moveEast() {
+        xCoord++;
+    }
+
+    public ArrayList<String> search() {
+        return inventory; // To be replaced when we have the variable for the items in the room
+    }
+
+    /*
+     * this works a little werid basicly you WANT negativeModdifier because inorder
+     * to hit you need to roll below you BS so negativeModdifiers make it easier to
+     * hit possitve modifiers
+     * make it harder to hit. If anyone reading this wants a better explination
+     * speak to Xander in person because it is easier to describe that way.
+     */
+    public void magic(int spellCost, int minDamage, int maxDamage, int targetHealth, int BS, int negativeModdifier,
+            int possitveModdifier) {
+        if (spellCost <= mana) {
+            if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
+                int finalDamage = rand.nextInt(minDamage, maxDamage);
+
+                targetHealth -= finalDamage;
+                System.out.printf("%d Damage%n", finalDamage);
+            } else {
+                System.out.println("Miss");
+            }
+
+        }
+    }
+
+    public void ranged(int arrowCount, int damageMin, int damageMax, int targetHealth, int BS, int negativeModdifier,
+            int possitiveModdifier) {
+        int finalDamage = rand.nextInt(damageMin, damageMax);
+        if (arrowCount > 0) {
+            if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= BS) {
+                targetHealth -= finalDamage;
+                System.out.printf("%d Damage%n", finalDamage);
+            }
+        }
+    }
+
+    public void closeCombat() {
 
     }
 
-    public static void search() {
+    public void openInventory() {
 
     }
 
-    public static void magic() {
+    public void grabFromInventory() {
 
     }
 
-    public static void ranged() {
-
-    }
-
-    public static void closeCombat() {
-
-    }
-
-    public static void openInventory() {
-
-    }
-
-    public static void grabFromInventory() {
-
-    }
-
-    public static void openDoor() {
-
-    }
-
-    public static void closeDoor() {
-
-    }
-
-    public static void barDoor() {
-
-    }
-
-    public static void unBarDoor() {
-
-    }
-
-    public static void lockDoor() {
-
-    }
-
-    public static void unlockDoor() {
-
-    }
-
-    public static void grabFromRoom() {
-
-    }
 }
