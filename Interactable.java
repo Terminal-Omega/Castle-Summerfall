@@ -2,9 +2,9 @@ import java.util.Vector;
 import java.util.function.*;
 
 public class Interactable {
-    private int size;
-    private int weight;
-    private boolean canBePickedUp;
-    private Vector<Interactable> inventory;
-    private int inventoryCapacity;
+    protected int size;
+    protected int weight;
+    protected boolean canBePickedUp;
+    protected Vector<Interactable> inventory;
+    protected int inventoryCapacity;
 }
