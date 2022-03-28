@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class NPC extends Actor {
-    protected String allience;
+    protected String npcAllience;
 
     public NPC() {
 
@@ -13,7 +13,7 @@ public class NPC extends Actor {
     }
 
     public void setAllience(String allience) {
-        this.allience = allience;
+        npcAllience = allience;
     }
 
     public void npcTurnNoneCombat(String doorLocation, boolean doorLocked, boolean doorBarred) {

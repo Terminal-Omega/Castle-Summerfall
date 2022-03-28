@@ -186,8 +186,12 @@ public class Actor {
         return shield;
     }
 
-    public void takeDamage(int damage, String name) {
-        health -= damage;
+    public void takeDamage(int damage, String name, int AC) {
+        int finalDamage = damage - AC;
+        if (finalDamage < 0) {
+            finalDamage = 0;
+        }
+        health -= finalDamage;
         System.out.printf("%d damage%n", damage);
         if (health <= 0) {
             if (name == "player") {
@@ -232,27 +236,26 @@ public class Actor {
      * make it harder to hit. If anyone reading this wants a better explination
      * speak to Xander in person because it is easier to describe that way.
      */
-    public void magic(int spellCost, int minDamage, int maxDamage, int targetHealth, String targetName, int BS,
+    public void magic(int minDamage, int maxDamage, int targetHealth, String targetName, int BS,
             int negativeModdifier,
-            int possitveModdifier) {
+            int possitveModdifier, int targetAC) {
         int finalDamage = rand.nextInt(minDamage, maxDamage);
-        if (spellCost <= mana) {
-            if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
-                takeDamage(finalDamage, targetName);
-            } else {
-                System.out.println("Miss");
-            }
 
+        if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
+            takeDamage(finalDamage, targetName, targetAC);
+        } else {
+            System.out.println("Miss");
         }
+
     }
 
     public void ranged(int arrowCount, int damageMin, int damageMax, int targetHealth, String targetName, int BS,
             int negativeModdifier,
-            int possitiveModdifier) {
+            int possitiveModdifier, int targetAC) {
         int finalDamage = rand.nextInt(damageMin, damageMax);
         if (arrowCount > 0) {
             if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= BS) {
-                takeDamage(finalDamage, targetName);
+                takeDamage(finalDamage, targetName, targetAC);
             } else {
                 System.out.println("Miss");
             }
@@ -260,12 +263,23 @@ public class Actor {
     }
 
     public void closeCombat(int damageMin, int damageMax, int targetHealth, String targetName, int WS,
-            int negativeModdifier, int possitiveModdifier) {
+            int negativeModdifier, int possitiveModdifier, int targetAC) {
         int finalDamage = rand.nextInt(damageMin, damageMax);
         if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= WS) {
-            takeDamage(finalDamage, targetName);
+            takeDamage(finalDamage, targetName, targetAC);
         } else {
             System.out.println("Miss");
+        }
+    }
+
+    public void cast(int castorMana, String type, int spellMana, String spellName) {
+        if (spellMana <= castorMana) {
+            castorMana -= spellMana;
+            if (type == "friendly") {
+
+            } else if (type == "attack") {
+
+            }
         }
     }
 
