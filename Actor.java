@@ -2,25 +2,25 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Actor {
-    private int xCoord;
-    private int yCoord;
-    private int health;
-    private int AC;
-    private int speed;
-    private int mana;
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
-    private int noise;
-    private int carryWeight;
-    private ArrayList<String> effects;
-    private String name;
-    private ArrayList<String> inventory = new ArrayList<String>();
-    private int shield;
-    private Random rand = new Random();
+    protected int xCoord;
+    protected int yCoord;
+    protected int health;
+    protected int AC;
+    protected int speed;
+    protected int mana;
+    protected int strength;
+    protected int dexterity;
+    protected int constitution;
+    protected int intelligence;
+    protected int wisdom;
+    protected int charisma;
+    protected int noise;
+    protected int carryWeight;
+    protected ArrayList<String> effects;
+    protected String name;
+    protected ArrayList<String> inventory = new ArrayList<String>();
+    protected int shield;
+    protected Random rand = new Random();
 
     public Actor() {
     }
