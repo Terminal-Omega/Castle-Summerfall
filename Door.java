@@ -1,5 +1,10 @@
 
 public class Door {
+    private enum KeyState{
+        INSIDE,
+        OUTSIDE,
+        NONE
+    }
     private boolean open;
     private boolean barred;
     private boolean locked;
@@ -7,7 +12,7 @@ public class Door {
     private int xCoord;
     private int yCoord; // Coordinates are stored based on the room farthest Northwest that the room is
                         // connected to
-
+    private KeyState keyState;
     public Door(boolean open, boolean barred, boolean locked, boolean direction, int xCoord, int yCoord) {
         setOpen(open);
         setBarred(barred);
