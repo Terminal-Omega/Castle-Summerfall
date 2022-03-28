@@ -5,6 +5,11 @@ public class Room {
     private ArrayList<Interactable> interactables;
     private String description;
 
+    public Room(ArrayList<Interactable> interactables, String description) {
+        this.interactables = interactables;
+        this.description = description;
+    }
+
     //Grab the description of the room
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
