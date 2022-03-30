@@ -27,6 +27,10 @@ public class App {
                 System.out.flush();
             }
 
+            if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())){
+               
+            }
+
         }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false);
     }
 }
