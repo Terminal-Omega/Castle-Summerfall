@@ -209,8 +209,15 @@ public class Actor {
         }
     }
 
-    public void moveNorth() {
-        yCoord++;
+    public void moveNorth(boolean doorLocked, boolean doorBarred) {
+        if (doorLocked == false && doorBarred == false) {
+            yCoord++;
+        } else if (doorLocked == true) {
+            System.out.print("Door is locked");
+        } else {
+            System.out.print("The Door is barred");
+        }
+
     }
 
     public void moveSouth() {

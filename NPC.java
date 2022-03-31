@@ -24,15 +24,4 @@ public class NPC extends Actor {
 
     }
 
-    public void npcTurnCombat() {
-        int attackChoice = rand.nextInt(2);
-        if (attackChoice == 0) {
-            // CC
-        } else if (attackChoice == 1) {
-            // Magic
-        } else if (attackChoice == 2) {
-            // Ranged
-        }
-    }
-
 }
