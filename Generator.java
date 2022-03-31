@@ -4,7 +4,33 @@ import java.util.Random;
 //this is a grouping of methods to randomly generate any given game object.
 //A room, an interactable, a floor, an enemy, etc.
 public class Generator {
-    //TODO: how do I generate a random interactable?
+
+    public static Floor generateFloor(int xSize, int ySize){
+        ArrayList<ArrayList<Room>> rooms = new ArrayList<>();
+        for(int i = 0;i<xSize;i++){
+            ArrayList<Room> column = new ArrayList<>();
+            for(int j = 0;j<ySize;j++){
+                column.add(generateRoom(1,3));
+            }
+            rooms.add(column);
+        }
+        Floor result = new Floor(rooms);
+        return result;
+    }
+    
+    public static Room generateRoom(int interactableMin, int interactableMax){
+        int range = interactableMax - interactableMin;
+        Random rand = new Random();
+        int loopCount = rand.nextInt(range) + interactableMin;
+        ArrayList<Interactable> roomInventory = new ArrayList<Interactable>();
+        for(int i = 0; i<loopCount;i++){
+            roomInventory.add(generateInteractable());
+        }
+        Room result = new Room(roomInventory,"This is a room");
+        return result; 
+    }
+
+    //below this is all the interactable generation.
     public static Interactable generateInteractable(){
         Random rand = new Random();
         Interactable result;
@@ -40,8 +66,8 @@ public class Generator {
     private static Interactable chest(){
         Random rand = new Random();
         ArrayList<Interactable> chestInventory = new ArrayList<Interactable>();
-
-        for(int i = 0;i<rand.nextInt(3);i++){
+        int loopCount = rand.nextInt(3);
+        for(int i = 0;i<loopCount;i++){
             chestInventory.add(generateInteractable());
         }
 
