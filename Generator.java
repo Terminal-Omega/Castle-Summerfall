@@ -34,7 +34,7 @@ public class Generator {
     public static Interactable generateInteractable() {
         Random rand = new Random();
         Interactable result;
-        switch (rand.nextInt(1)) {
+        switch (rand.nextInt(6)) {
             case 0:
                 result = chest();
                 break;
