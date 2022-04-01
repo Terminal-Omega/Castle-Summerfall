@@ -117,7 +117,7 @@ public class Generator {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a zombie.";
-        Enemy result = new Enemy(0, 0, 10, 10, 1, 0, 5, 5, 5, 5, 5, 5, 5, 20, "zombie", 10, "Enemy",description);
+        Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution, intelligence, wisdom, charismma, noise, carryWeight, name, shield, npcAlliance, description);
         return result;
     }
 
