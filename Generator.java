@@ -100,8 +100,24 @@ public class Generator {
         return result;
     }
 
-    private static Enemy zombie() {
-        Enemy result = new Enemy(0, 0, 10, 10, 1, 0, 5, 5, 5, 5, 5, 5, 5, 20, "zombie", 10, "Enemy");
+    private static Enemy zombie(int xCoord, int yCoord) {
+        int health = 10;
+        int AC = 10;
+        int speed = 1;
+        int mana = 0;
+        int strength = 5;
+        int dexterity = 5;
+        int constitution = 5;
+        int intelligence = 5;
+        int wisdom = 5;
+        int charismma = 5;
+        int noise = 5;
+        int carryWeight = 5;
+        String name = "Zombie";
+        int shield = 10;
+        String npcAlliance = "Enemy";
+        String description = "This is a zombie.";
+        Enemy result = new Enemy(0, 0, 10, 10, 1, 0, 5, 5, 5, 5, 5, 5, 5, 20, "zombie", 10, "Enemy",description);
         return result;
     }
 
