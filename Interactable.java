@@ -25,5 +25,21 @@ public class Interactable {
     public String getName(){
         return name;
     }
+
+    public String getDescription(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(description);
+        if(inventory != null){
+            builder.append("In the " + name + "are ");
+            for(int i = 0; i<inventory.size();i++){
+                if(i != inventory.size()-1){ 
+                    builder.append("a "+inventory.get(i).getName() + ", ");
+                } else{
+                    builder.append("and a " + inventory.get(i).getName() + ".");
+                }
+            }
+        }
+        return builder.toString();
+    }
     
 }

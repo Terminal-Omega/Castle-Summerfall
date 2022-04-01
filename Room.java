@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class Room {
     private ArrayList<Interactable> interactables;
     private String description;
+    private Door southDoor;
+    private Door eastDoor;
 
     public Room(ArrayList<Interactable> interactables, String description) {
         this.interactables = interactables;
@@ -26,5 +28,17 @@ public class Room {
             describe.append(interactables.get(i).getName());
         }
         return describe.toString();
+    }
+
+    // DO NOT USE this method. Use the one in the Floor Class, it's much easier.
+    public Door getDoor(Direction direction){
+        switch (direction) {
+            case SOUTH:
+                return southDoor;
+            case EAST:
+                return eastDoor;
+            default:
+            return null;
+        }
     }
 }
