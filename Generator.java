@@ -26,7 +26,7 @@ public class Generator {
         for (int i = 0; i < loopCount; i++) {
             roomInventory.add(generateInteractable());
         }
-        Room result = new Room(roomInventory, "This is a room");
+        Room result = new Room(roomInventory, "dark");
         return result;
     }
 
