@@ -1,6 +1,6 @@
 
 public class Weapon extends Interactable {
-    public Weapon(int size, int weight, boolean canBePickedUp, String name, String description) {
+    public Weapon(int size, int weight, boolean canBePickedUp, String name, String description, int pierce) {
         super(size, weight, canBePickedUp, name, description);
     }
 
