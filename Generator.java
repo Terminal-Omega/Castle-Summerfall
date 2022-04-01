@@ -117,8 +117,55 @@ public class Generator {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a zombie.";
-        Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution, intelligence, wisdom, charismma, noise, carryWeight, name, shield, npcAlliance, description);
+        Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution,
+                intelligence, wisdom, charismma, noise, carryWeight, name, shield, npcAlliance, description);
         return result;
+    }
+
+    private static Enemy skeleton(int xCoord, int yCoord) {
+        int health = 10;
+        int AC = 10;
+        int speed = 1;
+        int mana = 0;
+        int strength = 5;
+        int dexterity = 5;
+        int constitution = 5;
+        int intelligence = 5;
+        int wisdom = 5;
+        int charismma = 5;
+        int noise = 5;
+        int carryWeight = 5;
+        String name = "Skeleton";
+        int shield = 10;
+        String npcAlliance = "Enemy";
+        String description = "This is a Skeleton.";
+        Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution,
+                intelligence, wisdom, charismma, noise, carryWeight, name, shield, npcAlliance, description);
+        return result;
+
+    }
+
+    private static Enemy goblin(int xCoord, int yCoord) {
+        int health = 10;
+        int AC = 10;
+        int speed = 1;
+        int mana = 0;
+        int strength = 5;
+        int dexterity = 5;
+        int constitution = 5;
+        int intelligence = 5;
+        int wisdom = 5;
+        int charismma = 5;
+        int noise = 5;
+        int carryWeight = 5;
+        String name = "Goblin";
+        int shield = 10;
+        String npcAlliance = "Enemy";
+        String description = "This is a Goblin.";
+        Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution,
+                intelligence, wisdom, charismma, noise, carryWeight, name, shield, npcAlliance, description);
+        return result;
+
     }
 
 }
