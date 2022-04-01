@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Random;
 public class Floor {
     private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the vector.
 

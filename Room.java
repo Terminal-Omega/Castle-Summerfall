@@ -10,6 +10,9 @@ public class Room {
         this.description = description;
     }
 
+    public Room(int seed){
+        
+    }
     //Grab the description of the room
     public String getDescription(){
         StringBuilder describe = new StringBuilder();

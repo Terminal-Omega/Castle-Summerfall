@@ -1,6 +1,6 @@
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Stage {
-    protected Vector<Floor> floors;
+    protected ArrayList<Floor> floors;
 }
