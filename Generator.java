@@ -100,4 +100,9 @@ public class Generator {
         return result;
     }
 
+    private static Enemy zombie() {
+        Enemy result = new Enemy(0, 0, 10, 10, 1, 0, 5, 5, 5, 5, 5, 5, 5, 20, "zombie", 10, "Enemy");
+        return result;
+    }
+
 }
