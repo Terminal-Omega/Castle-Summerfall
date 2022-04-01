@@ -1,5 +1,6 @@
-
+// Doors, like the type you go through.
 public class Door {
+    // stores if there's a key in the door and which side it's on. Useless for now.
     private enum KeyState{
         INSIDE,
         OUTSIDE,
@@ -8,18 +9,11 @@ public class Door {
     private boolean open;
     private boolean barred;
     private boolean locked;
-    private boolean direction; // True is North/South, False is East/West
-    private int xCoord;
-    private int yCoord; // Coordinates are stored based on the room farthest Northwest that the room is
-                        // connected to
     private KeyState keyState;
-    public Door(boolean open, boolean barred, boolean locked, boolean direction, int xCoord, int yCoord) {
+    public Door(boolean open, boolean barred, boolean locked) {
         setOpen(open);
         setBarred(barred);
         setLocked(locked);
-        setDirection(direction);
-        setXCoord(xCoord);
-        setYCoord(yCoord);
     }
 
     public void setOpen(boolean open) {
@@ -34,15 +28,7 @@ public class Door {
         this.locked = locked;
     }
 
-    public void setDirection(boolean direction) {
-        this.direction = direction;
-    }
-
-    public void setXCoord(int xCoord) {
-        this.xCoord = xCoord;
-    }
-
-    public void setYCoord(int yCoord) {
-        this.yCoord = yCoord;
+    public boolean passable(){
+        return true;
     }
 }
