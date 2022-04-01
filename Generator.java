@@ -100,6 +100,39 @@ public class Generator {
         return result;
     }
 
+    /*
+     * example and description of what everything does for creation of enemies
+     * / private static Enemy INSERTNAMEHERE(int xCoord, int yCoord){
+     * // int health = AMOUNT //how much health the enemy has
+     * // int AC = AMOUNT //how much damge reduction they have
+     * // int speed = AMOUNT //for latter impliamtation can effect how many actions
+     * // have you
+     * /// get per turn
+     * // int mana = AMOUNT // how much magic you have
+     * // int strenght = AMOUNT // this desides things like carryWeight and also
+     * // will be implimented latterlatter
+     * /// on damage
+     * // int dexterity = AMOUNT // this helps decided speed
+     * // int constitution = AMOUNT // resilience to certain things
+     * // int intelligence = AMOUNT // for latter implitation manily dealing with AI
+     * // int wisdom = AMOUNT // same as intelligence
+     * // int charisma = AMOUNT // how this charecter interacts with other NPC
+     * // int noise = AMOUNT // this changes around saying how far they can be
+     * // detected
+     * /// everyone has a natural noise level
+     * // String name = NAMW // the name of the enemy
+     * // int shield = AMOUNT // a special second health bar
+     * // String npcAlliance = ALLIANCE // is the NPC friendly, neutral, or enemy to
+     * // the player
+     * // String description = DESCRIPTION // the description of the NPC that the
+     * /// player can see if they check
+     * //Enemy result = new Enemy(xCoord, yCoord, health, AC, speed, mana, strength,
+     * dexterity, constitution,
+     * intelligence, wisdom, charismma, noise, carryWeight, name, shield,
+     * npcAlliance, description);
+     * return result;
+     * }
+     */
     private static Enemy zombie(int xCoord, int yCoord) {
         int health = 10;
         int AC = 10;
