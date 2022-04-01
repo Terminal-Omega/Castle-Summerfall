@@ -76,27 +76,27 @@ public class Generator {
 
     // Weapons
     private static Weapon knife() {
-        Weapon result = new Weapon(1, 5, true, "Knife", "It's kinda sharp.", 3);
+        Weapon result = new Weapon(1, 5, true, "Knife", "It's kinda sharp.", 3, 4);
         return result;
     }
 
     private static Weapon shortSword() {
-        Weapon result = new Weapon(2, 8, true, "Short Sword", "Like a knife, but long.", 5);
+        Weapon result = new Weapon(2, 8, true, "Short Sword", "Like a knife, but long.", 5, 6);
         return result;
     }
 
     private static Weapon sword() {
-        Weapon result = new Weapon(2, 9, true, "Sword", "It might hurt someone", 6);
+        Weapon result = new Weapon(2, 9, true, "Sword", "It might hurt someone", 6, 8);
         return result;
     }
 
     private static Weapon greatSword() {
-        Weapon result = new Weapon(3, 11, true, "Greatsword", "This is a big sword.", 10);
+        Weapon result = new Weapon(3, 11, true, "Greatsword", "This is a big sword.", 10, 13);
         return result;
     }
 
     private static Weapon rapier() {
-        Weapon result = new Weapon(1, 6, true, "Rapier", "Thin and deadly.", 13);
+        Weapon result = new Weapon(1, 6, true, "Rapier", "Thin and deadly.", 13, 8);
         return result;
     }
 
