@@ -15,6 +15,7 @@ public class Room {
     public Room(int seed){
         
     }
+
     //Grab the description of the room
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
@@ -38,6 +39,25 @@ public class Room {
             case EAST:
                 return eastDoor;
             default:
+            return null;
+        }
+    }
+
+    public Interactable getItem(String name, int index){
+        int timesFound = -1;
+        int latestIndex = 0;
+        for(int i = 0;i<interactables.size();i++){
+            if(interactables.get(i).getName().toLowerCase().equals(name)){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    return interactables.get(i);
+                }
+            }
+        }
+        if(latestIndex !=0){
+            return interactables.get(latestIndex);
+        } else{
             return null;
         }
     }

@@ -41,5 +41,24 @@ public class Interactable {
         }
         return builder.toString();
     }
+
+    public Interactable getItem(String name, int index){
+        int timesFound = -1;
+        int latestIndex = 0;
+        for(int i = 0;i<inventory.size();i++){
+            if(inventory.get(i).getName().toLowerCase().equals(name)){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    return inventory.get(i);
+                }
+            }
+        }
+        if(latestIndex !=0){
+            return inventory.get(latestIndex);
+        } else{
+            return null;
+        }
+    }
     
 }
