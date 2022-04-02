@@ -46,7 +46,7 @@ public class Interactable {
         int timesFound = -1;
         int latestIndex = 0;
         for(int i = 0;i<inventory.size();i++){
-            if(inventory.get(i).getName().toLowerCase().equals(name)){
+            if(inventory.get(i).getName().toLowerCase().equals(name.toLowerCase())){
                 latestIndex = i;
                 timesFound++;
                 if(timesFound == index){

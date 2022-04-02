@@ -15,18 +15,19 @@ public class Room {
     public Room(int seed){
         
     }
-
+    
     //Grab the description of the room
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
-        describe.append("The room is ");
         describe.append(description);
-        describe.append("\nIn the room are ");
+        describe.append("\nIn the room is ");
         for(int i = 0;i<interactables.size();i++){
-            if(i!= 0){
-                describe.append(", ");
+            if(i!= interactables.size()-1){
+                describe.append("a " + interactables.get(i).getName() + ", ");
+            } else{
+                describe.append("and a " + interactables.get(i).getName() + ".");
             }
-            describe.append(interactables.get(i).getName());
+            
         }
         return describe.toString();
     }
@@ -47,7 +48,7 @@ public class Room {
         int timesFound = -1;
         int latestIndex = 0;
         for(int i = 0;i<interactables.size();i++){
-            if(interactables.get(i).getName().toLowerCase().equals(name)){
+            if(interactables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
                 latestIndex = i;
                 timesFound++;
                 if(timesFound == index){
@@ -60,5 +61,9 @@ public class Room {
         } else{
             return null;
         }
+    }
+
+    public Interactable getItem(String name){
+        return getItem(name,0);
     }
 }

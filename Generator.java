@@ -18,6 +18,8 @@ public class Generator {
         return result;
     }
 
+    //TODO: @yomas000 write some descriptions of rooms and stuff.
+    private static String[] roomDescriptions = {};
     public static Room generateRoom(int interactableMin, int interactableMax) {
         int range = interactableMax - interactableMin;
         Random rand = new Random();
@@ -26,7 +28,7 @@ public class Generator {
         for (int i = 0; i < loopCount; i++) {
             roomInventory.add(generateInteractable());
         }
-        Room result = new Room(roomInventory, "dark");
+        Room result = new Room(roomInventory, "This is a room.");
         return result;
     }
 
