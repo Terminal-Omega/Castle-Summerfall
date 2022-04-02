@@ -33,30 +33,11 @@ public class App {
             }
             //Move command
             if (moveMatch.find()){
-                if (moveMatch.group(1).equals("N") || moveMatch.group(1).equals("n")){
-                    if (player.getYCoord() < 5 && player.getYCoord() >= 0){
-                        player.setYCoord(player.getYCoord() + 1);
-                    }
-                }
-                if (moveMatch.group(1).equals("S") || moveMatch.group(1).equals("s")) {
-                    if (player.getYCoord() < 5 && player.getYCoord() >= 0) {
-                        player.setYCoord(player.getYCoord() - 1);
-                    }
-                }
-                if (moveMatch.group(1).equals("E") || moveMatch.group(1).equals("E")) {
-                    if (player.getXCoord() < 5 && player.getXCoord() >= 0) {
-                        player.setXCoord(player.getXCoord() - 1);
-                    }
-                }
-                if (moveMatch.group(1).equals("W") || moveMatch.group(1).equals("w")) {
-                    if (player.getXCoord() < 5 && player.getXCoord() >= 0) {
-                        player.setXCoord(player.getXCoord() + 1);
-                    }
-                }
+                UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
             }
 
             //clear command
-            if (inputCommand.equals("clear")){
+            if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())){
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
             }
@@ -77,7 +58,7 @@ public class App {
                 System.out.println(name);
             }
 
-            if (inputCommand.equals("inventory")){
+            if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
                 String inventory = "";
                 for (String name : player.getInventory()){
                     inventory += name + " ";

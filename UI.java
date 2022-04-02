@@ -42,17 +42,53 @@ public class UI {
         } else if (command.equals(Commands.CLEAR.getStrCommand())) {
             System.out.println("    This will clear the output of the console and bring your cursor to the top\n    Use: clear");
         } else if (command.equals(Commands.TAKE.getStrCommand())) {
-            System.out.println("    This will make your character pick up an object in the room and it will go to inventory\n    Use: take (object)");
+            System.out.println("    This will make your character pick up an object in the room or chest and it will go to inventory\n    Use: take (object)");
         } else if (command.equals(Commands.INSPECT.getStrCommand())) {
             System.out.println("    This will display an object in the rooms description\n    Use: inspect (object)");
         } else if (command.equals(Commands.EXIT.getStrCommand())) {
-            System.out.println("    This will exit the game\n    Use: inspect");
+            System.out.println("    This will exit the game\n    Use: exit");
         } else if (command.equals(Commands.MOVE.getStrCommand())) {
             System.out.println("    This will move your character in a direction if possible\n    Directions (North, north, N) / (South, south, S) etc..\n    Use: move (direction)");
         } else if (command.equals(Commands.DROP.getStrCommand())) {
             System.out.println("    This will drop and item from your inventory\n    Use: drop (item)");
         } else if (command.equals(Commands.ATTACK.getStrCommand())) {
             System.out.println("    This will attack an Actor in the room with a spesificed weapon in your inventory\n    Use: attack (Actor) with (weapon)");
+        }
+    }
+
+    public static void move(String command, Player player, Floor floor1, int floorSize){
+        if (command.equals("N") || command.equals("n")) {
+            if (player.getYCoord() < floorSize && player.getYCoord() >= 0) {
+                player.setYCoord(player.getYCoord() + 1);
+               // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+            }else{
+                System.out.println("You don't see a door in that wall. You can't move that way.");
+            }
+        }
+        if (command.equals("S") || command.equals("s")) {
+            if (player.getYCoord() <= floorSize && player.getYCoord() > 0) {
+                player.setYCoord(player.getYCoord() - 1);
+               // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+            } else {
+                System.out.println("You don't see a door in that wall. You can't move that way.");
+            }
+        }
+        if (command.equals("E") || command.equals("E")) {
+            if (player.getXCoord() <= floorSize && player.getXCoord() > 0) {
+                player.setXCoord(player.getXCoord() - 1);
+               // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+            } else {
+                System.out.println("You don't see a door in that wall. You can't move that way.");
+            }
+        }
+        if (command.equals("W") || command.equals("w")) {
+            if (player.getXCoord() <= floorSize && player.getXCoord() >= 0) {
+                player.setXCoord(player.getXCoord() + 1);
+                //System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+            } else {
+                System.out.println("You don't see a door in that wall. You can't move that way.");
+            }
+            
         }
     }
 }
