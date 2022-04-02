@@ -59,7 +59,8 @@ public class Room {
         if(latestIndex !=0){
             return interactables.get(latestIndex);
         } else{
-            return null;
+            //to stop it from crashing, sorry coban
+            return new Interactable(5, 20, false, "Chest", "There is no such thing in the room");
         }
     }
 
