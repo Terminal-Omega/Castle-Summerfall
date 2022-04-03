@@ -23,23 +23,28 @@ public class App {
             Matcher helpMatch = helpPat.matcher(inputCommand);
             Matcher moveMatch = movePat.matcher(inputCommand);
             Matcher inspectMatch = inspectPat.matcher(inputCommand);
+            boolean commandKnown = true;
 
             if (inputCommand.equals("help")){
                 UI.helpCommand("all");
+                commandKnown = false;
             }
 
             if (helpMatch.find()){
                 UI.helpCommand(helpMatch.group(1));
+                commandKnown = false;
             }
             //Move command
             if (moveMatch.find()){
                 UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
+                commandKnown = false;
             }
 
             //clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())){
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
+                commandKnown = false;
             }
 
             //look around command
@@ -50,12 +55,14 @@ public class App {
             //where TODO: remove this for final draft @yomas000
             if (inputCommand.equals("where")) {
                 System.out.print("x: " + player.getXCoord() + " y: " + player.getYCoord());
+                commandKnown = false;
             }
 
             //inspect command
             if (inspectMatch.find()){
                 String name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
                 System.out.println(name);
+                commandKnown = false;
             }
 
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
@@ -68,7 +75,13 @@ public class App {
                 }else{
                     System.out.println(inventory);
                 }
+                commandKnown = false;
             }
+
+            if (commandKnown && inputCommand.equals("exit") == false){
+                System.out.println("Sorry I don't know what you wanted.");
+            }
+
         }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health > 0);
     }
 }
