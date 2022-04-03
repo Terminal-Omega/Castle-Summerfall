@@ -19,7 +19,7 @@ public class Generator {
     }
 
     //TODO: @yomas000 write some descriptions of rooms and stuff.
-    private static String[] roomDescriptions = {};
+    private static String[] roomDescriptions = {"You look around and see nothing the room is too dark to see much. But you can see that the walls are gray brick that has moss and water dripping from the old stones.", "The room is a massive room with wooden beams sweaping up into high arched ceilings. It has bright chandeliers glowing with hundreds of candles.\nThe wood looks dark and varneshed. It reminds you of viking archetecture.", "The room you walked into is dark and dank. It smells like mildew and has slime covering the floor and walls."};
     public static Room generateRoom(int interactableMin, int interactableMax) {
         int range = interactableMax - interactableMin;
         Random rand = new Random();
@@ -28,7 +28,8 @@ public class Generator {
         for (int i = 0; i < loopCount; i++) {
             roomInventory.add(generateInteractable());
         }
-        Room result = new Room(roomInventory, "This is a room.");
+        Door door1 = new Door(true, false, false);
+        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)],door1, door1);
         return result;
     }
 
@@ -72,7 +73,7 @@ public class Generator {
             chestInventory.add(generateInteractable());
         }
 
-        Interactable result = new Interactable(5, 20, false, "Chest", "It's a box.", chestInventory);
+        Interactable result = new Interactable("Chest", "It's a box.", 5, 20, false, chestInventory);
         return result;
     }
 

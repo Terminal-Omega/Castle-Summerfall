@@ -7,9 +7,11 @@ public class Room {
     private Door southDoor;
     private Door eastDoor;
 
-    public Room(ArrayList<Interactable> interactables, String description) {
+    public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
         this.description = description;
+        this.southDoor = southDoor;
+        this.eastDoor = eastDoor;
     }
 
     public Room(int seed){
@@ -46,7 +48,7 @@ public class Room {
 
     public Interactable getItem(String name, int index){
         int timesFound = -1;
-        int latestIndex = 0;
+        int latestIndex = -1;
         for(int i = 0;i<interactables.size();i++){
             if(interactables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
                 latestIndex = i;
@@ -56,11 +58,11 @@ public class Room {
                 }
             }
         }
-        if(latestIndex !=0){
+        if(latestIndex !=-1){
             return interactables.get(latestIndex);
         } else{
             //to stop it from crashing, sorry coban
-            return new Interactable(5, 20, false, "Chest", "There is no such thing in the room");
+            return new Interactable("Chest", "There is no such thing in the room", 5, 20, false);
         }
     }
 
