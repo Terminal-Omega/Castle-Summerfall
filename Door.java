@@ -11,13 +11,17 @@ public class Door {
     private boolean locked;
     private KeyState keyState;
     public Door(boolean open, boolean barred, boolean locked) {
-        setOpen(open);
+        this.open = open;
         setBarred(barred);
         setLocked(locked);
     }
 
-    public void setOpen(boolean open) {
-        this.open = open;
+    public void open() {
+        open = true;
+    }
+
+    public void close() {
+        open = false;
     }
 
     public void setBarred(boolean barred) {
@@ -29,6 +33,6 @@ public class Door {
     }
 
     public boolean passable(){
-        return true;
+        return open;
     }
 }
