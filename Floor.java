@@ -34,13 +34,19 @@ public class Floor {
     public Door getDoor(int xCoord, int yCoord, Direction direction){
         switch (direction) {
             case NORTH:
-                return rooms.get(xCoord).get(yCoord+1).getDoor(Direction.SOUTH);
+                if(!(yCoord >= rooms.get(xCoord).size())){
+                    return rooms.get(xCoord).get(yCoord+1).getDoor(Direction.SOUTH);
+                }
             case SOUTH:
                 return rooms.get(xCoord).get(yCoord).getDoor(Direction.SOUTH);
             case EAST:
                 return rooms.get(xCoord).get(yCoord).getDoor(Direction.EAST);
             case WEST:
-            return rooms.get(xCoord-1).get(yCoord).getDoor(Direction.EAST);
+            if(xCoord!=0){
+                return rooms.get(xCoord-1).get(yCoord).getDoor(Direction.EAST);
+            }else{
+                return null;
+            }
             default:
                 return null;
         }
@@ -74,7 +80,36 @@ public class Floor {
                     builder.append(" and a" + localEnemies.get(i).getName() + ".");
                 }
             }
+           
         }
+        int i = 0;
+        for(Direction direction : Direction.values()){
+            if(getDoor(xCoord, yCoord, direction) != null){
+                i++;
+            }
+        }
+
+        int j = 0;
+        for(Direction direction : Direction.values()){
+            if(getDoor(xCoord, yCoord, direction)!=null){
+                j++;
+                String openStatus = "";
+                String directionString = direction.toString().substring(0,1).toUpperCase() + direction.toString().substring(1);
+                if(getDoor(xCoord, yCoord, direction).passable()){
+                    openStatus = "an open";
+                } else{
+                    openStatus = "a closed";
+                }
+                if(j == 1){
+                    builder.append("\nThere is " + openStatus + " door to the " + directionString);
+                } else if(j<Direction.values().length - 1){
+                    builder.append(", " + openStatus + " door to the " + directionString);
+                } else{
+                    builder.append(", and " + openStatus + " door to the " + directionString);
+                }
+            }
+        }
+        builder.append(".");
         return builder.toString();
     }
 }

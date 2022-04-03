@@ -22,17 +22,26 @@ public class Room {
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
         describe.append(description);
-        describe.append("\nIn the room is ");
-        for(int i = 0;i<interactables.size();i++){
-
-            if(interactables.size() == 1){
-                describe.append(" a " + interactables.get(i).getName()+".");
-            }else if(i!= interactables.size()-1){
-                describe.append(" a " + interactables.get(i).getName() + ",");
-            } else{
-                describe.append(" and a " + interactables.get(i).getName() + ".");
+        switch (interactables.size()) {
+            case 0:
+                break;
+            case 1:
+            describe.append("\n");
+            describe.append("There is a " + interactables.get(0).getName() + " in the room.");
+            break;
+            case 2:
+            describe.append("\n");
+            describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(0).getName()));
+            break;
+            default:
+            describe.append("\n");
+            for(int i = 0;i<interactables.size();i++){
+                if(i != interactables.size() - 1){
+                    describe.append(" a "+interactables.get(i).getName() + ",");
+                } else{
+                    describe.append(" and a" + interactables.get(i).getName() + ".");
+                }
             }
-            
         }
         return describe.toString();
     }

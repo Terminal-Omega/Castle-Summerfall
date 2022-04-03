@@ -11,7 +11,15 @@ public class Generator {
         for (int i = 0; i < xSize; i++) {
             ArrayList<Room> column = new ArrayList<>();
             for (int j = 0; j < ySize; j++) {
-                column.add(generateRoom(1, 3));
+                boolean southDoor = false;
+                boolean eastDoor = false;
+                if(j != 0){
+                    southDoor = true;
+                }
+                if(i!= xSize-1){
+                    eastDoor = true;
+                }
+                column.add(generateRoom(1, 3, southDoor, eastDoor));
             }
             rooms.add(column);
         }
@@ -28,16 +36,27 @@ public class Generator {
 
     //TODO: @yomas000 write some descriptions of rooms and stuff.
     private static String[] roomDescriptions = {"You look around and see nothing the room is too dark to see much. But you can see that the walls are gray brick that has moss and water dripping from the old stones.", "The room is a massive room with wooden beams sweaping up into high arched ceilings. It has bright chandeliers glowing with hundreds of candles.\nThe wood looks dark and varneshed. It reminds you of viking archetecture.", "The room you walked into is dark and dank. It smells like mildew and has slime covering the floor and walls."};
-    public static Room generateRoom(int interactableMin, int interactableMax) {
+    public static Room generateRoom(int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor) {
         int range = interactableMax - interactableMin;
         Random rand = new Random();
         int loopCount = rand.nextInt(range) + interactableMin;
         ArrayList<Interactable> roomInventory = new ArrayList<Interactable>();
+        Door door1;
+        Door door2;
         for (int i = 0; i < loopCount; i++) {
             roomInventory.add(generateInteractable());
         }
-        Door door1 = new Door(true, false, false);
-        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)],door1, door1);
+        if(southDoor){
+            door1 = new Door(true, false, false);
+        } else{
+            door1 = null;
+        }
+        if(eastDoor){
+            door2 = new Door(true, false, false);
+        } else{
+            door2 = null;
+        }
+        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)],door1, door2);
         return result;
     }
 
