@@ -50,6 +50,7 @@ public class App {
             //look around command
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())){
                System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord())); // Hey Thomas, just replaced the getDescription with the new one in floor so that it picks up enemies too. Otherwise, it works the exact same.
+               commandKnown = false;
             }
 
             //where TODO: remove this for final draft @yomas000

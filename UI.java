@@ -73,7 +73,7 @@ public class UI {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
         }
-        if (command.equals("E") || command.equals("E")) {
+        if (command.equals("E") || command.equals("e")) {
             if (player.getXCoord() <= floorSize && player.getXCoord() > 0) {
                 player.setXCoord(player.getXCoord() - 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
