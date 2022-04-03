@@ -6,6 +6,7 @@ import java.util.Random;
 public class Generator {
 
     public static Floor generateFloor(int xSize, int ySize) {
+        Random rand = new Random();
         ArrayList<ArrayList<Room>> rooms = new ArrayList<>();
         for (int i = 0; i < xSize; i++) {
             ArrayList<Room> column = new ArrayList<>();
@@ -15,6 +16,13 @@ public class Generator {
             rooms.add(column);
         }
         Floor result = new Floor(rooms);
+        int enemyFactor = (xSize*ySize)/4;
+        int enemyCount = rand.nextInt(enemyFactor) + enemyFactor;
+        for(int i = 0;i<enemyCount;i++){
+            int x = rand.nextInt(xSize);
+            int y = rand.nextInt(ySize);
+            result.addEnemy(generateEnemy(x, y));
+        }
         return result;
     }
 
@@ -136,6 +144,21 @@ public class Generator {
      * return result;
      * }
      */
+
+    private static Enemy generateEnemy(int xCoord, int yCoord){
+        Random rand = new Random();
+        switch (rand.nextInt(3)) {
+            case 0:
+                return zombie(xCoord, yCoord);
+            case 1:
+                return skeleton(xCoord, yCoord);
+            case 2:
+                return goblin(xCoord, yCoord);
+            default:
+                return null;
+        }
+    }
+
     private static Enemy zombie(int xCoord, int yCoord) {
         int health = 10;
         int AC = 10;

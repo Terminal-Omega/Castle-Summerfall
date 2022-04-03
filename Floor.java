@@ -1,11 +1,16 @@
 
 import java.util.ArrayList;
-import java.util.Random;
 public class Floor {
     private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the vector.
+    private ArrayList<Enemy> enemies;
 
     public Floor(ArrayList<ArrayList<Room>> rooms) {
         this.rooms = rooms;
+        this.enemies = new ArrayList<>();
+    }
+
+    public void addEnemy(Enemy enemy){
+        enemies.add(enemy);
     }
 
     // public Floor(){
@@ -39,5 +44,37 @@ public class Floor {
             default:
                 return null;
         }
+    }
+
+    public String getDescription(int xCoord, int yCoord){
+        StringBuilder builder = new StringBuilder(rooms.get(xCoord).get(yCoord).getDescription());
+        ArrayList<Enemy> localEnemies = new ArrayList<>();
+        for(Enemy enemy : enemies){
+            if(enemy.getXCoord() == xCoord && enemy.getYCoord() == yCoord){
+                localEnemies.add(enemy);
+            }
+        }
+        switch (localEnemies.size()) {
+            case 0:
+                break;
+            case 1:
+            builder.append("\n");
+            builder.append("There is a " + localEnemies.get(0).getName() + " in the room.");
+            break;
+            case 2:
+            builder.append("\n");
+            builder.append(String.format("In the room is a %s and a %s", localEnemies.get(0).getName(),localEnemies.get(0).getName()));
+            break;
+            default:
+            builder.append("\n");
+            for(int i = 0;i<localEnemies.size();i++){
+                if(i != localEnemies.size() - 1){
+                    builder.append(" a "+localEnemies.get(i).getName() + ",");
+                } else{
+                    builder.append(" and a" + localEnemies.get(i).getName() + ".");
+                }
+            }
+        }
+        return builder.toString();
     }
 }

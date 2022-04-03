@@ -31,12 +31,14 @@ public class Interactable {
         StringBuilder builder = new StringBuilder();
         builder.append(description);
         if(inventory != null){
-            builder.append("In the " + name + "are ");
+            builder.append("\nIn the " + name + " is");
             for(int i = 0; i<inventory.size();i++){
-                if(i != inventory.size()-1){ 
-                    builder.append("a "+inventory.get(i).getName() + ", ");
+                if(inventory.size() == 1){
+                    builder.append(" a " + inventory.get(i).getName() + ".");
+                }else if(i != inventory.size()-1){ 
+                    builder.append(" a " +inventory.get(i).getName() + ",");
                 } else{
-                    builder.append("and a " + inventory.get(i).getName() + ".");
+                    builder.append(" and a " + inventory.get(i).getName() + ".");
                 }
             }
         }

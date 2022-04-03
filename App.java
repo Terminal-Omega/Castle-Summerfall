@@ -11,7 +11,7 @@ public class App {
         final int FLOORSIZE = 5;
         Pattern helpPat = Pattern.compile("help ([a-z].*)");
         Pattern movePat = Pattern.compile("move ([N|n|S|s|W|w|E|e])");
-        Pattern inspectPat = Pattern.compile("inspect ([A-Z][a-z].*)");
+        Pattern inspectPat = Pattern.compile("inspect ([A-Z][a-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player();
         player.setYCoord(0);
@@ -44,7 +44,7 @@ public class App {
 
             //look around command
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())){
-               System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+               System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord())); // Hey Thomas, just replaced the getDescription with the new one in floor so that it picks up enemies too. Otherwise, it works the exact same.
             }
 
             //where TODO: remove this for final draft @yomas000

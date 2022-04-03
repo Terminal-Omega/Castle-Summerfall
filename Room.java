@@ -24,10 +24,13 @@ public class Room {
         describe.append(description);
         describe.append("\nIn the room is ");
         for(int i = 0;i<interactables.size();i++){
-            if(i!= interactables.size()-1){
-                describe.append("a " + interactables.get(i).getName() + ", ");
+
+            if(interactables.size() == 1){
+                describe.append(" a " + interactables.get(i).getName()+".");
+            }else if(i!= interactables.size()-1){
+                describe.append(" a " + interactables.get(i).getName() + ",");
             } else{
-                describe.append("and a " + interactables.get(i).getName() + ".");
+                describe.append(" and a " + interactables.get(i).getName() + ".");
             }
             
         }
