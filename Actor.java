@@ -186,6 +186,10 @@ public class Actor {
         return shield;
     }
 
+    public void putItem(Interactable interactable){
+        inventory.add(interactable.getName());
+    }
+
     public void takeDamage(int damage, String name, int AC) {
         int finalDamage = damage - AC;
         if (finalDamage < 0) {

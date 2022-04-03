@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +13,7 @@ public class App {
         Pattern helpPat = Pattern.compile("help ([a-z].*)");
         Pattern movePat = Pattern.compile("move ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("inspect ([A-Z][a-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
+        Pattern takePat = Pattern.compile("take ([A-Z][a-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player();
         player.setYCoord(0);
@@ -23,6 +25,7 @@ public class App {
             Matcher helpMatch = helpPat.matcher(inputCommand);
             Matcher moveMatch = movePat.matcher(inputCommand);
             Matcher inspectMatch = inspectPat.matcher(inputCommand);
+            Matcher takeMatch = takePat.matcher(inputCommand);
             boolean commandKnown = true;
 
             if (inputCommand.equals("help")){
@@ -66,10 +69,11 @@ public class App {
                 commandKnown = false;
             }
 
+            //inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
                 String inventory = "";
                 for (String name : player.getInventory()){
-                    inventory += name + " ";
+                    inventory += name + ", ";
                 }
                 if (inventory.equals("")){
                     System.out.println("You don't have anything on you");
@@ -79,6 +83,13 @@ public class App {
                 commandKnown = false;
             }
 
+            //take command
+            if (takeMatch.find()){
+                player.putItem(floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(takeMatch.group(1)));
+                //TODO: I need a room.removeItem() please @Corbanator
+            }
+
+            //if command is not known
             if (commandKnown && inputCommand.equals("exit") == false){
                 System.out.println("Sorry I don't know what you wanted.");
             }
