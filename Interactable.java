@@ -63,5 +63,35 @@ public class Interactable {
             return null;
         }
     }
+
+    public Interactable getItem(String name){
+        return getItem(name, 0);
+    }
     
+    public Interactable takeItem(String name, int index){
+        int timesFound = -1;
+        int latestIndex = 0;
+        for(int i = 0;i<inventory.size();i++){
+            if(inventory.get(i).getName().toLowerCase().equals(name.toLowerCase())){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    Interactable result = inventory.get(i);
+                    inventory.remove(i);
+                    return result;
+                }
+            }
+        }
+        if(latestIndex !=0){
+            Interactable result = inventory.get(latestIndex);
+            inventory.remove(latestIndex);
+            return result;
+        } else{
+            return null;
+        }
+    }
+
+    public Interactable takeitem(String name){
+        return takeItem(name, 0);
+    }
 }

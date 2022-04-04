@@ -81,4 +81,32 @@ public class Room {
     public Interactable getItem(String name){
         return getItem(name,0);
     }
+
+    public Interactable takeItem(String name, int index){
+        int timesFound = -1;
+        int latestIndex = -1;
+        for(int i = 0;i<interactables.size();i++){
+            if(interactables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    Interactable result = interactables.get(i);
+                    interactables.remove(i);
+                    return result;
+                }
+            }
+        }
+        if(latestIndex !=-1){
+            Interactable result = interactables.get(latestIndex);
+            interactables.remove(latestIndex);
+            return result;
+        } else{
+            //to stop it from crashing, sorry coban
+            return new Interactable("Chest", "There is no such thing in the room", 5, 20, false);
+        }
+    }
+
+    public Interactable takeItem(String name){
+        return takeItem(name, 0);
+    }
 }
