@@ -33,7 +33,7 @@ public class Door {
         this.locked = locked;
     }
 
-    public boolean passable(){
+    public boolean isOpen(){
         return open;
     }
 }

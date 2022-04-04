@@ -95,7 +95,7 @@ public class Floor {
                 j++;
                 String openStatus = "";
                 String directionString = direction.toString().substring(0,1).toUpperCase() + direction.toString().substring(1);
-                if(getDoor(xCoord, yCoord, direction).passable()){
+                if(getDoor(xCoord, yCoord, direction).isOpen()){
                     openStatus = "an open";
                 } else{
                     openStatus = "a closed";
