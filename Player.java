@@ -16,11 +16,14 @@ public class Player extends Actor {
         }
     }
 
-    public void dropItem(Interactable interactable){
+    public Interactable dropItem(Interactable interactable){
+        Interactable returnCrap = new Interactable();
         for (Interactable inter : inventory){
             if (inter.getName().equals(interactable.getName())){
+                returnCrap = inter;
                 inventory.remove(inter);
             }
         }
+        return returnCrap;
     }
 }
