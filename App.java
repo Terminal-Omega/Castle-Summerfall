@@ -13,8 +13,8 @@ public class App {
         final int FLOORSIZE = 5;
         Pattern helpPat = Pattern.compile("help ([a-z].*)");
         Pattern movePat = Pattern.compile("move ([N|n|S|s|W|w|E|e])");
-        Pattern inspectPat = Pattern.compile("inspect ([A-Z][a-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
-        Pattern takePat = Pattern.compile("take ([A-Z][a-z].*)");
+        Pattern inspectPat = Pattern.compile("inspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
+        Pattern takePat = Pattern.compile("take ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5);
 
@@ -32,6 +32,7 @@ public class App {
                 commandKnown = false;
             }
 
+            //help command
             if (helpMatch.find()){
                 UI.helpCommand(helpMatch.group(1));
                 commandKnown = false;
@@ -78,8 +79,12 @@ public class App {
 
             //take command
             if (takeMatch.find()){
-                player.putItem(floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1)));
-                System.out.println("taken");
+                Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
+                    if (interactable.getDescription().equals("There is no such thing in the room")){
+                        System.out.println(interactable.getDescription());
+                    }else{
+                        System.out.println("taken");
+                    }
                 commandKnown = false;
             }
 
