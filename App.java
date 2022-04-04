@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class App {
 
     public static void main(String[] args) {
+        UI.displayOpening();
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
@@ -15,9 +16,7 @@ public class App {
         Pattern inspectPat = Pattern.compile("inspect ([A-Z][a-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
         Pattern takePat = Pattern.compile("take ([A-Z][a-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player();
-        player.setYCoord(0);
-        player.setXCoord(0);
+        Player player = new Player(0, 0, 5);
 
         do{
             System.out.print("> ");
@@ -85,8 +84,21 @@ public class App {
 
             //take command
             if (takeMatch.find()){
-                player.putItem(floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(takeMatch.group(1)));
-                //TODO: I need a room.removeItem() please @Corbanator
+                player.putItem(floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1)));
+                System.out.println("taken");
+                commandKnown = false;
+            }
+
+            // if (inputCommand.equals("damage")){
+            //     player.takeDamage(2, "player", 3);
+            // }
+
+            //drop command
+
+            //health command
+            if (inputCommand.equals(UI.Commands.HEALTH.getStrCommand())){
+                UI.displayHeath(player.getHealth());
+                commandKnown = false;
             }
 
             //if command is not known
@@ -94,6 +106,6 @@ public class App {
                 System.out.println("Sorry I don't know what you wanted.");
             }
 
-        }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health > 0);
+        }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health <= 0);
     }
 }

@@ -11,7 +11,8 @@ public class UI {
         HELP("help"),
         EXIT("exit"),
         INVENTORY("inventory"),
-        CLEAR("clear");
+        CLEAR("clear"),
+        HEALTH("health");
 
         private String strCommand;
 
@@ -57,38 +58,61 @@ public class UI {
     }
 
     public static void move(String command, Player player, Floor floor1, int floorSize){
+
         if (command.equals("N") || command.equals("n")) {
-            if (player.getYCoord() < floorSize && player.getYCoord() >= 0) {
+            if (player.getYCoord() < floorSize - 1 && player.getYCoord() >= 0) {
                 player.setYCoord(player.getYCoord() + 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+               System.out.println("You walked north");
             }else{
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
         }
         if (command.equals("S") || command.equals("s")) {
-            if (player.getYCoord() <= floorSize && player.getYCoord() > 0) {
+            if (player.getYCoord() < floorSize - 1 && player.getYCoord() > 0) {
                 player.setYCoord(player.getYCoord() - 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+               System.out.println("You walked south");
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
         }
         if (command.equals("E") || command.equals("e")) {
-            if (player.getXCoord() <= floorSize && player.getXCoord() > 0) {
+            if (player.getXCoord() < floorSize - 1 && player.getXCoord() > 0) {
                 player.setXCoord(player.getXCoord() - 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+               System.out.println("You walked east");
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
         }
         if (command.equals("W") || command.equals("w")) {
-            if (player.getXCoord() <= floorSize && player.getXCoord() >= 0) {
+            if (player.getXCoord() < floorSize - 1 && player.getXCoord() >= 0) {
                 player.setXCoord(player.getXCoord() + 1);
                 //System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
+                System.out.println("You walked west");
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
             
         }
+    }
+
+    public static void displayHeath(int health){
+       System.out.print("[");
+       for (int i = 0; i<health; i++){
+           System.out.print("-");
+       }
+       System.out.println("]: " + health);
+    }
+
+    public static void displayOpening(){
+        System.out.println("  _____          _   _         _____                                      __      _ _ ");
+        System.out.println(" / ____|        | | | |       / ____|                                    / _|    | | |");
+        System.out.println("| |     __ _ ___| |_| | ___  | (___  _   _ _ __ ___  _ __ ___   ___ _ __| |_ __ _| | |");
+        System.out.println("| |    / _` / __| __| |/ _ \\  \\___ \\| | | | '_ ` _ \\| '_ ` _ \\ / _ \\ '__|  _/ _` | | |");
+        System.out.println("| |___| (_| \\__ \\ |_| |  __/  ____) | |_| | | | | | | | | | | |  __/ |  | || (_| | | |");
+        System.out.println(" \\_____\\__,_|___/\\__|_|\\___| |_____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|  |_| \\__,_|_|_|");
+
     }
 }
