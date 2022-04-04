@@ -25,9 +25,9 @@ public class Actor {
     public Actor() {
     }
 
-    public Actor(int xCoord, int yCoord, int health, int AC, int speed, int mana, int strength, int dexterity,
+    public Actor(int xCoord, int yCoord, int AC, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
-            int noise, int carryWeight, int sheild, String name) {
+            int noise, int sheild, String name) {
 
         setStrength(strength);
         setDexterity(dexterity);

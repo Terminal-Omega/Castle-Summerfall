@@ -9,12 +9,12 @@ public class NPC extends Actor {
 
     }
 
-    public NPC(int xCoord, int yCoord, int health, int AC, int speed, int mana, int strength, int dexterity,
+    public NPC(int xCoord, int yCoord, int AC, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
-            int noise, int carryWeight, int shield, String name, String npcAllience, String description) {
-        super(xCoord, yCoord, health, AC, speed, mana, strength, dexterity, constitution, intelligence, wisdom,
+            int noise, int shield, String name, String npcAllience, String description) {
+        super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom,
                 charisma, noise,
-                carryWeight, shield, name);
+                shield, name);
     }
 
     public NPC(String allience) {
