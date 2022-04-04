@@ -18,7 +18,7 @@ public class Actor {
     protected int carryWeight;
     protected ArrayList<String> effects;
     protected String name;
-    protected ArrayList<String> inventory = new ArrayList<String>();
+    protected ArrayList<Interactable> inventory = new ArrayList<Interactable>();
     protected int shield;
     protected Random rand = new Random();
 
@@ -110,7 +110,7 @@ public class Actor {
     }
 
     public void setInventory() {
-        inventory = new ArrayList<String>();
+        inventory = new ArrayList<Interactable>();
 
     }
 
@@ -178,7 +178,7 @@ public class Actor {
         return name;
     }
 
-    public ArrayList<String> getInventory() {
+    public ArrayList<Interactable> getInventory() {
         return inventory;
     }
 
@@ -187,7 +187,7 @@ public class Actor {
     }
 
     public void putItem(Interactable interactable){
-        inventory.add(interactable.getName());
+        inventory.add(interactable);
     }
 
     public void takeDamage(int damage, String name, int AC) {
@@ -236,7 +236,7 @@ public class Actor {
         xCoord++;
     }
 
-    public ArrayList<String> search() {
+    public ArrayList<Interactable> search() {
         return inventory; // To be replaced when we have the variable for the items in the room
     }
 

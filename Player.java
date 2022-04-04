@@ -10,15 +10,15 @@ public class Player extends Actor {
 
     public void putItem(Interactable interactable) {
         if (inventory.size() < 5){
-            inventory.add(interactable.getName());
+            inventory.add(interactable);
         }else{
             System.out.println("Your bag feels to heavy. You can't add any more.");
         }
     }
 
     public void dropItem(Interactable interactable){
-        for (String inter : inventory){
-            if (interactable.getName().equals(inter)){
+        for (Interactable inter : inventory){
+            if (inter.getName().equals(interactable.getName())){
                 inventory.remove(inter);
             }
         }

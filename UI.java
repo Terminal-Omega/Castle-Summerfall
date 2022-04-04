@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class UI {
     enum Commands {
         INSPECT("inspect"),
@@ -50,10 +52,12 @@ public class UI {
             System.out.println("    This will exit the game\n    Use: exit");
         } else if (command.equals(Commands.MOVE.getStrCommand())) {
             System.out.println("    This will move your character in a direction if possible\n    Directions (North, north, N, n) / (South, south, S, s) etc..\n    Use: move (direction)");
-        } else if (command.equals(Commands.DROP.getStrCommand())) {
-            System.out.println("    This will drop and item from your inventory\n    Use: drop (item)");
         } else if (command.equals(Commands.ATTACK.getStrCommand())) {
             System.out.println("    This will attack an Actor in the room with a spesificed weapon in your inventory\n    Use: attack (Actor) with (weapon)");
+        } else if (command.equals(Commands.CLEAR.getStrCommand())) {
+            System.out.println("    This will clear the output of the console and bring your cursor to the top\n    Use: clear)");
+        } else if (command.equals(Commands.HEALTH.getStrCommand())) {
+            System.out.println("    This will display your health in a status bar\n    Use: health");
         }
     }
 
@@ -79,7 +83,7 @@ public class UI {
         }
         if (command.equals("E") || command.equals("e")) {
             if (player.getXCoord() < floorSize - 1 && player.getXCoord() > 0) {
-                player.setXCoord(player.getXCoord() - 1);
+                player.setXCoord(player.getXCoord() + 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
                System.out.println("You walked east");
             } else {
@@ -88,7 +92,7 @@ public class UI {
         }
         if (command.equals("W") || command.equals("w")) {
             if (player.getXCoord() < floorSize - 1 && player.getXCoord() >= 0) {
-                player.setXCoord(player.getXCoord() + 1);
+                player.setXCoord(player.getXCoord() - 1);
                 //System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
                 System.out.println("You walked west");
             } else {
@@ -99,11 +103,24 @@ public class UI {
     }
 
     public static void displayHeath(int health){
-       System.out.print("[");
+       System.out.print("Health: [");
        for (int i = 0; i<health; i++){
            System.out.print("-");
        }
        System.out.println("]: " + health);
+    }
+
+    public static void displayInventory(ArrayList<Interactable> inventory, int health){
+        String inventoryOutput = "";
+        for (Interactable name : inventory) {
+            inventoryOutput += name.getName() + ", ";
+        }
+        if (inventoryOutput.equals("")) {
+            System.out.println("You don't have anything on you");
+        } else {
+            System.out.println(inventoryOutput);
+        }
+        displayHeath(health);
     }
 
     public static void displayOpening(){

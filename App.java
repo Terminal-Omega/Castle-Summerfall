@@ -63,22 +63,16 @@ public class App {
 
             //inspect command
             if (inspectMatch.find()){
-                String name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
+                String name = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                .getItem(inspectMatch.group(1), 0)
+                .getDescription();
                 System.out.println(name);
                 commandKnown = false;
             }
 
             //inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
-                String inventory = "";
-                for (String name : player.getInventory()){
-                    inventory += name + ", ";
-                }
-                if (inventory.equals("")){
-                    System.out.println("You don't have anything on you");
-                }else{
-                    System.out.println(inventory);
-                }
+                UI.displayInventory(player.getInventory(), player.getHealth());
                 commandKnown = false;
             }
 
