@@ -109,4 +109,8 @@ public class Room {
     public Interactable takeItem(String name){
         return takeItem(name, 0);
     }
+
+    public void addItem(Interactable item){
+        interactables.add(item);
+    }
 }

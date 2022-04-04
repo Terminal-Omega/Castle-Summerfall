@@ -91,7 +91,11 @@ public class Interactable {
         }
     }
 
-    public Interactable takeitem(String name){
+    public Interactable takeItem(String name){
         return takeItem(name, 0);
+    }
+
+    public void addItem(Interactable item){
+        inventory.add(item);
     }
 }
