@@ -16,8 +16,9 @@ public class Door {
         setLocked(locked);
     }
 
-    public void open() {
+    public String open() {
         open = true;
+        return "You open the Door";
     }
 
     public void close() {
