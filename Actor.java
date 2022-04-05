@@ -10,6 +10,8 @@ public class Actor {
     protected int mana;
     protected int strength;
     protected int dexterity;
+    protected int ballisticSkill;
+    protected int weaponSkill;
     protected int constitution;
     protected int intelligence;
     protected int wisdom;
@@ -18,7 +20,7 @@ public class Actor {
     protected int carryWeight;
     protected ArrayList<String> effects;
     protected String name;
-    protected ArrayList<Interactable> inventory = new ArrayList<Interactable>();
+    protected ArrayList<Interactable> inventory;
     protected int shield;
     protected Random rand = new Random();
 
@@ -28,7 +30,6 @@ public class Actor {
     public Actor(int xCoord, int yCoord, int AC, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
             int noise, int sheild, String name) {
-
         setStrength(strength);
         setDexterity(dexterity);
         setConstitution(constitution);
@@ -46,7 +47,7 @@ public class Actor {
         setShield(sheild);
         setHealth();
         setName(name);
-
+        inventory = new ArrayList<Interactable>();
     }
 
     public void setXCoord(int xCoord) {
@@ -118,6 +119,14 @@ public class Actor {
         this.shield = sheild;
     }
 
+    public void setBallisticSkill() {
+        ballisticSkill = intelligence * 2;
+    }
+
+    public void setWweaponSkill() {
+        weaponSkill = dexterity * 2;
+    }
+
     public int getXCoord() {
         return xCoord;
     }
@@ -186,24 +195,42 @@ public class Actor {
         return shield;
     }
 
-    public void putItem(Interactable interactable){
+    public int getBallisticSkill() {
+        return ballisticSkill;
+    }
+
+    public int getWeaponSkill() {
+        return weaponSkill;
+    }
+
+    public void putItem(Interactable interactable) {
         inventory.add(interactable);
     }
 
-    public void takeDamage(int damage, String name, int AC) {
-        int finalDamage = damage - AC;
+    public void takeDamagePlayer(int damage, Player player) {
+        int finalDamage = damage - player.AC;
         if (finalDamage < 0) {
+            System.out.print("Your armour protected you. you take 0 damage");
             finalDamage = 0;
         }
-        health -= finalDamage;
-        System.out.printf("%d damage%n", damage);
-        if (health <= 0) {
-            if (name == "player") {
-                System.out.println("You have been killed");
-            } else {
-                System.out.printf("%s is defeated");
-            }
+        player.health -= finalDamage;
+        if (player.health <= 0) {
+            System.out.println("You have died");
         }
+
+    }
+
+    public void takeDamageNPC(int damage, NPC target) {
+        int finalDamage = damage - target.AC;
+        if (finalDamage < 0) {
+            System.out.print("The Attack failed to harm the target");
+            finalDamage = 0;
+        }
+        target.health -= finalDamage;
+        if (target.health <= 0) {
+            System.out.println("A NPC has been killed");
+        }
+
     }
 
     public void heal(int heal, String name) {
@@ -247,39 +274,64 @@ public class Actor {
      * make it harder to hit. If anyone reading this wants a better explination
      * speak to Xander in person because it is easier to describe that way.
      */
-    public void magic(int minDamage, int maxDamage, int targetHealth, String targetName, int BS,
-            int negativeModdifier,
-            int possitveModdifier, int targetAC) {
-        int finalDamage = rand.nextInt(minDamage, maxDamage);
+    /*
+     * public void magic(int minDamage, int maxDamage, int targetHealth, String
+     * targetName, int BS,
+     * int negativeModdifier,
+     * int possitveModdifier, int targetAC) {
+     * int finalDamage = rand.nextInt(minDamage, maxDamage);
+     * 
+     * if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
+     * takeDamagePlayer(finalDamage, targetName, targetAC);
+     * } else {
+     * System.out.println("Miss");
+     * }
+     * 
+     * }
+     */
+    /*
+     * public void ranged(int arrowCount, int damageMin, int damageMax, int
+     * targetHealth, String targetName, int BS,
+     * int negativeModdifier,
+     * int possitiveModdifier, int targetAC) {
+     * int finalDamage = rand.nextInt(damageMin, damageMax);
+     * if (arrowCount > 0) {
+     * if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= BS) {
+     * takeDamagePlayer(finalDamage, targetName, targetAC);
+     * } else {
+     * System.out.println("Miss");
+     * }
+     * }
+     * }
+     */
+    /*
+     * public void closeCombat(int damageMin, int damageMax, int targetHealth,
+     * String targetName, int WS,
+     * int negativeModdifier, int possitiveModdifier, int targetAC) {
+     * int finalDamage = rand.nextInt(damageMin, damageMax);
+     * if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= WS) {
+     * takeDamage(finalDamage, targetName, targetAC);
+     * } else {
+     * System.out.println("Miss");
+     * }
+     * }
+     */
 
-        if (rand.nextInt(100) + 1 - negativeModdifier + possitveModdifier <= BS) {
-            takeDamage(finalDamage, targetName, targetAC);
+    public void closeCombatPlayer(Player player, Weapon weapon, NPC npcTarget) {
+        if (rand.nextInt(100) + 1 <= player.getWeaponSkill()) {
+            takeDamagePlayer(weapon.damage, player);
         } else {
             System.out.println("Miss");
         }
-
     }
 
-    public void ranged(int arrowCount, int damageMin, int damageMax, int targetHealth, String targetName, int BS,
-            int negativeModdifier,
-            int possitiveModdifier, int targetAC) {
-        int finalDamage = rand.nextInt(damageMin, damageMax);
-        if (arrowCount > 0) {
-            if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= BS) {
-                takeDamage(finalDamage, targetName, targetAC);
+    public void closeCombatNPC(NPC npc, Weapon weapon, String target, Player player, NPC npcTarget) {
+        if (rand.nextInt(100) + 1 <= npc.getWeaponSkill()) {
+            if (target == "Player") {
+                takeDamagePlayer(weapon.damage, player);
             } else {
-                System.out.println("Miss");
+                takeDamageNPC(weapon.damage, npcTarget);
             }
-        }
-    }
-
-    public void closeCombat(int damageMin, int damageMax, int targetHealth, String targetName, int WS,
-            int negativeModdifier, int possitiveModdifier, int targetAC) {
-        int finalDamage = rand.nextInt(damageMin, damageMax);
-        if (rand.nextInt(100) + 1 - negativeModdifier + possitiveModdifier <= WS) {
-            takeDamage(finalDamage, targetName, targetAC);
-        } else {
-            System.out.println("Miss");
         }
     }
 

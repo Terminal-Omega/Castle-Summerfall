@@ -26,7 +26,55 @@ public class NPC extends Actor {
         npcAllience = allience;
     }
 
-    public void npcTurnNoneCombat(String doorLocation, boolean doorLocked, boolean doorBarred) {
+    public void npcTurnCheck(Player player) {
+        if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
+            npcTurnNoneCombat();
+        } else {
+            npcTurnCombat();
+        }
+    }
+
+    public void npcTurnCombat() {
+        if (npcAllience == "Enemy") {
+            enemyTurnCombat();
+        } else if (npcAllience == "Friendly") {
+            friendlyTurnCombat();
+        } else {
+            neutralTurnCombat();
+        }
+    }
+
+    public void npcTurnNoneCombat() {
+        if (npcAllience == "Enemy") {
+            enemyTurnNoneCombat();
+        } else if (npcAllience == "Friendly") {
+            friendlyTurnNoneCombat();
+        } else {
+            neutralTurnNoneCombat();
+        }
+    }
+
+    public void enemyTurnNoneCombat() {
+
+    }
+
+    public void friendlyTurnNoneCombat() {
+
+    }
+
+    public void neutralTurnNoneCombat() {
+
+    }
+
+    public void enemyTurnCombat() {
+
+    }
+
+    public void friendlyTurnCombat() {
+
+    }
+
+    public void neutralTurnCombat() {
 
     }
 
