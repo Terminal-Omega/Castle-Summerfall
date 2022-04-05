@@ -19,3 +19,6 @@ returns: Room
 
 usage: Generator.generateInteractable()  
 returns: an interactable of some sort
+
+## Interactable
+The interactable class is for storing everything in the game that is not a room, door, or actor. extensions of the interactable class include Container and Weapon.

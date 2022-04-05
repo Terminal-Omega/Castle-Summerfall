@@ -31,7 +31,7 @@ public class Room {
             break;
             case 2:
             describe.append("\n");
-            describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(0).getName()));
+            describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(1).getName()));
             break;
             default:
             describe.append("\n");
