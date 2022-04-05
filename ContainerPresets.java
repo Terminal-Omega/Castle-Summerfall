@@ -23,5 +23,7 @@ public class ContainerPresets {
         Container result = new Container("Chest", description, 5, 20, false, chestInventory, 7);
         return result;
     }
-    private static String[] chestDescriptions = {"The chest is old, nearly to the point of rotting.","The chest is oddly clean, out of place in this dark and dingy dungeon.", "It's a chest."};
+    private static String[] chestDescriptions = {"The chest is old, nearly to the point of rotting."
+                                                ,"The chest is oddly clean, out of place in this dark and dingy dungeon."
+                                                , "It's a chest."};
 }

@@ -6,6 +6,7 @@ public class Room {
     private String description;
     private Door southDoor;
     private Door eastDoor;
+    private boolean visited = false;
 
     public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
@@ -110,5 +111,13 @@ public class Room {
 
     public void addItem(Interactable item){
         interactables.add(item);
+    }
+
+    public boolean isVisited(){
+        return visited;
+    }
+
+    public void visit(){
+        visited = true;
     }
 }
