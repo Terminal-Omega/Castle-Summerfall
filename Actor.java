@@ -223,12 +223,19 @@ public class Actor {
 
     }
 
-    public void closeCombat(Weapon weapon, Actor target) {
+    public void damageNoAC(int damage) {
+        health -= damage;
+        if (health < -0) {
+            System.out.print("Dead");
+        }
+    }
+
+    public boolean closeCombat(Weapon weapon, Actor target) {
         if (rand.nextInt(100) + 1 <= weaponSkill) {
             target.takeDamage(weapon.damage);
-        } else {
-            System.out.print("miss");
+            return true;
         }
+        return false;
     }
 
     public void cast(int castorMana, String type, int spellMana, String spellName) {
