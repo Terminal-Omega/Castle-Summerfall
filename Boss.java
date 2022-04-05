@@ -1,4 +1,4 @@
 /// 
-public class Boss extends Enemy {
+public class Boss extends NPC {
 
 }
