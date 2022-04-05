@@ -82,7 +82,7 @@ public class UI {
             }
         }
         if (command.equals("E") || command.equals("e")) {
-            if (player.getXCoord() < floorSize - 1 && player.getXCoord() > 0) {
+            if (player.getXCoord() < floorSize - 1 && player.getXCoord() >= 0) {
                 player.setXCoord(player.getXCoord() + 1);
                // System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
                System.out.println("You walked east");
@@ -91,7 +91,7 @@ public class UI {
             }
         }
         if (command.equals("W") || command.equals("w")) {
-            if (player.getXCoord() < floorSize - 1 && player.getXCoord() >= 0) {
+            if (player.getXCoord() <= floorSize - 1 && player.getXCoord() > 0) {
                 player.setXCoord(player.getXCoord() - 1);
                 //System.out.println(floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescription());
                 System.out.println("You walked west");

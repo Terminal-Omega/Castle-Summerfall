@@ -80,10 +80,11 @@ public class App {
             //take command
             if (takeMatch.find()){
                 Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
-                    if (interactable.getDescription().equals("There is no such thing in the room")){
-                        System.out.println(interactable.getDescription());
-                    }else{
+                    if (interactable != null){
+                        player.putItem(interactable);
                         System.out.println("taken");
+                    }else{
+                        System.out.println("There is no such thing in the room");
                     }
                 commandKnown = false;
             }

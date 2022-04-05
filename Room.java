@@ -6,12 +6,16 @@ public class Room {
     private String description;
     private Door southDoor;
     private Door eastDoor;
+    private boolean visited;
+    private ArrayList<String> bookmarks;
 
     public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
+        bookmarks = new ArrayList<>();
+        visited = false;
     }
 
     public Room(int seed){
@@ -31,7 +35,7 @@ public class Room {
             break;
             case 2:
             describe.append("\n");
-            describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(0).getName()));
+            describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(1).getName()));
             break;
             default:
             describe.append("\n");
@@ -110,5 +114,25 @@ public class Room {
 
     public void addItem(Interactable item){
         interactables.add(item);
+    }
+
+    public boolean isVisited(){
+        return visited;
+    }
+
+    public void visit(){
+        visited = true;
+    }
+
+    public void addBookmark(String bookmark){
+        bookmarks.add(bookmark);
+    }
+
+    public String[] getBookmarks(){
+        String[] result = new String[bookmarks.size()];
+        for(int i = 0;i<bookmarks.size();i++){
+            result[i] = bookmarks.get(i);
+        }
+        return result;
     }
 }

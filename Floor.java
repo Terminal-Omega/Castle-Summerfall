@@ -115,4 +115,12 @@ public class Floor {
         builder.append(".");
         return builder.toString();
     }
+
+    public int getXSize(){
+        return rooms.size();
+    }
+
+    public int getYSize(){
+        return rooms.get(0).size();
+    }
 }
