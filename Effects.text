@@ -9,13 +9,14 @@
  invisibility, harder to hit in CC and can not see via visual inspections but can still be heard
  muffle, can not be heard from a distance but can be seen
  
- Format:
+ Format for an ability:
  (Type:Target:Duration:Effect)
 
  Types:
  Active
  Passive
  Triggered(trigger here)
+ Hidden: this is added to another type to indicate not to show it to the player when the player looks at the effects that are on something
 
  Targets:
  Self
@@ -33,12 +34,15 @@
  Heal(Range)
  Damage(Quantity)
  Damage(Range)
+ DamageNoAC(Quantity)
+ DamageNoAC(Range)
  Reduce(Attribute, Quantity)
  Increase(Attribute, Quantity)
+ Any of the effects above, which translate to a passive ability
 
  Triggers:
  onDamage:inflictor
  onAction(Action)
  
  Bleed(duration):(passive:self:duration:damage(3))
- 
+
