@@ -6,14 +6,30 @@ public class effect {
     public static void applyEffect(String effect, Actor target){
         Random rand = new Random();
 
-        Pattern damage = Pattern.compile("damage ([0-9]*(-([0-9]*))?)");
-
+        Pattern damage = Pattern.compile("damage\\(([0-9]*(-([0-9]*))?)\\)");
+        Pattern heal = Pattern.compile("heal\\(([0-9]*(-([0-9]*))?)\\)");
 
         Matcher damageMatcher = damage.matcher(effect);
         if(damageMatcher.find()){
+            int damageAmount;
             if(damageMatcher.group(3)!=""){
-                int damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(1)));
+                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) + Integer.parseInt(damageMatcher.group(1));
+                // TODO: @Corbanator make this work once Xander pushes  the thing
+            } else{
+                damageAmount = Integer.parseInt(damageMatcher.group(1));
             }
+        }
+
+        Matcher healMatcher = heal.matcher(effect);
+        if(damageMatcher.find()){
+            int healAmount;
+            if(damageMatcher.group(3)!=""){
+                healAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) + Integer.parseInt(damageMatcher.group(1));
+                // TODO: @Corbanator make this work once Xander pushes  the thing
+            } else{
+                healAmount = Integer.parseInt(damageMatcher.group(1));
+            }
+            target.heal(healAmount);
         }
 
 
