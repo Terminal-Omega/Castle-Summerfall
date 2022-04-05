@@ -1,12 +1,44 @@
 
- blead: stackable damage but small amount
- fire, none stackable but high damge
+ bleed, stackable damage but small amount
+ fire, non-stackable but high damge
  healing, single turn heal
  healing long, multiturn heal
  slow, reduce speed
  weakness, reduce damage
  strength, increase damge
  invisibility, harder to hit in CC and can not see via visual inspections but can still be heard
- muffle, can not be heard from a distance but can not be seen
+ muffle, can not be heard from a distance but can be seen
  
+ Format:
+ (Type:Target:Duration:Effect)
+
+ Types:
+ Active
+ Passive
+ Triggered(trigger here)
+
+ Targets:
+ Self
+ Enemy(range)
+ Enemies(range)
+ Enemies(range, quantity)
+
+ Duration:
+ (number of turns)
+ trigger for it to end
+ permanent
+
+ Effects:
+ Heal(Quantity)
+ Heal(Range)
+ Damage(Quantity)
+ Damage(Range)
+ Reduce(Attribute, Quantity)
+ Increase(Attribute, Quantity)
+
+ Triggers:
+ onDamage:inflictor
+ onAction(Action)
+ 
+ Bleed(duration):(passive:self:duration:damage(3))
  
