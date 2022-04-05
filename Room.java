@@ -135,4 +135,12 @@ public class Room {
         }
         return result;
     }
+
+    public void removeBookmarks(String toRemove){
+        bookmarks.remove(toRemove);
+    }
+
+    public void removeAllBookmarks(String toRemove){
+        while(bookmarks.remove(toRemove)){}
+    }
 }
