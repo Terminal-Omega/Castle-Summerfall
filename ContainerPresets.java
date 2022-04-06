@@ -7,6 +7,8 @@ public class ContainerPresets {
         switch (rand.nextInt(1)) {
             case 0:
                 return chest(valueFactor);
+            case 1: 
+                return crate(valueFactor);
             default:
                 return null;
         }
