@@ -123,4 +123,8 @@ public class Floor {
     public int getYSize(){
         return rooms.get(0).size();
     }
+
+    public ArrayList<NPC> getNPCs(){
+        return NPCS;
+    }
 }
