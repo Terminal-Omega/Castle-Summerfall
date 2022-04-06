@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.lang.Integer;
-public class effect {
+public class Updates {
     public static void applyEffect(String effect, Actor target){
         Random rand = new Random();
 
@@ -33,5 +33,19 @@ public class effect {
         }
 
 
+    }
+
+    public static void doPassives(Actor actor){
+
+    }
+
+    public static void update(Player player, Floor floor){
+        doPassives(player);
+        // TODO: @Corbanator implement noise and LOS
+        for(NPC npc : floor.getNPCs()){
+            doPassives(npc);
+            // TODO: @Corbanator call NPC AI once it exists
+            // TODO: @Corbanator notify player if NPC enters the room
+        }
     }
 }
