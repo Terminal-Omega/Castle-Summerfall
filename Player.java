@@ -1,3 +1,4 @@
+import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
 
@@ -6,6 +7,7 @@ public class Player extends Actor {
         this.setXCoord(x);
         this.setConstitution(constituion);
         this.setHealth();
+        this.setInventory();
     }
 
     public void putItem(Interactable interactable) {
@@ -16,14 +18,16 @@ public class Player extends Actor {
         }
     }
 
-    public Interactable dropItem(Interactable interactable){
-        Interactable returnCrap = new Interactable();
-        for (Interactable inter : inventory){
-            if (inter.getName().equals(interactable.getName())){
-                returnCrap = inter;
-                inventory.remove(inter);
+    public Interactable dropItem(String interactable){
+        Interactable returnInter = new Interactable(true);
+        if (inventory.size() > 0){
+            for (Interactable inter : inventory){
+                if (inter.getName().toLowerCase().equals(interactable)){
+                    returnInter = inter;
+                }
             }
         }
-        return returnCrap;
+        inventory.remove(returnInter);
+        return returnInter;
     }
 }

@@ -77,7 +77,7 @@ public class Room {
         if(latestIndex !=-1){
             return interactables.get(latestIndex);
         } else{
-            return null;
+            return new Interactable(true);
         }
     }
 
@@ -104,7 +104,7 @@ public class Room {
             interactables.remove(latestIndex);
             return result;
         } else{
-            return null;
+            return new Interactable(true);
         }
     }
 

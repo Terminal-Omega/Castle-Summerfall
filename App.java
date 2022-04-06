@@ -10,11 +10,12 @@ public class App {
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
-        final int FLOORSIZE = 5;
+        final int FLOORSIZE = 9;
         Pattern helpPat = Pattern.compile("help ([a-z].*)");
         Pattern movePat = Pattern.compile("move ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("inspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
         Pattern takePat = Pattern.compile("take ([A-Za-z].*)");
+        Pattern dropPat = Pattern.compile("drop ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5);
 
@@ -25,6 +26,8 @@ public class App {
             Matcher moveMatch = movePat.matcher(inputCommand);
             Matcher inspectMatch = inspectPat.matcher(inputCommand);
             Matcher takeMatch = takePat.matcher(inputCommand);
+            Matcher dropMatch = dropPat.matcher(inputCommand);
+
             boolean commandKnown = true;
 
             if (inputCommand.equals("help")){
@@ -80,7 +83,7 @@ public class App {
             //take command
             if (takeMatch.find()){
                 Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
-                    if (interactable != null){
+                    if (!interactable.isNull()){
                         player.putItem(interactable);
                         System.out.println("taken");
                     }else{
@@ -94,10 +97,25 @@ public class App {
             // }
 
             //drop command
+            if (dropMatch.find()){
+                Interactable item = player.dropItem(dropMatch.group(1));
+                if (item.isNull()){
+                    System.out.println("I can't find that item");
+                }else{
+                    floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
+                    System.out.println("dropped");
+                }
+                commandKnown = false;
+            }
 
             //health command
             if (inputCommand.equals(UI.Commands.HEALTH.getStrCommand())){
                 UI.displayHeath(player.getHealth());
+                commandKnown = false;
+            }
+
+            if (inputCommand.equals("map")){
+                UI.displayMap(floor1.getXSize(), floor1.getYSize(), player);
                 commandKnown = false;
             }
 
