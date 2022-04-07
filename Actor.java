@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class Actor {
     protected int xCoord;
     protected int yCoord;
-    protected int maxHealth;
     protected int health;
     protected int AC;
     protected int speed;
@@ -30,7 +29,7 @@ public class Actor {
 
     public Actor(int xCoord, int yCoord, int AC, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
-            int noise, int sheild, String name, int health) {
+            int noise, int sheild, String name) {
         setStrength(strength);
         setDexterity(dexterity);
         setConstitution(constitution);

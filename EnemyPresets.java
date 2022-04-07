@@ -63,9 +63,8 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a zombie.";
-        int health = 20;
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
-                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description, health);
+                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
         return result;
     }
 
@@ -82,9 +81,8 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a Skeleton.";
-        int health = 20;
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
-                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description, health);
+                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
         return result;
 
     }
@@ -102,9 +100,8 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a Goblin.";
-        int health = 20;
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
-                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description, health);
+                intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
         return result;
 
     }
