@@ -9,7 +9,7 @@ public class NPC extends Actor {
     protected boolean playerDetected;
     protected boolean playerSeen;
     protected boolean playerHeard;
-    protected String playerDirection;
+    protected Direction playerDirection;
 
     public NPC() {
 
