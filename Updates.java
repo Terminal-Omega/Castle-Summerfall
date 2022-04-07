@@ -42,8 +42,13 @@ public class Updates {
     public static void update(Player player, Floor floor){
         doPassives(player);
         // TODO: @Corbanator implement noise and LOS
-        for(NPC npc : floor.getNPCs()){
+        for(int i = 0; i<floor.getNPCs().size();i++){
+            NPC npc = floor.getNPCs().get(i);
             doPassives(npc);
+            if(npc.getHealth() <= 0){
+                floor.getNPCs().remove(i);
+                System.out.println(npc.getName() +" was killed.");
+            }
             npc.npcTurnAllience(player, floor.getXSize());
             // TODO: @Corbanator call NPC AI once it exists
             // TODO: @Corbanator notify player if NPC enters the room
