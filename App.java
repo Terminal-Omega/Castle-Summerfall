@@ -85,9 +85,14 @@ public class App {
                     System.out.println("You don't have any time left");
                 } else {
                     speed -= 3;
-                    String name = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                            .getItem(inspectMatch.group(1), 0).getDescription();
-                    System.out.println(name);
+                    String name;
+                    try {
+                        name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
+                        System.out.println(name);
+                    } catch (ThingNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        System.out.println(e.getMessage());
+                    }
                 }
                 
                 commandKnown = false;
@@ -111,9 +116,9 @@ public class App {
                     System.out.println("You don't have any time left");
                 } else {
                     speed -= 4;
-                    Interactable interactable;
                     try {
-                        interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
+                        Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
+                        player.putItem(interactable);
                     } catch (ThingNotFoundException e) {
                         System.out.println(e.getMessage());;
                     }
@@ -132,7 +137,7 @@ public class App {
                         Interactable item = player.dropItem(dropMatch.group(1), 0);
                         floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
                         System.out.println("dropped");
-                    } catch (ThingNotFoundException e){
+                    } catch (ThingNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
                     
