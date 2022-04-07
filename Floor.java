@@ -127,4 +127,13 @@ public class Floor {
     public ArrayList<NPC> getNPCs(){
         return NPCS;
     }
+
+    public NPC getNPC(String name, int index) throws ThingNotFoundException{
+        for(NPC npc : NPCS){
+            if(npc.getName().toLowerCase().equals(name.toLowerCase())){
+                return npc;
+            }
+        }
+        throw new ThingNotFoundException("Enemy not found.");
+    }
 }
