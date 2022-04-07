@@ -85,7 +85,7 @@ public class Room {
         return getItem(name,0);
     }
 
-    public Interactable takeItem(String name, int index){
+    public Interactable takeItem(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = -1;
         for(int i = 0;i<interactables.size();i++){
@@ -104,11 +104,11 @@ public class Room {
             interactables.remove(latestIndex);
             return result;
         } else{
-            return new Interactable(true);
+            throw new ThingNotFoundException("Item not Found");
         }
     }
 
-    public Interactable takeItem(String name){
+    public Interactable takeItem(String name) throws ThingNotFoundException{
         return takeItem(name, 0);
     }
 

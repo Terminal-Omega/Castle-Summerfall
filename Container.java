@@ -53,7 +53,7 @@ public class Container extends Interactable {
         return getItem(name, 0);
     }
     
-    public Interactable takeItem(String name, int index){
+    public Interactable takeItem(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = 0;
         for(int i = 0;i<inventory.size();i++){
@@ -72,11 +72,11 @@ public class Container extends Interactable {
             inventory.remove(latestIndex);
             return result;
         } else{
-            return null;
+            throw new ThingNotFoundException("Item not found.");
         }
     }
 
-    public Interactable takeItem(String name){
+    public Interactable takeItem(String name) throws ThingNotFoundException{
         return takeItem(name, 0);
     }
 
