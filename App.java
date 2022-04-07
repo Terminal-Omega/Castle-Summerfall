@@ -11,13 +11,16 @@ public class App {
         Scanner input = new Scanner(System.in);
         String inputCommand;
         final int FLOORSIZE = 9;
-        Pattern helpPat = Pattern.compile("help ([a-z].*)");
-        Pattern movePat = Pattern.compile("move ([N|n|S|s|W|w|E|e])");
-        Pattern inspectPat = Pattern.compile("inspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
-        Pattern takePat = Pattern.compile("take ([A-Za-z].*)");
-        Pattern dropPat = Pattern.compile("drop ([A-Za-z].*)");
+        Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
+        Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
+        Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
+        Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
+        Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
+        Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player(0, 0, 5);
+        Player player = new Player(0, 0, 5, 15);
+        int speed = player.getSpeed();
+        boolean endTurn = false;
 
         do{
             System.out.print("> ");
@@ -27,6 +30,7 @@ public class App {
             Matcher inspectMatch = inspectPat.matcher(inputCommand);
             Matcher takeMatch = takePat.matcher(inputCommand);
             Matcher dropMatch = dropPat.matcher(inputCommand);
+            Matcher attackMatch = attackPat.matcher(inputCommand);
 
             boolean commandKnown = true;
 
@@ -42,8 +46,13 @@ public class App {
             }
             //Move command
             if (moveMatch.find()){
-                UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
                 commandKnown = false;
+                if (speed - 5 <= 0){
+                    System.out.println("You don't have any time left");
+                }else{
+                    speed -= 5;
+                    UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
+                }
             }
 
             //clear command
@@ -55,8 +64,13 @@ public class App {
 
             //look around command
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())){
-               System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord())); // Hey Thomas, just replaced the getDescription with the new one in floor so that it picks up enemies too. Otherwise, it works the exact same.
                commandKnown = false;
+               if (speed - 2 <= 0) {
+                   System.out.println("You don't have any time left");
+               } else {
+                   speed -= 2;
+                   System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+               }
             }
 
             //where TODO: remove this for final draft @yomas000
@@ -67,44 +81,63 @@ public class App {
 
             //inspect command
             if (inspectMatch.find()){
-                String name = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                .getItem(inspectMatch.group(1), 0)
-                .getDescription();
-                System.out.println(name);
+                if (speed - 3 <= 0) {
+                    System.out.println("You don't have any time left");
+                } else {
+                    speed -= 3;
+                    String name = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                            .getItem(inspectMatch.group(1), 0).getDescription();
+                    System.out.println(name);
+                }
+                
                 commandKnown = false;
             }
 
             //inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
-                UI.displayInventory(player.getInventory(), player.getHealth());
+                if (speed - 3 <= 0) {
+                    System.out.println("You don't have any time left");
+                } else {
+                    speed -= 3;
+                    UI.displayInventory(player.getInventory(), player.getHealth());
+                }
+                
                 commandKnown = false;
             }
 
             //take command
             if (takeMatch.find()){
-                Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
-                    if (!interactable.isNull()){
-                        player.putItem(interactable);
-                        System.out.println("taken");
-                    }else{
-                        System.out.println("There is no such thing in the room");
+                if (speed - 4 <= 0) {
+                    System.out.println("You don't have any time left");
+                } else {
+                    speed -= 4;
+                    Interactable interactable;
+                    try {
+                        interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
+                    } catch (ThingNotFoundException e) {
+                        System.out.println(e.getMessage());;
                     }
+                }
+                
                 commandKnown = false;
             }
 
-            // if (inputCommand.equals("damage")){
-            //     player.takeDamage(2, "player", 3);
-            // }
-
             //drop command
             if (dropMatch.find()){
-                Interactable item = player.dropItem(dropMatch.group(1));
-                if (item.isNull()){
-                    System.out.println("I can't find that item");
-                }else{
-                    floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
-                    System.out.println("dropped");
+                if (speed - 3 <= 0) {
+                    System.out.println("You don't have any time left");
+                } else {
+                    speed -= 3;
+                    try {
+                        Interactable item = player.dropItem(dropMatch.group(1), 0);
+                        floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
+                        System.out.println("dropped");
+                    } catch (ThingNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
+                    
                 }
+                
                 commandKnown = false;
             }
 
@@ -114,8 +147,29 @@ public class App {
                 commandKnown = false;
             }
 
+            //TODO: remove unlimited command for final draft @yomas000
             if (inputCommand.equals("map")){
                 UI.displayMap(floor1.getXSize(), floor1.getYSize(), player);
+                commandKnown = false;
+            }
+
+            //attack command
+            if (attackMatch.find()){
+                String actorString = attackMatch.group(1);
+                String weaponString = attackMatch.group(2);
+
+                if (player.isInInventory(weaponString)){
+                        try {
+                            Weapon weapon = (Weapon) player.getItem(weaponString, 0);
+                            floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                        } catch (ThingNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    //player.closeCombat(weapon, actorString);
+
+                }else{
+                    System.out.println("You don't have that in your inventory, so you attack with your hands");
+                }
                 commandKnown = false;
             }
 

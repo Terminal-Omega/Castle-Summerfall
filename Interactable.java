@@ -5,7 +5,6 @@ public class Interactable {
     protected boolean canBePickedUp;
     protected String name;
     protected String description;
-    protected boolean isNull;
 
     //Constructors
     public Interactable(String name, String description, int size, int weight, boolean canBePickedUp){
@@ -18,18 +17,10 @@ public class Interactable {
 
     public Interactable(){};
 
-    public Interactable(boolean isNull){
-        this.isNull = isNull;
-    }
-
 
     //Methods
     public String getName(){
         return name;
-    }
-
-    public boolean isNull(){
-        return isNull;
     }
 
     public String getDescription(){
