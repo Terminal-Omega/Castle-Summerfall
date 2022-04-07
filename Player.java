@@ -9,6 +9,7 @@ public class Player extends Actor {
         this.setHealth();
         this.setInventory();
         this.setSpeed(speed);
+        this.setWweaponSkill();
     }
 
     public void putItem(Interactable interactable) {
@@ -43,7 +44,7 @@ public class Player extends Actor {
         }
     }
 
-    public Interactable getItem(String interactable, int index){
+    public Interactable getItem(String name, int index){
         int timesFound = -1;
         int latestIndex = 0;
         for (int i = 0; i < inventory.size(); i++) {

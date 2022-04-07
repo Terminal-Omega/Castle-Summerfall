@@ -49,6 +49,7 @@ public class App {
                 commandKnown = false;
                 if (speed - 5 <= 0){
                     System.out.println("You don't have any time left");
+                    endTurn = true;
                 }else{
                     speed -= 5;
                     UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
@@ -67,6 +68,7 @@ public class App {
                commandKnown = false;
                if (speed - 2 <= 0) {
                    System.out.println("You don't have any time left");
+                   endTurn = true;
                } else {
                    speed -= 2;
                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
@@ -83,6 +85,7 @@ public class App {
             if (inspectMatch.find()){
                 if (speed - 3 <= 0) {
                     System.out.println("You don't have any time left");
+                    endTurn = true;
                 } else {
                     speed -= 3;
                     String name;
@@ -102,6 +105,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
                 if (speed - 3 <= 0) {
                     System.out.println("You don't have any time left");
+                    endTurn = true;
                 } else {
                     speed -= 3;
                     UI.displayInventory(player.getInventory(), player.getHealth());
@@ -114,6 +118,7 @@ public class App {
             if (takeMatch.find()){
                 if (speed - 4 <= 0) {
                     System.out.println("You don't have any time left");
+                    endTurn = true;
                 } else {
                     speed -= 4;
                     try {
@@ -131,6 +136,7 @@ public class App {
             if (dropMatch.find()){
                 if (speed - 3 <= 0) {
                     System.out.println("You don't have any time left");
+                    endTurn = true;
                 } else {
                     speed -= 3;
                     try {
@@ -166,21 +172,32 @@ public class App {
                 if (player.isInInventory(weaponString)){
                         try {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
-                            floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                            NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                            player.closeCombat(weapon, badGuy);
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
                         }
-                    //player.closeCombat(weapon, actorString);
-
                 }else{
                     System.out.println("You don't have that in your inventory, so you attack with your hands");
                 }
                 commandKnown = false;
             }
 
+            if (inputCommand.equals("speed")){
+                System.out.println(speed);
+                commandKnown = false;
+            }
+
             //if command is not known
             if (commandKnown && inputCommand.equals("exit") == false){
                 System.out.println("Sorry I don't know what you wanted.");
+            }
+
+            //reset turn
+            if (endTurn){
+                System.out.println("Enemies do things now");
+                speed = player.getSpeed();
+                endTurn = false;
             }
 
         }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health <= 0);

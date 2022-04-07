@@ -233,6 +233,7 @@ public class Actor {
     public boolean closeCombat(Weapon weapon, Actor target) {
         if (rand.nextInt(100) + 1 <= weaponSkill) {
             target.takeDamage(weapon.damage);
+            System.out.println("x");
             return true;
         }
         return false;
