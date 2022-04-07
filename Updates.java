@@ -44,6 +44,7 @@ public class Updates {
         // TODO: @Corbanator implement noise and LOS
         for(NPC npc : floor.getNPCs()){
             doPassives(npc);
+            npc.npcTurnAllience(player, floor.getXSize());
             // TODO: @Corbanator call NPC AI once it exists
             // TODO: @Corbanator notify player if NPC enters the room
         }
