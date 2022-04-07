@@ -128,9 +128,9 @@ public class Floor {
         return NPCS;
     }
 
-    public NPC getNPC(String name, int index) throws ThingNotFoundException{
+    public NPC getNPC(String name, int xCoord, int yCoord ,int index) throws ThingNotFoundException{
         for(NPC npc : NPCS){
-            if(npc.getName().toLowerCase().equals(name.toLowerCase())){
+            if(npc.getName().toLowerCase().equals(name.toLowerCase()) && npc.getXCoord() == xCoord && npc.getYCoord() == yCoord){
                 return npc;
             }
         }
