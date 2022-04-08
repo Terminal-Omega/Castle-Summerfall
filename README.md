@@ -12,7 +12,7 @@ This game is a text-adventure-inspired roguelike video game. The gameplay takes 
 # How to install<a name="install"></a>
 
 ## Step 1: Download java (if not installed)
-1. Download Java from [HERE](https://www.oracle.com/java/technologies/downloads/#jdk18-windows/ "Here")
+1. Download Java from [HERE](https://www.oracle.com/java/technologies/downloads/ "Here")
 2. Download the file that coreesponds to your opporating system
 3. Run the downloaded file
 
