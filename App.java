@@ -17,7 +17,7 @@ public class App {
         final int FLOORSIZE = 9;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
-        Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
+        Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
@@ -51,11 +51,12 @@ public class App {
             //Move command
             if (moveMatch.find()){
                 commandKnown = false;
-                if (speed - 5 <= 0){
+                int speedCost = UI.Commands.MOVE.getSpeedCommand();
+                if (speed - speedCost <= 0){
                     System.out.println("You don't have any time left");
                     endTurn = true;
                 }else{
-                    speed -= 5;
+                    speed -= speedCost;
                     UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
                 }
             }
@@ -70,34 +71,29 @@ public class App {
             //look around command
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())){
                commandKnown = false;
-               if (speed - 2 <= 0) {
+               int speedCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
+               if (speed - speedCost <= 0) {
                    System.out.println("You don't have any time left");
                    endTurn = true;
                } else {
-                   speed -= 2;
+                   speed -= speedCost;
                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                }
             }
 
-            //where TODO: remove this for final draft @yomas000
-            if (inputCommand.equals("where")) {
-                System.out.print("x: " + player.getXCoord() + " y: " + player.getYCoord());
-                commandKnown = false;
-            }
-
             //inspect command
             if (inspectMatch.find()){
-                if (speed - 3 <= 0) {
+                int speedCost = UI.Commands.INSPECT.getSpeedCommand();
+                if (speed - speedCost <= 0) {
                     System.out.println("You don't have any time left");
                     endTurn = true;
                 } else {
-                    speed -= 3;
+                    speed -= speedCost;
                     String name;
                     try {
                         name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
                         System.out.println(name);
                     } catch (ThingNotFoundException e) {
-                        // TODO Auto-generated catch block
                         System.out.println(e.getMessage());
                     }
                 }
@@ -107,11 +103,12 @@ public class App {
 
             //inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
-                if (speed - 3 <= 0) {
+                int speedCost = UI.Commands.INVENTORY.getSpeedCommand();
+                if (speed - speedCost <= 0) {
                     System.out.println("You don't have any time left");
                     endTurn = true;
                 } else {
-                    speed -= 3;
+                    speed -= speedCost;
                     UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth());
                 }
                 
@@ -120,11 +117,12 @@ public class App {
 
             //take command
             if (takeMatch.find()){
-                if (speed - 4 <= 0) {
+                int speedCost = UI.Commands.TAKE.getSpeedCommand();
+                if (speed - speedCost < 0) {
                     System.out.println("You don't have any time left");
                     endTurn = true;
                 } else {
-                    speed -= 4;
+                    speed -= speedCost;
                     try {
                         Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord()).takeItem(takeMatch.group(1));
                         player.putItem(interactable);
@@ -138,11 +136,12 @@ public class App {
 
             //drop command
             if (dropMatch.find()){
-                if (speed - 3 <= 0) {
+                int speedCost = UI.Commands.DROP.getSpeedCommand();
+                if (speed - speedCost <= 0) {
                     System.out.println("You don't have any time left");
                     endTurn = true;
                 } else {
-                    speed -= 3;
+                    speed -= speedCost;
                     try {
                         Interactable item = player.dropItem(dropMatch.group(1), 0);
                         floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
@@ -172,22 +171,27 @@ public class App {
             if (attackMatch.find()){
                 String actorString = attackMatch.group(1);
                 String weaponString = attackMatch.group(2);
-
-                if (player.isInInventory(weaponString)){
-                        try {
-                            Weapon weapon = (Weapon) player.getItem(weaponString, 0);
-                            NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
-                            if (player.closeCombat(weapon, badGuy)){
-                                System.out.println("Dead");
-                            }else{
-                                UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
-                            }
-                            
-                        } catch (ThingNotFoundException e) {
-                            System.out.println(e.getMessage());
-                        }
+                int speedCost = UI.Commands.ATTACK.getSpeedCommand();
+                if (speed - speedCost <= 0){
+                    System.out.println("You don't have any time left");
+                    endTurn = true;
                 }else{
-                    System.out.println("You don't have that in your inventory, so you attack with your hands");
+                    if (player.isInInventory(weaponString)){
+                            try {
+                                Weapon weapon = (Weapon) player.getItem(weaponString, 0);
+                                NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                                if (player.closeCombat(weapon, badGuy)){
+                                    System.out.println("Dead");
+                                }else{
+                                    UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
+                                }
+                                
+                            } catch (ThingNotFoundException e) {
+                                System.out.println(e.getMessage());
+                            }
+                    }else{
+                        System.out.println("You don't have that in your inventory, so you attack with your hands");
+                    }
                 }
                 commandKnown = false;
             }

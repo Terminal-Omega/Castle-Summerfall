@@ -2,30 +2,36 @@ import java.util.ArrayList;
 
 public class UI {
     enum Commands {
-        INSPECT("inspect"),
-        TAKE("take"),
-        LOOK_AROUND("look around"),
-        DROP("drop"),
-        MOVE("move"),
-        ATTACK("attack"),
+        INSPECT("inspect", 3),
+        TAKE("take", 4),
+        LOOK_AROUND("look around", 2),
+        DROP("drop", 4),
+        MOVE("move", 5),
+        ATTACK("attack", 3), //TODO: this should maybe change
         //DRINK("drink"),
         //CAST("cast"),
-        HELP("help"),
-        EXIT("exit"),
-        INVENTORY("inventory"),
-        CLEAR("clear"),
-        USE("use"),
-        BOOKMARK("bookmark"),
-        HEALTH("health");
+        HELP("help", 0),
+        EXIT("exit", 0),
+        INVENTORY("inventory", 2),
+        CLEAR("clear", 0),
+        USE("use", 3),
+        BOOKMARK("bookmark", 0),
+        SPEED("speed", 0),
+        HEALTH("health", 0);
 
         private String strCommand;
+        private int speed;
 
-        private Commands(String command) {
+        private Commands(String command, int speed) {
             this.strCommand = command;
+            this.speed = speed;
         }
 
         public String getStrCommand() {
             return this.strCommand;
+        }
+        public int getSpeedCommand(){
+            return this.speed;
         }
         }
 
@@ -39,9 +45,9 @@ public class UI {
             System.out.println("\nThis is a text based adventure game where you fight monsters. How many floors can you decesend?\n");
             System.out.println("Commands:");
             for (Commands name : Commands.values()){
-                System.out.println("\t" + name.getStrCommand() + ",");
+                System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Speed Cost:", name.getSpeedCommand());
             }
-            System.out.println("Use help (command name) to learn about that command\n");
+            System.out.println("Use help to get back to this screen\nUse help (command name) to learn about that command\nYou can alse use (help how to play) for a description how to play\n");
         } else if (command.equals(Commands.DROP.getStrCommand())){
             System.out.println("\tThis will drop an item from your inventory to the ground\n\tUse: drop (item name)");
         } else if (command.equals(Commands.LOOK_AROUND.getStrCommand())) {
@@ -66,9 +72,14 @@ public class UI {
             System.out.println("\tThis will display your health in a status bar\n\tUse: health");
         } else if (command.equals(Commands.USE.getStrCommand())) {
             System.out.println("\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use (item)");
-        }else if (command.equals(Commands.BOOKMARK.getStrCommand())) {
-            System.out.println("\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark (visual char) (description) / Use: bookmark remove (visual char)");
-        }else{
+        } else if (command.equals(Commands.BOOKMARK.getStrCommand())) {
+            //System.out.println("\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark (visual char) (description) / Use: bookmark remove (visual char)");
+            System.out.println("\tSorry this isn't currently implemented");
+        } else if (command.equals(Commands.SPEED.getStrCommand())){
+            System.out.println("\tThis will display how much speed you have left for your turn\n\tUse: speed");
+        } else if (command.equals("how to play")){
+            System.out.println("This is a real time turn based game.\nEach command takes a certain amount of speed you start off with about 15 speed. If you run out of speed enemies can attack you.\nDifferent weapons also effect your ability to hit and with how much damage.");
+        } else {
             System.out.println("\tSorry I don't know what command you wanted");
         }
     }
