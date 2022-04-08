@@ -17,6 +17,7 @@ public class UI {
         USE("use", 3),
         BOOKMARK("bookmark", 0),
         SPEED("speed", 0),
+        WAIT("wait", 0),
         HEALTH("health", 0);
 
         private String strCommand;
@@ -78,7 +79,9 @@ public class UI {
         } else if (command.equals(Commands.SPEED.getStrCommand())){
             System.out.println("\tThis will display how much speed you have left for your turn\n\tUse: speed");
         } else if (command.equals("how to play")){
-            System.out.println("This is a real time turn based game.\nEach command takes a certain amount of speed you start off with about 15 speed. If you run out of speed enemies can attack you.\nDifferent weapons also effect your ability to hit and with how much damage.");
+            System.out.println("In this game you have a set amount of time to preform your action. This is called speed.\nDifferent actions take a different amount of speed. If you run out of speed the enemy can attack you.\nYou can use the speed command to see how much speed you have left to spend.");
+        } else if (command.equals(Commands.WAIT.getStrCommand())){
+            System.out.println("This will wait out the rest of your turn bringing your speed down to 0");
         } else {
             System.out.println("\tSorry I don't know what command you wanted");
         }
@@ -97,11 +100,10 @@ public class UI {
 
         // move north
         if (command.equals("N") || command.equals("n")) {
-            if (y < floorSize - 1 && y >= 0) {
+            if (y < (floorSize - 1) && y >= 0) {
                 if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){
                     player.setYCoord(y + 1);
                     System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-                    
                 }
             }else{
                 System.out.println("You don't see a door in that wall. You can't move that way.");

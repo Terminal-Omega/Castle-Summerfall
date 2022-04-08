@@ -86,7 +86,7 @@ public class Player extends Actor {
         boolean isFound = false;
         if (inventory.size() > 0) {
             for (Interactable inter : inventory) {
-                if (inter.getName().toLowerCase().equals(interactable)) {
+                if (inter.getName().toLowerCase().equals(interactable.toLowerCase())) {
                     isFound = true;
                 }
             }

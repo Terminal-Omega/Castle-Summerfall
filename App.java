@@ -14,7 +14,7 @@ public class App {
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
-        final int FLOORSIZE = 9;
+        final int FLOORSIZE = 5;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
@@ -53,8 +53,7 @@ public class App {
                 commandKnown = false;
                 int speedCost = UI.Commands.MOVE.getSpeedCommand();
                 if (speed - speedCost <= 0){
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 }else{
                     speed -= speedCost;
                     UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
@@ -73,8 +72,7 @@ public class App {
                commandKnown = false;
                int speedCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
                if (speed - speedCost <= 0) {
-                   System.out.println("You don't have any time left");
-                   endTurn = true;
+                   System.out.println("You don't have enought time to do this");
                } else {
                    speed -= speedCost;
                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
@@ -85,8 +83,7 @@ public class App {
             if (inspectMatch.find()){
                 int speedCost = UI.Commands.INSPECT.getSpeedCommand();
                 if (speed - speedCost <= 0) {
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 } else {
                     speed -= speedCost;
                     String name;
@@ -105,8 +102,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())){
                 int speedCost = UI.Commands.INVENTORY.getSpeedCommand();
                 if (speed - speedCost <= 0) {
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 } else {
                     speed -= speedCost;
                     UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth());
@@ -119,8 +115,7 @@ public class App {
             if (takeMatch.find()){
                 int speedCost = UI.Commands.TAKE.getSpeedCommand();
                 if (speed - speedCost < 0) {
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 } else {
                     speed -= speedCost;
                     try {
@@ -138,8 +133,7 @@ public class App {
             if (dropMatch.find()){
                 int speedCost = UI.Commands.DROP.getSpeedCommand();
                 if (speed - speedCost <= 0) {
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 } else {
                     speed -= speedCost;
                     try {
@@ -173,8 +167,7 @@ public class App {
                 String weaponString = attackMatch.group(2);
                 int speedCost = UI.Commands.ATTACK.getSpeedCommand();
                 if (speed - speedCost <= 0){
-                    System.out.println("You don't have any time left");
-                    endTurn = true;
+                    System.out.println("You don't have enought time to do this");
                 }else{
                     if (player.isInInventory(weaponString)){
                             try {
@@ -201,14 +194,19 @@ public class App {
                 commandKnown = false;
             }
 
+            if (inputCommand.equals(UI.Commands.WAIT.getStrCommand())){
+                commandKnown = false;
+                speed -= speed;
+            }
+
             //if command is not known
             if (commandKnown && inputCommand.equals("exit") == false){
                 System.out.println("Sorry I don't know what you wanted.");
             }
 
             //reset turn
-            if (endTurn){
-                System.out.println("Enemies do things now");
+            if (speed <= 0){
+                //System.out.println("Enemies do things now");
                 Updates.update(player, floor1);
                 speed = player.getSpeed();
                 endTurn = false;
@@ -216,6 +214,24 @@ public class App {
                 Updates.actionUpdate(floor1);
             }
 
-        }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health <= 0);
+            //Easter eggs
+            if (inputCommand.equals("Xyzzyz")){
+                player.setConstitution(15);
+                player.setHealth();
+                System.out.println("You have found the cheat code. Your health is now 30");
+                commandKnown = false;;
+            }
+            if (inputCommand.equals("eat knife")){
+                if (player.isInInventory("Knife")){
+                    player.setConstitution(0);
+                    player.setHealth();
+                    System.out.println("You found the secret ending. PS this was Adam's idea");
+                }else{
+                    System.out.println("You don't have a knife to eat");
+                }
+                commandKnown = false;
+            }
+
+        }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.getHealth() >= 0);
     }
 }
