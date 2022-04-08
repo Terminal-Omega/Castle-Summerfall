@@ -58,7 +58,7 @@ public class NPC extends Actor {
      * @param floorSize
      */
     public void enemyTurnNoneCombat(int floorSize) {
-        int direction = rand.nextInt();
+        int direction = rand.nextInt(3);
         switch (direction) {
             case 0:
                 if (yCoord < floorSize - 1 && yCoord >= 0) {
