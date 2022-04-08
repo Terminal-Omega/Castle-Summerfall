@@ -22,6 +22,9 @@ public class Actor {
     protected String name;
     protected ArrayList<Interactable> inventory;
     protected int shield;
+    protected int maxHealth;
+    protected int maxSpeed;
+    protected int maxMana;
     protected Random rand = new Random();
 
     public Actor() {
@@ -64,6 +67,7 @@ public class Actor {
 
     public void setHealth() {
         health = constitution * 2;
+        maxHealth = health;
     }
 
     public void setAC(int AC) {
@@ -72,10 +76,12 @@ public class Actor {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+        maxSpeed = speed;
     }
 
     public void setMana() {
         mana = intelligence * 2;
+        maxMana = mana;
     }
 
     public void setStrength(int strength) {
@@ -201,6 +207,19 @@ public class Actor {
 
     public int getWeaponSkill() {
         return weaponSkill;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public int getMaxMana() {
+        return maxMana;
     }
 
     public void putItem(Interactable interactable) {
