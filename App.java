@@ -17,7 +17,7 @@ public class App {
         final int FLOORSIZE = 9;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
-        Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)"); // TODO: @yomas000 this RegEx is broken, I think, and it only finds item names that are capitalized. Maybe remove some square brackets?
+        Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
@@ -81,12 +81,6 @@ public class App {
                }
             }
 
-            //where TODO: remove this for final draft @yomas000
-            if (inputCommand.equals("where")) {
-                System.out.print("x: " + player.getXCoord() + " y: " + player.getYCoord());
-                commandKnown = false;
-            }
-
             //inspect command
             if (inspectMatch.find()){
                 int speedCost = UI.Commands.INSPECT.getSpeedCommand();
@@ -100,7 +94,6 @@ public class App {
                         name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
                         System.out.println(name);
                     } catch (ThingNotFoundException e) {
-                        // TODO Auto-generated catch block
                         System.out.println(e.getMessage());
                     }
                 }
