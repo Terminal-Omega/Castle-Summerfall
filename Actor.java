@@ -129,7 +129,7 @@ public class Actor {
         ballisticSkill = intelligence * 2;
     }
 
-    public void setWweaponSkill() {
+    public void setWeaponSkill() {
         weaponSkill = dexterity * 2;
     }
 

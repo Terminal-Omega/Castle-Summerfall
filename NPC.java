@@ -52,18 +52,22 @@ public class NPC extends Actor {
             case 0:
                 if (yCoord < floorSize - 1 && yCoord >= 0) {
                     yCoord++;
+                    System.out.println("Enemy moved North");
                 }
             case 1:
                 if (yCoord < floorSize - 1 && yCoord > 0) {
                     yCoord--;
+                    System.out.println("Enemy moved South");
                 }
             case 2:
                 if (xCoord < floorSize - 1 && xCoord >= 0) {
                     xCoord++;
+                    System.out.println("Enemy moved West");
                 }
             case 3:
-                if (yCoord < floorSize - 1 && yCoord > 0) {
-                    yCoord--;
+                if (xCoord < floorSize - 1 && xCoord > 0) {
+                    xCoord--;
+                    System.out.println("Enemy moved East");
                 }
             default:
 
@@ -80,7 +84,7 @@ public class NPC extends Actor {
     }
 
     public void enemyTurnCombat() {
-
+        System.out.println("Enemy wacked the player");
     }
 
     public void friendlyTurnCombat() {
