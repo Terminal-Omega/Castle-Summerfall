@@ -1,6 +1,5 @@
 package game;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +24,6 @@ public class App {
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5, 15);
         int speed = player.getSpeed();
-        boolean endTurn = false;
 
         do {
             System.out.print("> ");
@@ -213,7 +211,6 @@ public class App {
                 // System.out.println("Enemies do things now");
                 Updates.update(player, floor1);
                 speed = player.getSpeed();
-                endTurn = false;
             } else {
                 Updates.actionUpdate(floor1);
             }
