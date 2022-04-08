@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ContainerPresets {
+    
+    /** 
+     * @param valueFactor
+     * @return Container
+     */
     public static Container Random(int valueFactor){
         Random rand = new Random();
         switch (rand.nextInt(1)) {
@@ -21,6 +26,11 @@ public class ContainerPresets {
         "It's a chest."
     };
 
+    
+    /** 
+     * @param valueFactor
+     * @return Container
+     */
     public static Container chest(int valueFactor){
         Random rand = new Random();
         ArrayList<Interactable> chestInventory = getInventory(0,3, valueFactor);
@@ -34,6 +44,11 @@ public class ContainerPresets {
         "A wooden box. Maybe it has loot inside?"
     };
 
+    
+    /** 
+     * @param valueFactor
+     * @return Container
+     */
     private static Container crate(int valueFactor){
         Random rand = new Random();
         ArrayList<Interactable> inventory = getInventory(1, 2, valueFactor);
@@ -42,6 +57,13 @@ public class ContainerPresets {
         return result;
     }
 
+    
+    /** 
+     * @param rangeStart
+     * @param rangeEnd
+     * @param valueFactor
+     * @return ArrayList<Interactable>
+     */
     public static ArrayList<Interactable> getInventory(int rangeStart, int rangeEnd, int valueFactor){
         Random rand = new Random();
         ArrayList<Interactable> inventory = new ArrayList<Interactable>();

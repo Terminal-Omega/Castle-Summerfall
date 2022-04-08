@@ -12,6 +12,10 @@ public class Player extends Actor {
         this.setWweaponSkill();
     }
 
+    
+    /** 
+     * @param interactable
+     */
     public void putItem(Interactable interactable) {
         if (inventory.size() < 5){
             inventory.add(interactable);
@@ -21,6 +25,13 @@ public class Player extends Actor {
         }
     }
 
+    
+    /** 
+     * @param interactable
+     * @param index
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable dropItem(String interactable, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = 0;
@@ -44,6 +55,12 @@ public class Player extends Actor {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @param index
+     * @return Interactable
+     */
     public Interactable getItem(String name, int index){
         int timesFound = -1;
         int latestIndex = 0;
@@ -63,6 +80,11 @@ public class Player extends Actor {
         }
     }
 
+    
+    /** 
+     * @param interactable
+     * @return boolean
+     */
     public boolean isInInventory(String interactable){
         boolean isFound = false;
         if (inventory.size() > 0) {

@@ -10,10 +10,18 @@ public class Floor {
         this.NPCS = new ArrayList<>();
     }
 
+    
+    /** 
+     * @param NPC
+     */
     public void addNPC(NPC NPC) {
         NPCS.add(NPC);
     }
 
+    
+    /** 
+     * @return Room
+     */
     // public Floor(){
     // ArrayList<ArrayList<Room>> rooms;
     // ArrayList<Room> roomList;
@@ -31,6 +39,13 @@ public class Floor {
         return rooms.get(xCoord).get(yCoord);
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @param direction
+     * @return Door
+     */
     // use this to get a door going in a specific direction
     public Door getDoor(int xCoord, int yCoord, Direction direction) {
         switch (direction) {
@@ -53,6 +68,12 @@ public class Floor {
         }
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @return String
+     */
     public String getDescription(int xCoord, int yCoord) {
         StringBuilder builder = new StringBuilder(rooms.get(xCoord).get(yCoord).getDescription());
         ArrayList<NPC> localNPC = new ArrayList<>();
@@ -116,18 +137,39 @@ public class Floor {
         return builder.toString();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getXSize(){
         return rooms.size();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getYSize(){
         return rooms.get(0).size();
     }
 
+    
+    /** 
+     * @return ArrayList<NPC>
+     */
     public ArrayList<NPC> getNPCs(){
         return NPCS;
     }
 
+    
+    /** 
+     * @param name
+     * @param xCoord
+     * @param yCoord
+     * @param index
+     * @return NPC
+     * @throws ThingNotFoundException
+     */
     public NPC getNPC(String name, int xCoord, int yCoord ,int index) throws ThingNotFoundException{
         for(NPC npc : NPCS){
             if(npc.getName().toLowerCase().equals(name.toLowerCase()) && npc.getXCoord() == xCoord && npc.getYCoord() == yCoord){

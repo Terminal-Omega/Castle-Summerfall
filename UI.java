@@ -30,6 +30,10 @@ public class UI {
         }
 
     
+    
+    /** 
+     * @param command
+     */
     public static void helpCommand(String command){
         if (command.equals("all")){
             System.out.println("\nThis is a text based adventure game where you fight monsters. How many floors can you decesend?\n");
@@ -69,6 +73,13 @@ public class UI {
         }
     }
 
+    
+    /** 
+     * @param command
+     * @param player
+     * @param floor1
+     * @param floorSize
+     */
     public static void move(String command, Player player, Floor floor1, int floorSize){
         int x = player.getXCoord();
         int y = player.getYCoord();
@@ -120,6 +131,10 @@ public class UI {
         }
     }
 
+    
+    /** 
+     * @param health
+     */
     public static void displayHeath(int health){
        System.out.print("Health: [");
        for (int i = 0; i<health; i++){
@@ -128,6 +143,11 @@ public class UI {
        System.out.println("]: " + health);
     }
 
+    
+    /** 
+     * @param inventory
+     * @param health
+     */
     public static void displayInventory(ArrayList<Interactable> inventory, int health){
         String inventoryOutput = "";
         for (Interactable name : inventory) {
@@ -151,6 +171,12 @@ public class UI {
 
     }
 
+    
+    /** 
+     * @param xSize
+     * @param ySize
+     * @param player
+     */
     public static void displayMap(int xSize, int ySize, Player player){
         int xP = ySize - player.getYCoord() -1;
         int yP = player.getXCoord();

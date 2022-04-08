@@ -13,6 +13,12 @@ public class Generator {
         LEGENDARY
     }
 
+    
+    /** 
+     * @param xSize
+     * @param ySize
+     * @return Floor
+     */
     public static Floor generateFloor(int xSize, int ySize) {
         Random rand = new Random();
         ArrayList<ArrayList<Room>> rooms = new ArrayList<>();
@@ -62,6 +68,14 @@ public class Generator {
             "The room you walked into feels sterile. It has whitewashed walls with steel tables in the center.\nSmaller tables hold all sorts of deadly looking tools.",
             "The room is a hotel you realise. Torch sconces line the very expensive mahogonay hallway.\nThe doors have brass name plates numbering 1 through 25" };
 
+    
+    /** 
+     * @param interactableMin
+     * @param interactableMax
+     * @param southDoor
+     * @param eastDoor
+     * @return Room
+     */
     public static Room generateRoom(int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor) {
         int range = interactableMax - interactableMin;
         Random rand = new Random();
@@ -86,6 +100,17 @@ public class Generator {
         return result;
     }
 
+    
+    /** 
+     * @param containerWeight
+     * @param commonWeight
+     * @param uncommonWeight
+     * @param rareWeight
+     * @param veryRareWeight
+     * @param legendaryWeight
+     * @param containerValue
+     * @return Interactable
+     */
     // below this is all the interactable generation.
     public static Interactable generateInteractable(double containerWeight, double commonWeight, double uncommonWeight,
             double rareWeight, double veryRareWeight, double legendaryWeight, int containerValue) {
@@ -109,6 +134,10 @@ public class Generator {
         return result;
     }
 
+    
+    /** 
+     * @return Interactable
+     */
     public static Interactable generateInteractable() {
         return generateInteractable(.2, .8, 0, 0, 0, 0, 5);
     }

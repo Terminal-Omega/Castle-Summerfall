@@ -2,6 +2,10 @@ import java.util.Random;
 
 public class EnemyPresets {
 
+     
+     /** 
+      * @return NPC
+      */
      /*
      * example and description of what everything does for creation of enemies
      * / private static Enemy INSERTNAMEHERE(int xCoord, int yCoord){
@@ -50,6 +54,12 @@ public class EnemyPresets {
         }
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @return NPC
+     */
     private static NPC zombie(int xCoord, int yCoord) {
         int AC = 10;
         int strength = 5;
@@ -68,6 +78,12 @@ public class EnemyPresets {
         return result;
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @return NPC
+     */
     private static NPC skeleton(int xCoord, int yCoord) {
         int AC = 10;
         int strength = 5;
@@ -87,6 +103,12 @@ public class EnemyPresets {
 
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @return NPC
+     */
     private static NPC goblin(int xCoord, int yCoord) {
         int AC = 10;
         int strength = 5;

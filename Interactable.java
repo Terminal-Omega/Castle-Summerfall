@@ -18,11 +18,19 @@ public class Interactable {
     public Interactable(){};
 
 
+    
+    /** 
+     * @return String
+     */
     //Methods
     public String getName(){
         return name;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getDescription(){
         StringBuilder builder = new StringBuilder();
         builder.append(description);
