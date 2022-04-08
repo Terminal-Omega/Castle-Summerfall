@@ -9,6 +9,7 @@ public class Player extends Actor {
         this.setHealth();
         this.setInventory();
         this.setSpeed(speed);
+        this.setDexterity(30);
         this.setWeaponSkill();
     }
 

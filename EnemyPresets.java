@@ -61,7 +61,7 @@ public class EnemyPresets {
      * @return NPC
      */
     private static NPC zombie(int xCoord, int yCoord) {
-        int AC = 10;
+        int AC = 3;
         int strength = 5;
         int dexterity = 5;
         int constitution = 5;
@@ -85,7 +85,7 @@ public class EnemyPresets {
      * @return NPC
      */
     private static NPC skeleton(int xCoord, int yCoord) {
-        int AC = 10;
+        int AC = 3;
         int strength = 5;
         int dexterity = 5;
         int constitution = 5;
@@ -110,7 +110,7 @@ public class EnemyPresets {
      * @return NPC
      */
     private static NPC goblin(int xCoord, int yCoord) {
-        int AC = 10;
+        int AC = 3;
         int strength = 5;
         int dexterity = 5;
         int constitution = 5;

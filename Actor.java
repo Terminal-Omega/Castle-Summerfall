@@ -382,6 +382,8 @@ public class Actor {
         health -= finalDamage;
         if (health <= 0) {
             System.out.print("Dead");
+        }else{
+            System.out.println("You hit it with " + finalDamage + " damage");
         }
     }
 
@@ -412,9 +414,8 @@ public class Actor {
      * @return boolean
      */
     public boolean closeCombat(Weapon weapon, Actor target) {
-        if (rand.nextInt(100) + 1 <= weaponSkill) {
+        if (rand.nextInt(10) + 1 <= weaponSkill) {
             target.takeDamage(weapon.damage);
-            System.out.println("x");
             return true;
         }
         return false;

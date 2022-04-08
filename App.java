@@ -178,6 +178,7 @@ public class App {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
                             NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
                             player.closeCombat(weapon, badGuy);
+                            UI.displayHeath(badGuy.getHealth());
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
                         }

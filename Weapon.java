@@ -3,6 +3,7 @@ public class Weapon extends Interactable {
     public Weapon(int size, int weight, boolean canBePickedUp, String name, String description, int pierce,
             int damage) {
         super(name, description, size, weight, canBePickedUp);
+        this.damage = damage;
     }
 
     protected int attackSpeed;
