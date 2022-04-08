@@ -89,7 +89,8 @@ public class UI {
             if (y < floorSize - 1 && y >= 0) {
                 if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){
                     player.setYCoord(y + 1);
-                    System.out.println("You walked north");
+                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    
                 }
             }else{
                 System.out.println("You don't see a door in that wall. You can't move that way.");
@@ -101,7 +102,7 @@ public class UI {
                 if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()){
                     player.setYCoord(y - 1);
                 }
-               System.out.println("You walked south");
+                System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
@@ -111,7 +112,7 @@ public class UI {
             if (x < floorSize - 1 && x >= 0) {
                 if (floor1.getDoor(x, y, Direction.EAST).isOpen()){
                     player.setXCoord(x + 1);
-                    System.out.println("You walked east");
+                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
@@ -122,7 +123,7 @@ public class UI {
             if (x <= floorSize - 1 && x > 0) {
                 if (floor1.getDoor(x, y, Direction.WEST).isOpen()){
                     player.setXCoord(x - 1);
-                    System.out.println("You walked west");
+                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
@@ -135,10 +136,14 @@ public class UI {
     /** 
      * @param health
      */
-    public static void displayHeath(int health){
+    public static void displayHeath(int health, int maxHealth){
        System.out.print("Health: [");
-       for (int i = 0; i<health; i++){
-           System.out.print("-");
+       for (int i = 0; i<maxHealth; i++){
+           if (i <= health) {
+               System.out.print("-");
+            } else { 
+                System.out.print(" ");
+            }
        }
        System.out.println("]: " + health);
     }
@@ -148,7 +153,7 @@ public class UI {
      * @param inventory
      * @param health
      */
-    public static void displayInventory(ArrayList<Interactable> inventory, int health){
+    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth){
         String inventoryOutput = "";
         for (Interactable name : inventory) {
             inventoryOutput += name.getName() + ", ";
@@ -158,7 +163,7 @@ public class UI {
         } else {
             System.out.println(inventoryOutput);
         }
-        displayHeath(health);
+        displayHeath(health, maxHealth);
     }
 
     public static void displayOpening(){

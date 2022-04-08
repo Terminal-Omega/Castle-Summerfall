@@ -374,16 +374,17 @@ public class Actor {
     /** 
      * @param damage
      */
-    public void takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         int finalDamage = damage - AC;
         if (finalDamage < 0) {
             finalDamage = 0;
         }
         health -= finalDamage;
         if (health <= 0) {
-            System.out.print("Dead");
+            return true;
         }else{
             System.out.println("You hit it with " + finalDamage + " damage");
+            return false;
         }
     }
 
@@ -415,8 +416,7 @@ public class Actor {
      */
     public boolean closeCombat(Weapon weapon, Actor target) {
         if (rand.nextInt(10) + 1 <= weaponSkill) {
-            target.takeDamage(weapon.damage);
-            return true;
+            return target.takeDamage(weapon.damage);
         }
         return false;
     }

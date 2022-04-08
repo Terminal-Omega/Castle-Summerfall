@@ -112,7 +112,7 @@ public class App {
                     endTurn = true;
                 } else {
                     speed -= 3;
-                    UI.displayInventory(player.getInventory(), player.getHealth());
+                    UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth());
                 }
                 
                 commandKnown = false;
@@ -158,7 +158,7 @@ public class App {
 
             //health command
             if (inputCommand.equals(UI.Commands.HEALTH.getStrCommand())){
-                UI.displayHeath(player.getHealth());
+                UI.displayHeath(player.getHealth(), player.getMaxHealth());
                 commandKnown = false;
             }
 
@@ -177,8 +177,12 @@ public class App {
                         try {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
                             NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
-                            player.closeCombat(weapon, badGuy);
-                            UI.displayHeath(badGuy.getHealth());
+                            if (player.closeCombat(weapon, badGuy)){
+                                System.out.println("Dead");
+                            }else{
+                                UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
+                            }
+                            
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
                         }
@@ -201,6 +205,7 @@ public class App {
             //reset turn
             if (endTurn){
                 System.out.println("Enemies do things now");
+                Updates.update(player, floor1);
                 speed = player.getSpeed();
                 endTurn = false;
             }
