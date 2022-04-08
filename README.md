@@ -46,8 +46,8 @@ This game is a text-adventure-inspired roguelike video game. The gameplay takes 
         1. Who am I kidding you already know how to do this
 
 ## Step 4: Running the file
-Once you are in the right folder that your .jar file is in type this command or copy paste it with ctrl+shift+v
-You will need to replace the filename with the file name of your .jar file
+Once you are in the right folder that your .jar file is in type this command or copy paste it with ctrl+shift+v<br />
+You will need to replace the filename with the file name of your .jar file<br /><br />
 **java -jar (filename).jar**
 
 
