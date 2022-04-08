@@ -157,6 +157,10 @@ public class Actor {
 
     }
 
+    public void addInventory(Interactable item) {
+        inventory.add(item);
+    }
+
     /**
      * @param sheild
      */
@@ -345,7 +349,7 @@ public class Actor {
         health -= finalDamage;
         if (health <= 0) {
             return true;
-        }else{
+        } else {
             System.out.println("You hit it with " + finalDamage + " damage");
             return false;
         }
