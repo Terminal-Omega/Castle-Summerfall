@@ -14,7 +14,7 @@ This game is a text-adventure-inspired roguelike video game. The gameplay takes 
 3. find the file that ends in .jar
 4. Download file by clicking on it
 5. Put it in whatever directory you want
-    1. Remember where you put it
+    1. ***Remember where you put it***
 
 ## Step 3: Open a terminal and navigate to your file
 1. open a terminal window
@@ -30,3 +30,20 @@ This game is a text-adventure-inspired roguelike video game. The gameplay takes 
         1. You already know how to do this
         2. Why are you running linux if you can't do this
 2. Navigate to your file
+    1. Windows
+        1. Type *dir* to see your file system
+        2. Type *cd (folder)* to navigate into that folder
+        3. Find your .jar file that you downloaded
+    2. Mac
+        1. Type *ls* to see your file system
+        2. Type *cd (folder)* to navigate into that folder
+        3. Find your .jar file that you downloaded
+    3. Linux
+        1. Who am I kidding you already know how to do this
+
+## Step 4: Running the file
+Once you are in the right folder that your .jar file is in type this command or copy paste it with ctrl+shift+v
+You will need to replace the filename with the file name of your .jar file
+**java -jar (filename).jar**
+
+## Step 5: Enjoy
