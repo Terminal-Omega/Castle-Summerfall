@@ -21,6 +21,7 @@ public class NPC extends Actor {
         super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom,
                 charisma, noise,
                 shield, name);
+        setAllience(npcAllience);
     }
 
     public NPC(String allience) {
