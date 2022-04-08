@@ -1,3 +1,4 @@
+package game;
 import java.util.regex.Pattern;
 import java.util.Random;
 import java.util.regex.Matcher;

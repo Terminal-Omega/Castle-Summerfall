@@ -1,3 +1,4 @@
+package game;
 import java.util.ArrayList;
 public class Interactable {
     protected int size;

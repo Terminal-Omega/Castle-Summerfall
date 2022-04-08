@@ -1,3 +1,4 @@
+package game;
 // Doors, like the type you go through.
 public class Door {
     // stores if there's a key in the door and which side it's on. Useless for now.

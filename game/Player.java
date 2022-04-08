@@ -1,3 +1,4 @@
+package game;
 import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
