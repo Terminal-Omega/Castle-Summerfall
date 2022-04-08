@@ -2,37 +2,35 @@ import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
 
-    public Player(int x, int y, int constituion, int speed){
+    public Player(int x, int y, int constituion, int speed) {
         this.setYCoord(y);
         this.setXCoord(x);
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
         this.setSpeed(speed);
-        this.setWweaponSkill();
+        this.setWeaponSkill();
     }
 
-    
-    /** 
+    /**
      * @param interactable
      */
     public void putItem(Interactable interactable) {
-        if (inventory.size() < 5){
+        if (inventory.size() < 5) {
             inventory.add(interactable);
             System.out.println("taken");
-        }else{
+        } else {
             System.out.println("Your bag feels to heavy. You can't add any more.");
         }
     }
 
-    
-    /** 
+    /**
      * @param interactable
      * @param index
      * @return Interactable
      * @throws ThingNotFoundException
      */
-    public Interactable dropItem(String interactable, int index) throws ThingNotFoundException{
+    public Interactable dropItem(String interactable, int index) throws ThingNotFoundException {
         int timesFound = -1;
         int latestIndex = 0;
         for (int i = 0; i < inventory.size(); i++) {
@@ -55,13 +53,12 @@ public class Player extends Actor {
         }
     }
 
-    
-    /** 
+    /**
      * @param name
      * @param index
      * @return Interactable
      */
-    public Interactable getItem(String name, int index){
+    public Interactable getItem(String name, int index) {
         int timesFound = -1;
         int latestIndex = 0;
         for (int i = 0; i < inventory.size(); i++) {
@@ -80,12 +77,11 @@ public class Player extends Actor {
         }
     }
 
-    
-    /** 
+    /**
      * @param interactable
      * @return boolean
      */
-    public boolean isInInventory(String interactable){
+    public boolean isInInventory(String interactable) {
         boolean isFound = false;
         if (inventory.size() > 0) {
             for (Interactable inter : inventory) {
