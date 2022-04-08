@@ -208,6 +208,8 @@ public class App {
                 Updates.update(player, floor1);
                 speed = player.getSpeed();
                 endTurn = false;
+            } else{
+                Updates.actionUpdate(floor1);
             }
 
         }while(inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.health <= 0);
