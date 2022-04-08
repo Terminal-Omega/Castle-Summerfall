@@ -37,7 +37,7 @@ public class CommonItem {
     /** 
      * @return Weapon
      */
-    private static Weapon knife() {
+    public static Weapon knife() {
         int size = 1;
         int weight = 5;
         boolean canBePickedUp = true;
@@ -53,7 +53,7 @@ public class CommonItem {
     /** 
      * @return Weapon
      */
-    private static Weapon shortSword() {
+    public static Weapon shortSword() {
         int size = 2;
         int weight = 8;
         boolean canBePickedUp = true;
@@ -69,7 +69,7 @@ public class CommonItem {
     /** 
      * @return Weapon
      */
-    private static Weapon sword() {
+    public static Weapon sword() {
         int size = 2;
         int weight = 9;
         boolean canBePickedUp = true;
@@ -85,7 +85,7 @@ public class CommonItem {
     /** 
      * @return Weapon
      */
-    private static Weapon greatSword() {
+    public static Weapon greatSword() {
         int size = 3;
         int weight = 11;
         boolean canBePickedUp = true;
@@ -101,7 +101,7 @@ public class CommonItem {
     /** 
      * @return Weapon
      */
-    private static Weapon rapier() {
+    public static Weapon rapier() {
         int size = 1;
         int weight = 6;
         boolean canBePickedUp = true;

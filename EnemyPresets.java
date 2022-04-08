@@ -73,8 +73,10 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a zombie.";
+        Interactable weapon = CommonItem.shortSword();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
                 intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
+        result.addInventory(weapon);
         return result;
     }
 
@@ -97,8 +99,10 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a Skeleton.";
+        Interactable weapon = CommonItem.rapier();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
                 intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
+        result.addInventory(weapon);
         return result;
 
     }
@@ -122,8 +126,10 @@ public class EnemyPresets {
         int shield = 10;
         String npcAlliance = "Enemy";
         String description = "This is a Goblin.";
+        Interactable weapon = CommonItem.knife();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
                 intelligence, wisdom, charismma, noise, shield, name, npcAlliance, description);
+        result.addInventory(weapon);
         return result;
 
     }
