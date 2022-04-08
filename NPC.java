@@ -40,10 +40,10 @@ public class NPC extends Actor {
      * @param player
      * @param floorSize
      */
-    public void npcTurnAllience(Player player, int floorSize) {
+    public void npcTurnAllience(Actor player, int floorSize) {
         if (npcAllience.equals("Enemy")) {
             if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
-                enemyTurnCombat();
+                enemyTurnCombat(player);
             } else {
                 enemyTurnNoneCombat(floorSize);
             }
@@ -98,7 +98,10 @@ public class NPC extends Actor {
 
     }
 
-    public void enemyTurnCombat() {
+    public void enemyTurnCombat(Actor player) {
+        Weapon weapon = (Weapon) inventory.get(0);
+        System.out.println(weapon.damage);
+        closeCombat(weapon, player);
         System.out.printf("%s wacked the player%n", name);
     }
 

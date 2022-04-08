@@ -50,6 +50,8 @@ public class Actor {
         setShield(sheild);
         setHealth();
         setName(name);
+        setWeaponSkill();
+        setBallisticSkill();
         inventory = new ArrayList<Interactable>();
     }
 
@@ -157,8 +159,7 @@ public class Actor {
 
     }
 
-    
-    /** 
+    /**
      * @param item
      */
     public void addInventory(Interactable item) {
@@ -347,9 +348,12 @@ public class Actor {
      */
     public boolean takeDamage(int damage) {
         int finalDamage = damage - AC;
+
         if (finalDamage < 0) {
             finalDamage = 0;
+
         }
+
         health -= finalDamage;
         if (health <= 0) {
             return true;
