@@ -53,24 +53,21 @@ public class Actor {
         inventory = new ArrayList<Interactable>();
     }
 
-    
-    /** 
+    /**
      * @param xCoord
      */
     public void setXCoord(int xCoord) {
         this.xCoord = xCoord;
     }
 
-    
-    /** 
+    /**
      * @param name
      */
     public void setName(String name) {
         this.name = name;
     }
 
-    
-    /** 
+    /**
      * @param yCoord
      */
     public void setYCoord(int yCoord) {
@@ -82,16 +79,14 @@ public class Actor {
         maxHealth = health;
     }
 
-    
-    /** 
+    /**
      * @param AC
      */
     public void setAC(int AC) {
         this.AC = AC;
     }
 
-    
-    /** 
+    /**
      * @param speed
      */
     public void setSpeed(int speed) {
@@ -104,56 +99,49 @@ public class Actor {
         maxMana = mana;
     }
 
-    
-    /** 
+    /**
      * @param strength
      */
     public void setStrength(int strength) {
         this.strength = strength;
     }
 
-    
-    /** 
+    /**
      * @param dexterity
      */
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
     }
 
-    
-    /** 
+    /**
      * @param constituion
      */
     public void setConstitution(int constituion) {
         this.constitution = constituion;
     }
 
-    
-    /** 
+    /**
      * @param intelligence
      */
     public void setIntelligence(int intelligence) {
         this.intelligence = intelligence;
     }
 
-    
-    /** 
+    /**
      * @param wisdom
      */
     public void setWisdom(int wisdom) {
         this.wisdom = wisdom;
     }
 
-    
-    /** 
+    /**
      * @param charisma
      */
     public void setCharisma(int charisma) {
         this.charisma = charisma;
     }
 
-    
-    /** 
+    /**
      * @param noise
      */
     public void setNoise(int noise) {
@@ -169,8 +157,7 @@ public class Actor {
 
     }
 
-    
-    /** 
+    /**
      * @param sheild
      */
     public void setShield(int sheild) {
@@ -185,160 +172,140 @@ public class Actor {
         weaponSkill = dexterity * 2;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getXCoord() {
         return xCoord;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getYCoord() {
         return yCoord;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getHealth() {
         return health;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getAC() {
         return AC;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getSpeed() {
         return speed;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getMana() {
         return mana;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getStrength() {
         return strength;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getDexterity() {
         return dexterity;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getConstitution() {
         return constitution;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getIntelligence() {
         return intelligence;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getWisdom() {
         return wisdom;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getCharisma() {
         return charisma;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getNoise() {
         return noise;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getCarryWeight() {
         return carryWeight;
     }
 
-    
-    /** 
+    /**
      * @return String
      */
     public String getName() {
         return name;
     }
 
-    
-    /** 
+    /**
      * @return ArrayList<Interactable>
      */
     public ArrayList<Interactable> getInventory() {
         return inventory;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getShield() {
         return shield;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getBallisticSkill() {
         return ballisticSkill;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getWeaponSkill() {
         return weaponSkill;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getMaxHealth() {
@@ -346,32 +313,28 @@ public class Actor {
 
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getMaxSpeed() {
         return maxSpeed;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
     public int getMaxMana() {
         return maxMana;
     }
 
-    
-    /** 
+    /**
      * @param interactable
      */
     public void putItem(Interactable interactable) {
         inventory.add(interactable);
     }
 
-    
-    /** 
+    /**
      * @param damage
      */
     public void takeDamage(int damage) {
@@ -385,8 +348,7 @@ public class Actor {
         }
     }
 
-    
-    /** 
+    /**
      * @param heal
      */
     public void heal(int heal) {
@@ -394,19 +356,15 @@ public class Actor {
 
     }
 
-    
-    /** 
+    /**
      * @param damage
      */
     public void damageNoAC(int damage) {
         health -= damage;
-        if (health < -0) {
-            System.out.print("Dead");
-        }
+
     }
 
-    
-    /** 
+    /**
      * @param weapon
      * @param target
      * @return boolean
@@ -420,8 +378,7 @@ public class Actor {
         return false;
     }
 
-    
-    /** 
+    /**
      * @param castorMana
      * @param type
      * @param spellMana
