@@ -3,7 +3,13 @@ This game is a text-adventure-inspired roguelike video game. The gameplay takes 
 
 - - - -
 
-# How to install
+### Go to
+[How to Install](#install)<br />
+[How to Play](#play)
+
+- - - -
+
+# How to install<a name="install"></a>
 
 ## Step 1: Download java (if not installed)
 1. Download Java from [HERE](https://www.oracle.com/java/technologies/downloads/#jdk18-windows/ "Here")
@@ -55,4 +61,4 @@ You will need to replace the filename with the file name of your .jar file<br />
 
 - - - -
 
-# How to play
+# How to play<a name="play"></a>
