@@ -63,25 +63,25 @@ public class NPC extends Actor {
             case 0:
                 if (yCoord < floorSize - 1 && yCoord >= 0) {
                     yCoord++;
-                    System.out.println("Enemy moved North");
+                    System.out.printf("%s moved North to cordanites x%d, y%d", name, xCoord, yCoord);
                     break;
                 }
             case 1:
                 if (yCoord < floorSize - 1 && yCoord > 0) {
                     yCoord--;
-                    System.out.println("Enemy moved South");
+                    System.out.printf("%s moved South to cordanites x%d, y%d", name, xCoord, yCoord);
                     break;
                 }
             case 2:
                 if (xCoord < floorSize - 1 && xCoord >= 0) {
                     xCoord++;
-                    System.out.println("Enemy moved West");
+                    System.out.printf("%s moved East to cordanites x%d, y%d", name, xCoord, yCoord);
                     break;
                 }
             case 3:
                 if (xCoord < floorSize - 1 && xCoord > 0) {
                     xCoord--;
-                    System.out.println("Enemy moved East");
+                    System.out.printf("%s moved West to cordanites x%d, y%d", name, xCoord, yCoord);
                     break;
                 }
             default:
