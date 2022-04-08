@@ -64,21 +64,25 @@ public class NPC extends Actor {
                 if (yCoord < floorSize - 1 && yCoord >= 0) {
                     yCoord++;
                     System.out.println("Enemy moved North");
+                    break;
                 }
             case 1:
                 if (yCoord < floorSize - 1 && yCoord > 0) {
                     yCoord--;
                     System.out.println("Enemy moved South");
+                    break;
                 }
             case 2:
                 if (xCoord < floorSize - 1 && xCoord >= 0) {
                     xCoord++;
                     System.out.println("Enemy moved West");
+                    break;
                 }
             case 3:
                 if (xCoord < floorSize - 1 && xCoord > 0) {
                     xCoord--;
                     System.out.println("Enemy moved East");
+                    break;
                 }
             default:
 
