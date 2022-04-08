@@ -16,6 +16,10 @@ public class Door {
         setLocked(locked);
     }
 
+    
+    /** 
+     * @return String
+     */
     public String open() {
         open = true;
         return "You open the Door";
@@ -25,14 +29,26 @@ public class Door {
         open = false;
     }
 
+    
+    /** 
+     * @param barred
+     */
     public void setBarred(boolean barred) {
         this.barred = barred;
     }
 
+    
+    /** 
+     * @param locked
+     */
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isOpen(){
         return open;
     }

@@ -1,6 +1,10 @@
 import java.util.Random;
 public class CommonItem {
     
+    
+    /** 
+     * @return Interactable
+     */
     public static Interactable Random(){
         Random rand = new Random();
         Interactable result = new Interactable();
@@ -29,6 +33,10 @@ public class CommonItem {
         return result;
     }
 
+    
+    /** 
+     * @return Weapon
+     */
     private static Weapon knife() {
         int size = 1;
         int weight = 5;
@@ -41,6 +49,10 @@ public class CommonItem {
         return result;
     }
 
+    
+    /** 
+     * @return Weapon
+     */
     private static Weapon shortSword() {
         int size = 2;
         int weight = 8;
@@ -53,6 +65,10 @@ public class CommonItem {
         return result;
     }
 
+    
+    /** 
+     * @return Weapon
+     */
     private static Weapon sword() {
         int size = 2;
         int weight = 9;
@@ -65,6 +81,10 @@ public class CommonItem {
         return result;
     }
 
+    
+    /** 
+     * @return Weapon
+     */
     private static Weapon greatSword() {
         int size = 3;
         int weight = 11;
@@ -77,6 +97,10 @@ public class CommonItem {
         return result;
     }
 
+    
+    /** 
+     * @return Weapon
+     */
     private static Weapon rapier() {
         int size = 1;
         int weight = 6;
@@ -96,6 +120,10 @@ public class CommonItem {
         "It's literally a bobby pin. You suppose it will do the job, however."
     };
 
+    
+    /** 
+     * @return Interactable
+     */
     public static Interactable key(){
         Random rand = new Random();
         String name = "Key";

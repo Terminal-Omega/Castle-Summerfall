@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Room {
     private ArrayList<Interactable> interactables;
@@ -7,14 +8,14 @@ public class Room {
     private Door southDoor;
     private Door eastDoor;
     private boolean visited;
-    private ArrayList<String> bookmarks;
+    private Hashtable<Character, String> bookmarks;
 
     public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
-        bookmarks = new ArrayList<>();
+        bookmarks = new Hashtable<>();
         visited = false;
     }
 
@@ -22,7 +23,12 @@ public class Room {
         
     }
     
-    //Grab the description of the room
+    /**
+     * very simple, just gets the description of the room, saying which objects are in it.
+     * DO NOT USE, you should use the getDescription in the Floor class.
+     * 
+     * @return the description of the room
+     */
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
         describe.append(description);
@@ -50,7 +56,12 @@ public class Room {
         return describe.toString();
     }
 
-    // DO NOT USE this method. Use the one in the Floor Class, it's much easier.
+    /**
+     * DO NOT USE THIS METHOD. USE THE ONE IN THE FLOOR CLASS.
+     * 
+     * @param direction the direction you want the door in. Accepts only South and East
+     * @return A door corresponding to that direction
+     */
     public Door getDoor(Direction direction){
         switch (direction) {
             case SOUTH:
@@ -62,6 +73,14 @@ public class Room {
         }
     }
 
+    /**
+     * 
+     * @param name the name of the item
+     * @param index which occurence of the item, starting at 0 for the first occurence.
+     * Defaults to 0 if not set.
+     * @return an Interactable corresponding to the name
+     * @throws ThingNotFoundException Throws this exception if it's not found.
+     */
     public Interactable getItem(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = -1;
@@ -81,6 +100,23 @@ public class Room {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
+    public Interactable getItem(String name) throws ThingNotFoundException{
+        return getItem(name, 0);
+    }
+    /**
+     * Exactly like getItem, but it removes the item when it returns it.
+     * @param name the name of the item
+     * @param index which occurence of the item, starting at 0 for the first occurence.
+     * Defaults to 0 if left out.
+     * @return an Interactable corresponding to the name
+     * @throws ThingNotFoundException Throws this exception if it's not found.
+     */
     public Interactable takeItem(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = -1;
@@ -104,14 +140,28 @@ public class Room {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable takeItem(String name) throws ThingNotFoundException{
         return takeItem(name, 0);
     }
 
+    
+    /** 
+     * @param item
+     */
     public void addItem(Interactable item){
         interactables.add(item);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isVisited(){
         return visited;
     }
@@ -120,23 +170,28 @@ public class Room {
         visited = true;
     }
 
-    public void addBookmark(String bookmark){
-        bookmarks.add(bookmark);
+    
+    /** 
+     * @param bookmark
+     * @param description
+     */
+    public void addBookmark(char bookmark, String description){
+        bookmarks.put(bookmark, description);
     }
 
-    public String[] getBookmarks(){
-        String[] result = new String[bookmarks.size()];
-        for(int i = 0;i<bookmarks.size();i++){
-            result[i] = bookmarks.get(i);
-        }
-        return result;
+    
+    /** 
+     * @return Hashtable<Character, String> returns all of the bookmarks
+     */
+    public Hashtable<Character, String> getBookmarks(){
+        return bookmarks;
     }
 
-    public void removeBookmarks(String toRemove){
+    
+    /** 
+     * @param toRemove
+     */
+    public void removeBookmark(char toRemove){
         bookmarks.remove(toRemove);
-    }
-
-    public void removeAllBookmarks(String toRemove){
-        while(bookmarks.remove(toRemove)){}
     }
 }

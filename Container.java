@@ -11,6 +11,10 @@ public class Container extends Interactable {
         
     }
 
+    
+    /** 
+     * @return String
+     */
     //methods
     public String getDescription(){
         StringBuilder builder = new StringBuilder();
@@ -30,6 +34,12 @@ public class Container extends Interactable {
         return builder.toString();
     }
 
+    
+    /** 
+     * @param name
+     * @param index
+     * @return Interactable
+     */
     public Interactable getItem(String name, int index){
         int timesFound = -1;
         int latestIndex = 0;
@@ -49,10 +59,22 @@ public class Container extends Interactable {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @return Interactable
+     */
     public Interactable getItem(String name){
         return getItem(name, 0);
     }
     
+    
+    /** 
+     * @param name
+     * @param index
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable takeItem(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = 0;
@@ -76,10 +98,20 @@ public class Container extends Interactable {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable takeItem(String name) throws ThingNotFoundException{
         return takeItem(name, 0);
     }
 
+    
+    /** 
+     * @param item
+     */
     public void addItem(Interactable item){
         inventory.add(item);
     }

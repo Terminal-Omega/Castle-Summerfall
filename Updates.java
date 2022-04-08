@@ -3,6 +3,11 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.lang.Integer;
 public class Updates {
+    
+    /** 
+     * @param effect
+     * @param target
+     */
     public static void applyEffect(String effect, Actor target){
         Random rand = new Random();
 
@@ -35,10 +40,19 @@ public class Updates {
 
     }
 
+    
+    /** 
+     * @param actor
+     */
     public static void doPassives(Actor actor){
 
     }
 
+    
+    /** 
+     * @param player
+     * @param floor
+     */
     public static void update(Player player, Floor floor){
         doPassives(player);
         // TODO: @Corbanator implement noise and LOS

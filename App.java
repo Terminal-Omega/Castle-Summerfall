@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 
 public class App {
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         UI.displayOpening();
         UI.helpCommand("all");

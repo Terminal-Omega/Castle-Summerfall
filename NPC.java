@@ -28,10 +28,19 @@ public class NPC extends Actor {
 
     }
 
+    
+    /** 
+     * @param allience
+     */
     public void setAllience(String allience) {
         npcAllience = allience;
     }
 
+    
+    /** 
+     * @param player
+     * @param floorSize
+     */
     public void npcTurnAllience(Player player, int floorSize) {
         if (npcAllience == "Enemy") {
             if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
@@ -46,6 +55,10 @@ public class NPC extends Actor {
         }
     }
 
+    
+    /** 
+     * @param floorSize
+     */
     public void enemyTurnNoneCombat(int floorSize) {
         int direction = rand.nextInt();
         switch (direction) {
