@@ -69,6 +69,10 @@ public class Updates {
         }
     }
 
+    
+    /** 
+     * @param floor
+     */
     public static void actionUpdate(Floor floor){
         for(int i = 0; i<floor.getNPCs().size();i++){
             NPC npc = floor.getNPCs().get(i);

@@ -157,6 +157,10 @@ public class Actor {
 
     }
 
+    
+    /** 
+     * @param item
+     */
     public void addInventory(Interactable item) {
         inventory.add(item);
     }
