@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 public class UI {
     enum Commands {
-        INSPECT("inspect", 3),
+        INSPECT("inspect", 0),
         TAKE("take", 4),
         LOOK_AROUND("look around", 2),
         DROP("drop", 4),
         MOVE("move", 5),
-        ATTACK("attack", 3), //TODO: this should maybe change
+        ATTACK("attack", 3),
         //DRINK("drink"),
         //CAST("cast"),
         HELP("help", 0),
@@ -17,8 +17,8 @@ public class UI {
         CLEAR("clear", 0),
         USE("use", 3),
         BOOKMARK("bookmark", 0),
-        SPEED("speed", 0),
-        WAIT("wait", 0),
+        ENERGY("energy", 0),
+        REST("rest", 0),
         HEALTH("health", 0);
 
         private String strCommand;
@@ -47,7 +47,7 @@ public class UI {
             System.out.println("\nThis is a text based adventure game where you fight monsters. How many floors can you decesend?\n");
             System.out.println("Commands:");
             for (Commands name : Commands.values()){
-                System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Speed Cost:", name.getSpeedCommand());
+                System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:", name.getSpeedCommand());
             }
             System.out.println("Use help to get back to this screen\nUse help (command name) to learn about that command\nYou can alse use (help how to play) for a description how to play\n");
         } else if (command.equals(Commands.DROP.getStrCommand())){
@@ -59,30 +59,30 @@ public class UI {
         } else if (command.equals(Commands.CLEAR.getStrCommand())) {
             System.out.println("\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
         } else if (command.equals(Commands.TAKE.getStrCommand())) {
-            System.out.println("\tThis will make your character pick up an object in the room or chest and it will go to inventory\n\tUse: take (object)");
+            System.out.println("\tThis will make your character pick up an object in the room or chest and it will go to inventory\n\tUse: take [object]");
         } else if (command.equals(Commands.INSPECT.getStrCommand())) {
-            System.out.println("\tThis will display an object in the rooms description\n\tUse: inspect (object)");
+            System.out.println("\tThis will display an object in the rooms description\n\tUse: inspect [object]");
         } else if (command.equals(Commands.EXIT.getStrCommand())) {
             System.out.println("\tThis will exit the game\n\tUse: exit");
         } else if (command.equals(Commands.MOVE.getStrCommand())) {
-            System.out.println("\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move (direction)");
+            System.out.println("\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move [direction]");
         } else if (command.equals(Commands.ATTACK.getStrCommand())) {
-            System.out.println("\tThis will attack an Actor in the room with a spesificed weapon in your inventory\n\tUse: attack (Actor) with (weapon)");
+            System.out.println("\tThis will attack an Actor in the room with a spesificed weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
         } else if (command.equals(Commands.CLEAR.getStrCommand())) {
-            System.out.println("\tThis will clear the output of the console and bring your cursor to the top\n\tUse: (clear)");
+            System.out.println("\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
         } else if (command.equals(Commands.HEALTH.getStrCommand())) {
             System.out.println("\tThis will display your health in a status bar\n\tUse: health");
         } else if (command.equals(Commands.USE.getStrCommand())) {
-            System.out.println("\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use (item)");
+            System.out.println("\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use [item]");
         } else if (command.equals(Commands.BOOKMARK.getStrCommand())) {
             //System.out.println("\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark (visual char) (description) / Use: bookmark remove (visual char)");
             System.out.println("\tSorry this isn't currently implemented");
-        } else if (command.equals(Commands.SPEED.getStrCommand())){
-            System.out.println("\tThis will display how much speed you have left for your turn\n\tUse: speed");
+        } else if (command.equals(Commands.ENERGY.getStrCommand())){
+            System.out.println("\tThis will display how much energy you have left for your turn\n\tUse: energy");
         } else if (command.equals("how to play")){
-            System.out.println("In this game you have a set amount of time to preform your action. This is called speed.\nDifferent actions take a different amount of speed. If you run out of speed the enemy can attack you.\nYou can use the speed command to see how much speed you have left to spend.");
-        } else if (command.equals(Commands.WAIT.getStrCommand())){
-            System.out.println("This will wait out the rest of your turn bringing your speed down to 0");
+            System.out.println("In this game you have a set amount of time to preform your action. This is called energy.\nDifferent actions take a different amount of engergy. If you run out of energy the enemy can attack you.\nYou can use the speed command to see how much speed you have left to spend.");
+        } else if (command.equals(Commands.REST.getStrCommand())){
+            System.out.println("This will make your character rest bringing there energy back to full. But it will make it so enemies can attack you.");
         } else {
             System.out.println("\tSorry I don't know what command you wanted");
         }
@@ -214,5 +214,15 @@ public class UI {
             }
             System.out.println();
         }
+    }
+
+    public static void displayEnergy(int energy){
+        System.out.println("\tYou could do these instead");
+        for (Commands command : Commands.values()){
+            if (command.getSpeedCommand() <= energy){
+                System.out.println("\t" + command.getStrCommand() + ",");
+            }
+        }
+        System.out.println("\tOr you could rest instead");
     }
 }

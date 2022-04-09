@@ -23,7 +23,7 @@ public class App {
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5, 15);
-        int speed = player.getSpeed();
+        int energy = player.getSpeed();
 
         do {
             System.out.print("> ");
@@ -50,11 +50,12 @@ public class App {
             // Move command
             if (moveMatch.find()) {
                 commandKnown = false;
-                int speedCost = UI.Commands.MOVE.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.MOVE.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
                 }
             }
@@ -69,22 +70,24 @@ public class App {
             // look around command
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())) {
                 commandKnown = false;
-                int speedCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             }
 
             // inspect command
             if (inspectMatch.find()) {
-                int speedCost = UI.Commands.INSPECT.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.INSPECT.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     String name;
                     try {
                         name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
@@ -100,11 +103,12 @@ public class App {
 
             // inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
-                int speedCost = UI.Commands.INVENTORY.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth());
                 }
 
@@ -113,11 +117,12 @@ public class App {
 
             // take command
             if (takeMatch.find()) {
-                int speedCost = UI.Commands.TAKE.getSpeedCommand();
-                if (speed - speedCost < 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.TAKE.getSpeedCommand();
+                if (energy - energyCost < 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     try {
                         Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord())
                                 .takeItem(takeMatch.group(1));
@@ -133,11 +138,12 @@ public class App {
 
             // drop command
             if (dropMatch.find()) {
-                int speedCost = UI.Commands.DROP.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.DROP.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
-                    speed -= speedCost;
+                    energy -= energyCost;
                     try {
                         Interactable item = player.dropItem(dropMatch.group(1), 0);
                         floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
@@ -167,9 +173,10 @@ public class App {
             if (attackMatch.find()) {
                 String actorString = attackMatch.group(1);
                 String weaponString = attackMatch.group(2);
-                int speedCost = UI.Commands.ATTACK.getSpeedCommand();
-                if (speed - speedCost <= 0) {
-                    System.out.println("You don't have enought time to do this");
+                int energyCost = UI.Commands.ATTACK.getSpeedCommand();
+                if (energy - energyCost <= 0) {
+                    System.out.println("You don't have enough energy to do this");
+                    UI.displayEnergy(energy);
                 } else {
                     if (player.isInInventory(weaponString)) {
                         try {
@@ -191,14 +198,14 @@ public class App {
                 commandKnown = false;
             }
 
-            if (inputCommand.equals("speed")) {
-                System.out.println(speed);
+            if (inputCommand.equals(UI.Commands.ENERGY.getStrCommand())) {
+                System.out.println(energy);
                 commandKnown = false;
             }
 
-            if (inputCommand.equals(UI.Commands.WAIT.getStrCommand())) {
+            if (inputCommand.equals(UI.Commands.REST.getStrCommand())) {
                 commandKnown = false;
-                speed -= speed;
+                energy -= energy;
             }
 
             // if command is not known
@@ -207,10 +214,10 @@ public class App {
             }
 
             // reset turn
-            if (speed <= 0) {
+            if (energy <= 0) {
                 // System.out.println("Enemies do things now");
                 Updates.update(player, floor1);
-                speed = player.getSpeed();
+                energy = player.getSpeed();
             } else {
                 Updates.actionUpdate(floor1);
             }
