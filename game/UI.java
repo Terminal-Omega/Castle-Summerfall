@@ -101,7 +101,7 @@ public class UI {
 
         // move north
         if (command.equals("N") || command.equals("n")) {
-            if (y < (floorSize - 1) && y >= 0) {
+            if (y < (floorSize - 2) && y >= 0) {
                 if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){
                     player.setYCoord(y + 1);
                     System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));

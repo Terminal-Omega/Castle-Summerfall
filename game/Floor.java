@@ -52,7 +52,7 @@ public class Floor {
         switch (direction) {
             case NORTH:
                 if (!(yCoord >= rooms.get(xCoord).size())) {
-                    return rooms.get(xCoord).get(yCoord).getDoor(Direction.SOUTH);
+                    return rooms.get(xCoord).get(yCoord + 1).getDoor(Direction.SOUTH);
                 }
             case SOUTH:
                 return rooms.get(xCoord).get(yCoord).getDoor(Direction.SOUTH);

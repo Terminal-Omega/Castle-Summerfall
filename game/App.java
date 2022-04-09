@@ -234,6 +234,6 @@ public class App {
                 commandKnown = false;
             }
 
-        } while (inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false || player.getHealth() >= 0);
+        } while (inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false);
     }
 }
