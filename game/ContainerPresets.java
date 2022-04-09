@@ -10,7 +10,7 @@ public class ContainerPresets {
      */
     public static Container Random(int valueFactor){
         Random rand = new Random();
-        switch (rand.nextInt(1)) {
+        switch (rand.nextInt(2)) {
             case 0:
                 return chest(valueFactor);
             case 1: 
