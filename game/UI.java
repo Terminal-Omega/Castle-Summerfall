@@ -44,8 +44,8 @@ public class UI {
      */
     public static void helpCommand(String command){
         if (command.equals("all")){
-            System.out.println("\nThis is a text based adventure game where you fight monsters. How many floors can you decesend?\n");
-            System.out.println("Commands:");
+           // System.out.println("\nThis is a text based adventure game where you fight monsters. How many floors can you decesend?\n");
+            System.out.println("\nCommands:");
             for (Commands name : Commands.values()){
                 System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:", name.getSpeedCommand());
             }
@@ -181,6 +181,11 @@ public class UI {
     }
 
     public static void displayOpening(){
+        System.out.println("\n\nYour breath comes heavy as you break your way out of the haunted forest\nYour goal lies on ahead. A forboding dark castle made of black stone rises like a mountain in front of you.");
+        System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man flooors the castle actullay has, each of them gaurded impossible guards going progressivly deeper");
+        System.out.println("But what ever it takes you will reach your goal. The dark wizard of the castle has captured your family because you refused to bow to him.\nAnd now he was going to pay.\n\n");
+        System.out.printf("%50s", "WELCOME TO\n\n\n");
+
         System.out.println("  _____          _   _         _____                                      __      _ _ ");
         System.out.println(" / ____|        | | | |       / ____|                                    / _|    | | |");
         System.out.println("| |     __ _ ___| |_| | ___  | (___  _   _ _ __ ___  _ __ ___   ___ _ __| |_ __ _| | |");
@@ -197,7 +202,7 @@ public class UI {
      * @param player
      */
     public static void displayMap(int xSize, int ySize, Player player){
-        int xP = ySize - player.getYCoord() -1;
+        int xP = ySize - player.getYCoord() - 1;
         int yP = player.getXCoord();
 
         for (int i = 0; i<xSize; i++){

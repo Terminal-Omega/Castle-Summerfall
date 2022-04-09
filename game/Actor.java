@@ -359,7 +359,6 @@ public class Actor {
         if (health <= 0) {
             return true;
         } else {
-            System.out.println("You hit it with " + finalDamage + " damage");
             return false;
         }
     }
