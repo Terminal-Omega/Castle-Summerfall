@@ -151,7 +151,7 @@ public class UI {
      * @param health
      */
     public static void displayHeath(int health, int maxHealth){
-       System.out.print("Health: [");
+       System.out.print("\tHealth: [");
        for (int i = 0; i<maxHealth; i++){
            if (i <= health) {
                System.out.print("-");
@@ -170,13 +170,14 @@ public class UI {
     public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth){
         String inventoryOutput = "";
         for (Interactable name : inventory) {
-            inventoryOutput += name.getName() + ", ";
+            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ",";
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
             System.out.println(inventoryOutput);
         }
+        System.out.println();
         displayHeath(health, maxHealth);
     }
 
