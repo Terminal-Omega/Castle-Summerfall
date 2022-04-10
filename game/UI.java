@@ -40,6 +40,7 @@ public class UI {
     
     
     /** 
+     * This will display how to use a command, given the command name. Or display all the commands
      * @param command
      */
     public static void helpCommand(String command){
@@ -90,6 +91,7 @@ public class UI {
 
     
     /** 
+     * This will move the player, first checking for doors and walls
      * @param command
      * @param player
      * @param floor1
@@ -148,6 +150,7 @@ public class UI {
 
     
     /** 
+     * This will display the health of an Actor
      * @param health
      */
     public static void displayHeath(int health, int maxHealth){
@@ -164,6 +167,7 @@ public class UI {
 
     
     /** 
+     * This will display the inventory of an Actor, and some stats
      * @param inventory
      * @param health
      */
@@ -198,6 +202,7 @@ public class UI {
 
     
     /** 
+     * This will display a map of the floor
      * @param xSize
      * @param ySize
      * @param player
@@ -221,6 +226,11 @@ public class UI {
             System.out.println();
         }
     }
+
+    /**
+     * This will display the energy of the player and display what they could do with their left over energy
+     * @param energy
+     */
 
     public static void displayEnergy(int energy){
         System.out.println("\tYou could do these instead");

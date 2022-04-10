@@ -31,6 +31,7 @@ public class NPC extends Actor {
     }
 
     /**
+     * This will set the Alliance of a NPC so it will attack/not attack the player
      * @param allience
      */
     public void setAllience(String allience) {
@@ -38,6 +39,7 @@ public class NPC extends Actor {
     }
 
     /**
+     * This will make the NPC attack the player
      * @param player
      * @param floorSize
      */
@@ -56,6 +58,7 @@ public class NPC extends Actor {
     }
 
     /**
+     * this will move the NPC instead
      * @param floorSize
      */
     public void enemyTurnNoneCombat(int floorSize) {
@@ -98,7 +101,10 @@ public class NPC extends Actor {
     public void neutralTurnNoneCombat() {
 
     }
-
+    /**
+     * This will make the player take damage
+     * @param player
+     */
     public void enemyTurnCombat(Actor player) {
         Weapon weapon = (Weapon) inventory.get(0);
         System.out.println(weapon.damage);

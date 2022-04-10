@@ -4,6 +4,7 @@ public class CommonItem {
     
     
     /** 
+     * This generates a random Interactable
      * @return Interactable
      */
     public static Interactable Random(){
@@ -36,6 +37,7 @@ public class CommonItem {
 
     
     /** 
+     * This generates an Interactble of knife
      * @return Weapon
      */
     public static Weapon knife() {
@@ -51,7 +53,8 @@ public class CommonItem {
     }
 
     
-    /** 
+    /**
+     * This generates an Interactble of short sword
      * @return Weapon
      */
     public static Weapon shortSword() {
@@ -67,7 +70,8 @@ public class CommonItem {
     }
 
     
-    /** 
+    /**
+     * This generates an Interactble of sword
      * @return Weapon
      */
     public static Weapon sword() {
@@ -83,7 +87,8 @@ public class CommonItem {
     }
 
     
-    /** 
+    /**
+     * This generates an Interactble of great sword
      * @return Weapon
      */
     public static Weapon greatSword() {
@@ -99,7 +104,8 @@ public class CommonItem {
     }
 
     
-    /** 
+    /**
+     * This generates an Interactble of rapier
      * @return Weapon
      */
     public static Weapon rapier() {
@@ -122,7 +128,8 @@ public class CommonItem {
     };
 
     
-    /** 
+    /**
+     * This generates an Interactble of key
      * @return Interactable
      */
     public static Interactable key(){

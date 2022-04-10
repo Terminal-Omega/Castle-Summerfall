@@ -16,6 +16,7 @@ public class Generator {
 
     
     /** 
+     * This will generate a floor
      * @param xSize
      * @param ySize
      * @return Floor
@@ -71,6 +72,7 @@ public class Generator {
 
     
     /** 
+     * This will generate a random room
      * @param interactableMin
      * @param interactableMax
      * @param southDoor
@@ -103,6 +105,7 @@ public class Generator {
 
     
     /** 
+     * This will generate a random Interactable to go in a room
      * @param containerWeight
      * @param commonWeight
      * @param uncommonWeight
@@ -137,6 +140,7 @@ public class Generator {
 
     
     /** 
+     * This generate a default Interactable
      * @return Interactable
      */
     public static Interactable generateInteractable() {
