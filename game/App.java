@@ -19,6 +19,7 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
+        Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
@@ -34,6 +35,7 @@ public class App {
             Matcher takeMatch = takePat.matcher(inputCommand);
             Matcher dropMatch = dropPat.matcher(inputCommand);
             Matcher attackMatch = attackPat.matcher(inputCommand);
+            Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
 
             boolean commandKnown = true;
 
@@ -115,6 +117,12 @@ public class App {
                 commandKnown = false;
             }
 
+            // if (takeChestMatch.find()){
+            //     System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
+            //     commandKnown = false;
+            //     continue;
+            // }
+
             // take command
             if (takeMatch.find()) {
                 int energyCost = UI.Commands.TAKE.getSpeedCommand();
@@ -128,8 +136,13 @@ public class App {
                                 .takeItem(takeMatch.group(1));
                         player.putItem(interactable);
                     } catch (ThingNotFoundException e) {
-                        System.out.println(e.getMessage());
-                        ;
+                        try {
+                            Interactable chest = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                                .takeItem("Chest");
+                            Interactable thing = chest;
+                        } catch (ThingNotFoundException r) {
+                            System.out.println(r.getMessage());
+                        }
                     }
                 }
 
