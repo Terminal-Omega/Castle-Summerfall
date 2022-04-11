@@ -1,4 +1,5 @@
 package game;
+
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class NPC extends Actor {
                 charisma, noise,
                 shield, name);
         setAllience(npcAllience);
+        setDescription(description);
     }
 
     public NPC(String allience) {
@@ -30,8 +32,13 @@ public class NPC extends Actor {
 
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     /**
      * This will set the Alliance of a NPC so it will attack/not attack the player
+     * 
      * @param allience
      */
     public void setAllience(String allience) {
@@ -40,10 +47,17 @@ public class NPC extends Actor {
 
     /**
      * This will make the NPC attack the player
+     * 
      * @param player
      * @param floorSize
      */
     public void npcTurnAllience(Actor player, int floorSize) {
+        if (maxShield > 0) {
+            shield += shieldRegen;
+            if (shield > maxShield) {
+                shield = maxShield;
+            }
+        }
         if (npcAllience.equals("Enemy")) {
             if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
                 enemyTurnCombat(player);
@@ -59,6 +73,7 @@ public class NPC extends Actor {
 
     /**
      * this will move the NPC instead
+     * 
      * @param floorSize
      */
     public void enemyTurnNoneCombat(int floorSize) {
@@ -101,8 +116,10 @@ public class NPC extends Actor {
     public void neutralTurnNoneCombat() {
 
     }
+
     /**
      * This will make the player take damage
+     * 
      * @param player
      */
     public void enemyTurnCombat(Actor player) {
