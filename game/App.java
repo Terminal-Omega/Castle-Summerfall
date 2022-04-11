@@ -24,7 +24,7 @@ public class App {
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player(0, 0, 5, 15);
+        Player player = new Player(0, 0, 7, 15);
         int energy = player.getSpeed();
         Random rand = new Random();
         boolean endGame = true;
@@ -99,8 +99,9 @@ public class App {
                         System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                     }else{
                         try {
-                            name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
-                                    .getDescription();
+                            name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
+                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).weight;
+                            
                             System.out.println(name);
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
@@ -220,6 +221,7 @@ public class App {
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
                         }
+                        energy -= energyCost;
                     } else {
                         System.out.println("You don't have that in your inventory, so you attack with your hands");
                     }
@@ -291,6 +293,7 @@ public class App {
 
             if (player.getHealth() <= 0){
                 endGame = false;
+                UI.displayEnding();
             }
 
             // if command is not known
@@ -300,6 +303,5 @@ public class App {
 
         } while (endGame);
 
-        UI.displayEnding();
     }
 }

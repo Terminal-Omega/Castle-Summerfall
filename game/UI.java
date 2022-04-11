@@ -180,9 +180,11 @@ public class UI {
         }
         output += "] " + health;
 
-        if (health / maxHealth <= 0.3){
+        double percent = (double) health / maxHealth;
+
+        if (percent <= 0.3){
             output = colorString(output, Colors.RED);
-        }else if (health / maxHealth <= 0.6) {
+        }else if (percent <= 0.6 && percent > 0.3) {
             output = colorString(output, Colors.YELLOW);
         } else {
             output = colorString(output, Colors.GREEN);
@@ -198,12 +200,15 @@ public class UI {
      */
     public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth){
         String inventoryOutput = "";
+        int weight = 0;
         for (Interactable name : inventory) {
             inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ",";
+            weight += name.weight;
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
+            inventoryOutput += "\n\n\tTotal Weight: " + weight;
             System.out.println(inventoryOutput);
         }
         System.out.println();
