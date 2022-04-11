@@ -180,9 +180,9 @@ public class UI {
         }
         output += "] " + health;
 
-        if (health / maxHealth < 0.3){
+        if (health / maxHealth <= 0.3){
             output = colorString(output, Colors.RED);
-        }else if (health / maxHealth < 0.6) {
+        }else if (health / maxHealth <= 0.6) {
             output = colorString(output, Colors.YELLOW);
         } else {
             output = colorString(output, Colors.GREEN);
@@ -223,6 +223,18 @@ public class UI {
         System.out.println("| |___| (_| \\__ \\ |_| |  __/  ____) | |_| | | | | | | | | | | |  __/ |  | || (_| | | |");
         System.out.println(" \\_____\\__,_|___/\\__|_|\\___| |_____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|  |_| \\__,_|_|_|");
 
+    }
+
+    public static void displayEnding(){
+        System.out.println(" __     __           _____  _          _ _   _______                             _      ___  ");
+        System.out.println(" \\ \\   / /          |  __ \\(_)        | | | |__   __|                           (_)    |__ \\ ");
+        System.out.println("  \\ \\_/ /__  _   _  | |  | |_  ___  __| | |    | |_ __ _   _    __ _  __ _  __ _ _ _ __   ) |");
+        System.out.println("   \\   / _ \\| | | | | |  | | |/ _ \\/ _` | |    | | '__| | | |  / _` |/ _` |/ _` | | '_ \\ / / ");
+        System.out.println("    | | (_) | |_| | | |__| | |  __/ (_| |_|    | | |  | |_| | | (_| | (_| | (_| | | | | |_|  ");
+        System.out.println("    |_|\\___/ \\__,_| |_____/|_|\\___|\\__,_(_)    |_|_|   \\__, |  \\__,_|\\__, |\\__,_|_|_| |_(_)  ");
+        System.out.println("                                                        __/ |         __/ |                  ");
+        System.out.println("                                                       |___/         |___/                   ");
+        
     }
 
     

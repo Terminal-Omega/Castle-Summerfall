@@ -299,5 +299,7 @@ public class App {
             }
 
         } while (endGame);
+
+        UI.displayEnding();
     }
 }
