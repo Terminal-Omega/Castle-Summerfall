@@ -101,19 +101,22 @@ public class NPC extends Actor {
                 case 0:
                     if (yCoord < floorSize - 1 && yCoord >= 0) {
                         yCoord++;
-                        System.out.printf("%s moved North to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                        // System.out.printf("%s moved North to coordinates x%d, y%d%n", name, xCoord,
+                        // yCoord);
                         break;
                     }
                 case 1:
                     if (yCoord < floorSize - 1 && yCoord > 0) {
                         yCoord--;
-                        System.out.printf("%s moved South to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                        // System.out.printf("%s moved South to coordinates x%d, y%d%n", name, xCoord,
+                        // yCoord);
                         break;
                     }
                 case 2:
                     if (xCoord < floorSize - 1 && xCoord >= 0) {
                         xCoord++;
-                        System.out.printf("%s moved East to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                        // System.out.printf("%s moved East to coordinates x%d, y%d%n", name, xCoord,
+                        // yCoord);
                         break;
                     }
                 case 3:
@@ -144,8 +147,9 @@ public class NPC extends Actor {
      */
     public void enemyTurnCombat(Actor player) {
         Weapon weapon = (Weapon) inventory.get(0);
+        System.out.println(weapon.damage);
         closeCombat(weapon, player);
-        System.out.printf("%s wacked you with %d damage%n", name, weapon.damage);
+        System.out.printf("%s wacked the player%n", name);
     }
 
     public void friendlyTurnCombat() {

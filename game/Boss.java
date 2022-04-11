@@ -16,6 +16,10 @@ public class Boss extends NPC {
 
     public void bossFight(Actor player) {
         int attackChoice = rand.nextInt(3);
+        if (health < maxHealth / 2) {
+            attackChoice = rand.nextInt(4);
+        }
+
         switch (attackChoice) {
             case 0:
                 Weapon weapon1 = (Weapon) inventory.get(0);
@@ -29,6 +33,11 @@ public class Boss extends NPC {
                 Weapon weapon3 = (Weapon) inventory.get(2);
                 System.out.println(weapon3.damage + "Smack");
                 closeCombat(weapon3, player);
+            case 3:
+                int healAmountBase = maxHealth / 2;
+                int healAmount = rand.nextInt(healAmountBase);
+                heal(healAmount);
+
             default:
                 System.out.println("uh Something broke... well that is annoying");
 

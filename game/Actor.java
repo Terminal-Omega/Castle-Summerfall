@@ -427,19 +427,40 @@ public class Actor {
      * 
      * @param damage
      */
-    public boolean takeDamage(int damage) {
+    public boolean takeDamage(int damage, int pierce) {
         int finalDamage = damage;
         int shieldStart = shield;
+        int finalAC = AC - pierce;
         shield -= finalDamage;
         if (shield < 0) {
             shield = 0;
         }
-        finalDamage -= AC + shieldStart;
+        finalDamage -= finalAC + shieldStart;
         if (finalDamage < 0) {
             finalDamage = 0;
 
         }
+        health -= finalDamage;
+        if (health <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public boolean takeDamage(int damageMin, int damageMax, int pierce) {
+        int finalDamage = rand.nextInt(damageMin, damageMax) + 1;
+        int shieldStart = shield;
+        int finalAC = AC - pierce;
+        shield -= finalDamage;
+        if (shield < 0) {
+            shield = 0;
+        }
+        finalDamage -= finalAC + shieldStart;
+        if (finalDamage < 0) {
+            finalDamage = 0;
+
+        }
         health -= finalDamage;
         if (health <= 0) {
             return true;
@@ -478,7 +499,8 @@ public class Actor {
      */
     public boolean closeCombat(Weapon weapon, Actor target) {
         if (rand.nextInt(10) + 1 <= weaponSkill) {
-            return target.takeDamage(weapon.damage);
+
+            return target.takeDamage(weapon.damage, weapon.pierce);
         }
         return false;
     }
