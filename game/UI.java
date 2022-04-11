@@ -180,7 +180,7 @@ public class UI {
         }
         output += "] " + health;
 
-        if (health / maxHealth < 0.2){
+        if (health / maxHealth < 0.3){
             output = colorString(output, Colors.RED);
         }else if (health / maxHealth < 0.6) {
             output = colorString(output, Colors.YELLOW);
@@ -264,7 +264,7 @@ public class UI {
                 System.out.println("\t" + command.getStrCommand() + ",");
             }
         }
-        System.out.println("\tOr you could rest instead");
+        System.out.println(colorString("You could also rest to reset your energy", Colors.YELLOW));
     }
 
     public static String colorString(String string, Colors color){
