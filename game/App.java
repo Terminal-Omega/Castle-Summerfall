@@ -90,7 +90,7 @@ public class App {
 
             //bookmark command
             if (bookMatch.find()){
-                floor1.getRoom(player.getXCoord(), player.getYCoord()).addBookmark(bookMatch.group(1), bookMatch.group(2));
+                floor1.getRoom((FLOORSIZE - 1) - player.getXCoord(), player.getYCoord()).addBookmark(bookMatch.group(1), bookMatch.group(2));
             }
 
             // inspect command
