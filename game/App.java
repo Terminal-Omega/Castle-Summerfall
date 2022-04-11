@@ -3,6 +3,7 @@ package game;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Random;
 
 public class App {
 
@@ -25,6 +26,7 @@ public class App {
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5, 15);
         int energy = player.getSpeed();
+        Random rand = new Random();
 
         do {
             System.out.print("> ");
@@ -85,18 +87,23 @@ public class App {
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
+                String command = inspectMatch.group(1);
                 if (energy - energyCost <= 0) {
                     System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
                     String name;
-                    try {
-                        name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
-                                .getDescription();
-                        System.out.println(name);
-                    } catch (ThingNotFoundException e) {
-                        System.out.println(e.getMessage());
+                    if (command.equals("room") || command.equals("Room")){
+                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    }else{
+                        try {
+                            name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
+                                    .getDescription();
+                            System.out.println(name);
+                        } catch (ThingNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                 }
 
@@ -236,7 +243,19 @@ public class App {
 
             // reset turn
             if (energy <= 0) {
-                // System.out.println("Enemies do things now");
+                int randNum = rand.nextInt(5);
+                switch(randNum) {
+                    case 0:
+                        System.out.println("Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
+                        break;
+                    case 1:
+                        System.out.println("The floor doesn't seem so bad you think, as you sink to your groud. I have to be quick though.");
+                        break;
+                    case 2:
+                        System.out.println("The floor doesn't seem so bad you think, as you sink to your groud. I have to be quick though.");
+                        break;
+                }
+                
                 Updates.update(player, floor1);
                 energy = player.getSpeed();
             } else {

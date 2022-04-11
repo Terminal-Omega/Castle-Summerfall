@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class UI {
     enum Commands {
+        LOOK_AROUND("look around", 2),
         INSPECT("inspect", 0),
         TAKE("take", 4),
-        LOOK_AROUND("look around", 2),
         DROP("drop", 4),
         MOVE("move", 5),
         ATTACK("attack", 3),
