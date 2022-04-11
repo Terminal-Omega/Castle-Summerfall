@@ -1,4 +1,5 @@
 package game;
+
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -26,6 +27,8 @@ public class Actor {
     protected int maxHealth;
     protected int maxSpeed;
     protected int maxMana;
+    protected int maxShield;
+    protected int shieldRegen;
     protected Random rand = new Random();
 
     public Actor() {
@@ -58,6 +61,7 @@ public class Actor {
 
     /**
      * This will set the x coordinate of the Actor
+     * 
      * @param xCoord
      */
     public void setXCoord(int xCoord) {
@@ -66,6 +70,7 @@ public class Actor {
 
     /**
      * This will set the name of the Actor
+     * 
      * @param name
      */
     public void setName(String name) {
@@ -74,6 +79,7 @@ public class Actor {
 
     /**
      * This will set the y coordinate of the player
+     * 
      * @param yCoord
      */
     public void setYCoord(int yCoord) {
@@ -87,6 +93,7 @@ public class Actor {
 
     /**
      * This will set the Armor Class of the Actor
+     * 
      * @param AC
      */
     public void setAC(int AC) {
@@ -95,6 +102,7 @@ public class Actor {
 
     /**
      * This will set the speed of the Actor
+     * 
      * @param speed
      */
     public void setSpeed(int speed) {
@@ -109,6 +117,7 @@ public class Actor {
 
     /**
      * This sets the strength of the Actor
+     * 
      * @param strength
      */
     public void setStrength(int strength) {
@@ -117,6 +126,7 @@ public class Actor {
 
     /**
      * This sets the dexterity of the Actor
+     * 
      * @param dexterity
      */
     public void setDexterity(int dexterity) {
@@ -125,6 +135,7 @@ public class Actor {
 
     /**
      * This will set the constituion of the Actor
+     * 
      * @param constituion
      */
     public void setConstitution(int constituion) {
@@ -133,6 +144,7 @@ public class Actor {
 
     /**
      * This sets the intelligence of the Actor
+     * 
      * @param intelligence
      */
     public void setIntelligence(int intelligence) {
@@ -141,6 +153,7 @@ public class Actor {
 
     /**
      * This sets the wisdom of the Actor
+     * 
      * @param wisdom
      */
     public void setWisdom(int wisdom) {
@@ -149,6 +162,7 @@ public class Actor {
 
     /**
      * This sets the charisma of the Actor
+     * 
      * @param charisma
      */
     public void setCharisma(int charisma) {
@@ -157,6 +171,7 @@ public class Actor {
 
     /**
      * This sets the Noise level the Actor will make
+     * 
      * @param noise
      */
     public void setNoise(int noise) {
@@ -174,6 +189,7 @@ public class Actor {
 
     /**
      * This will add an Interactable to an Actors inventory
+     * 
      * @param item
      */
     public void addInventory(Interactable item) {
@@ -182,10 +198,12 @@ public class Actor {
 
     /**
      * This sets the sheild value of the Actor
+     * 
      * @param sheild
      */
     public void setShield(int sheild) {
         this.shield = sheild;
+        maxShield = shield;
     }
 
     public void setBallisticSkill() {
@@ -198,6 +216,7 @@ public class Actor {
 
     /**
      * This gets the x coordinate of the Actor
+     * 
      * @return int
      */
     public int getXCoord() {
@@ -206,6 +225,7 @@ public class Actor {
 
     /**
      * This gets the y coordinate of the Actor
+     * 
      * @return int
      */
     public int getYCoord() {
@@ -214,6 +234,7 @@ public class Actor {
 
     /**
      * This gets the current health of the Actor
+     * 
      * @return int
      */
     public int getHealth() {
@@ -222,6 +243,7 @@ public class Actor {
 
     /**
      * This returns the Armor Class of the Actor
+     * 
      * @return int
      */
     public int getAC() {
@@ -230,6 +252,7 @@ public class Actor {
 
     /**
      * This will get the speed of the Actor
+     * 
      * @return int
      */
     public int getSpeed() {
@@ -238,6 +261,7 @@ public class Actor {
 
     /**
      * This will get the amount of mana the Actor has
+     * 
      * @return int
      */
     public int getMana() {
@@ -246,6 +270,7 @@ public class Actor {
 
     /**
      * This returns the strength of the Actor
+     * 
      * @return int
      */
     public int getStrength() {
@@ -254,6 +279,7 @@ public class Actor {
 
     /**
      * This return the dexterity of the Actor
+     * 
      * @return int
      */
     public int getDexterity() {
@@ -262,6 +288,7 @@ public class Actor {
 
     /**
      * This will get the constitution of the Actor
+     * 
      * @return int
      */
     public int getConstitution() {
@@ -270,6 +297,7 @@ public class Actor {
 
     /**
      * This will get the intelligece of the Actor
+     * 
      * @return int
      */
     public int getIntelligence() {
@@ -278,6 +306,7 @@ public class Actor {
 
     /**
      * This will get the wisdom of the Actor
+     * 
      * @return int
      */
     public int getWisdom() {
@@ -286,6 +315,7 @@ public class Actor {
 
     /**
      * This will get the Charisma of the Actor
+     * 
      * @return int
      */
     public int getCharisma() {
@@ -294,6 +324,7 @@ public class Actor {
 
     /**
      * This will get the amount of noise the Actor makes
+     * 
      * @return int
      */
     public int getNoise() {
@@ -302,6 +333,7 @@ public class Actor {
 
     /**
      * This will return how much the Actor can carry
+     * 
      * @return int
      */
     public int getCarryWeight() {
@@ -310,6 +342,7 @@ public class Actor {
 
     /**
      * This will return the name of the Actor
+     * 
      * @return String
      */
     public String getName() {
@@ -318,6 +351,7 @@ public class Actor {
 
     /**
      * This will return the inventory of the Actor
+     * 
      * @return ArrayList<Interactable>
      */
     public ArrayList<Interactable> getInventory() {
@@ -326,6 +360,7 @@ public class Actor {
 
     /**
      * This will return the sheild strength of the Actor
+     * 
      * @return int
      */
     public int getShield() {
@@ -334,6 +369,7 @@ public class Actor {
 
     /**
      * This will return the ballistic skill of the Actor
+     * 
      * @return int
      */
     public int getBallisticSkill() {
@@ -342,6 +378,7 @@ public class Actor {
 
     /**
      * This will return the weapon skill of the Actor
+     * 
      * @return int
      */
     public int getWeaponSkill() {
@@ -350,6 +387,7 @@ public class Actor {
 
     /**
      * This will return the max health of the Actor
+     * 
      * @return int
      */
     public int getMaxHealth() {
@@ -359,6 +397,7 @@ public class Actor {
 
     /**
      * This will return the max speed of the Actor
+     * 
      * @return int
      */
     public int getMaxSpeed() {
@@ -367,6 +406,7 @@ public class Actor {
 
     /**
      * This will return the max mana of the Actor
+     * 
      * @return int
      */
     public int getMaxMana() {
@@ -375,6 +415,7 @@ public class Actor {
 
     /**
      * This will put an Iteractable in the Actors Inventory
+     * 
      * @param interactable
      */
     public void putItem(Interactable interactable) {
@@ -383,11 +424,17 @@ public class Actor {
 
     /**
      * This will make the Actor take damage decreaseing their health
+     * 
      * @param damage
      */
     public boolean takeDamage(int damage) {
-        int finalDamage = damage - AC;
-
+        int finalDamage = damage;
+        int shieldStart = shield;
+        shield -= finalDamage;
+        if (shield < 0) {
+            shield = 0;
+        }
+        finalDamage -= AC + shieldStart;
         if (finalDamage < 0) {
             finalDamage = 0;
 
@@ -403,6 +450,7 @@ public class Actor {
 
     /**
      * This will heal the Actor, increasing their health
+     * 
      * @param heal
      */
     public void heal(int heal) {
@@ -412,6 +460,7 @@ public class Actor {
 
     /**
      * This will do no calculations for the damage to the Actor
+     * 
      * @param damage
      */
     public void damageNoAC(int damage) {
@@ -420,7 +469,9 @@ public class Actor {
     }
 
     /**
-     * This is what you should use when doing damage. It will do damage to another thing in the room
+     * This is what you should use when doing damage. It will do damage to another
+     * thing in the room
+     * 
      * @param weapon
      * @param target
      * @return boolean
@@ -434,6 +485,7 @@ public class Actor {
 
     /**
      * This will cast a spell on the Actor (Not currently implementaed)
+     * 
      * @param castorMana
      * @param type
      * @param spellMana
