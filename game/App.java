@@ -19,7 +19,7 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-        Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
+       // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
@@ -35,7 +35,7 @@ public class App {
             Matcher takeMatch = takePat.matcher(inputCommand);
             Matcher dropMatch = dropPat.matcher(inputCommand);
             Matcher attackMatch = attackPat.matcher(inputCommand);
-            Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
+            //Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
 
             boolean commandKnown = true;
 
@@ -137,9 +137,10 @@ public class App {
                         player.putItem(interactable);
                     } catch (ThingNotFoundException e) {
                         try {
-                            Interactable chest = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                .takeItem("Chest");
-                            Interactable thing = chest;
+                            Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
+                            Container Chest = (Container) item;
+                            Interactable thing = Chest.takeItem(takeMatch.group(1));
+                            player.putItem(thing);
                         } catch (ThingNotFoundException r) {
                             System.out.println(r.getMessage());
                         }
