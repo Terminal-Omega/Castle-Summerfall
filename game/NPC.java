@@ -144,9 +144,8 @@ public class NPC extends Actor {
      */
     public void enemyTurnCombat(Actor player) {
         Weapon weapon = (Weapon) inventory.get(0);
-        System.out.println(weapon.damage);
         closeCombat(weapon, player);
-        System.out.printf("%s wacked the player%n", name);
+        System.out.printf("%s wacked you with %d damage%n", name, weapon.damage);
     }
 
     public void friendlyTurnCombat() {
