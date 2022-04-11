@@ -142,7 +142,14 @@ public class App {
                             Interactable thing = Chest.takeItem(takeMatch.group(1));
                             player.putItem(thing);
                         } catch (ThingNotFoundException r) {
-                            System.out.println(r.getMessage());
+                            try {
+                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Crate");
+                                Container Chest = (Container) item;
+                                Interactable thing = Chest.takeItem(takeMatch.group(1));
+                                player.putItem(thing);
+                            } catch (ThingNotFoundException t) {
+                                System.out.println(t.getMessage());
+                            }
                         }
                     }
                 }
