@@ -1,13 +1,13 @@
 package game;
+
 import java.util.Random;
 
 public class EnemyPresets {
 
-     
-     /** 
-      * @return NPC
-      */
-     /*
+    /**
+     * @return NPC
+     */
+    /*
      * example and description of what everything does for creation of enemies
      * / private static Enemy INSERTNAMEHERE(int xCoord, int yCoord){
      * // int health = AMOUNT //how much health the enemy has
@@ -55,8 +55,7 @@ public class EnemyPresets {
         }
     }
 
-    
-    /** 
+    /**
      * @param xCoord
      * @param yCoord
      * @return NPC
@@ -72,7 +71,7 @@ public class EnemyPresets {
         int noise = 5;
         String name = "Zombie";
         int shield = 10;
-        String npcAlliance = "Enemy";
+        NpcAllience npcAlliance = NpcAllience.ENEMY;
         String description = "This is a zombie.";
         Interactable weapon = CommonItem.shortSword();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
@@ -81,8 +80,7 @@ public class EnemyPresets {
         return result;
     }
 
-    
-    /** 
+    /**
      * @param xCoord
      * @param yCoord
      * @return NPC
@@ -98,7 +96,7 @@ public class EnemyPresets {
         int noise = 5;
         String name = "Skeleton";
         int shield = 10;
-        String npcAlliance = "Enemy";
+        NpcAllience npcAlliance = NpcAllience.ENEMY;
         String description = "This is a Skeleton.";
         Interactable weapon = CommonItem.rapier();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
@@ -108,8 +106,7 @@ public class EnemyPresets {
 
     }
 
-    
-    /** 
+    /**
      * @param xCoord
      * @param yCoord
      * @return NPC
@@ -125,7 +122,7 @@ public class EnemyPresets {
         int noise = 5;
         String name = "Goblin";
         int shield = 10;
-        String npcAlliance = "Enemy";
+        NpcAllience npcAlliance = NpcAllience.ENEMY;
         String description = "This is a Goblin.";
         Interactable weapon = CommonItem.knife();
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution,
