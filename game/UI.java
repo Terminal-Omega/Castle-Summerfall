@@ -1,5 +1,6 @@
 package game;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class UI {
     enum Commands {
@@ -92,8 +93,8 @@ public class UI {
         } else if (command.equals(Commands.USE.getStrCommand())) {
             System.out.println("\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use [item]");
         } else if (command.equals(Commands.BOOKMARK.getStrCommand())) {
-            //System.out.println("\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark (visual char) (description) / Use: bookmark remove (visual char)");
-            System.out.println("\tSorry this isn't currently implemented");
+            System.out.println("\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark [visual character] : [description] / Use: bookmark remove [visual char]\nEx. bookmark a : where the stairs are");
+            //System.out.println("\tSorry this isn't currently implemented");
         } else if (command.equals(Commands.ENERGY.getStrCommand())){
             System.out.println("\tThis will display how much energy you have left for your turn\n\tUse: energy");
         } else if (command.equals("how to play")){
@@ -249,15 +250,24 @@ public class UI {
      * @param ySize
      * @param player
      */
-    public static void displayMap(int xSize, int ySize, Player player){
+    public static void displayMap(int xSize, int ySize, Player player, Floor floor){
         int xP = ySize - player.getYCoord() - 1;
         int yP = player.getXCoord();
+        String bookmarkMap = "";
 
         for (int i = 0; i<xSize; i++){
             for (int k = 0; k<ySize * 2; k++){
                 if (k % 2 == 0){
+                    String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
+                    if (!bookmark[0].equals("")){
+                        bookmarkMap = "_" + bookmark[0] + "_";
+                    }
+                    
+                    
                     if (xP == i && yP == k/2){
                         System.out.print("_*_");
+                    }else if (!bookmarkMap.equals("")){
+                        System.out.print(bookmarkMap);
                     }else{
                         System.out.print("___");
                     }
