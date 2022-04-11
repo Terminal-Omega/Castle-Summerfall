@@ -3,6 +3,7 @@ package game;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Random;
 
 public class App {
 
@@ -19,12 +20,14 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-        Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
+       // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 5, 15);
         int energy = player.getSpeed();
+        Random rand = new Random();
+        boolean endGame = true;
 
         do {
             System.out.print("> ");
@@ -35,7 +38,7 @@ public class App {
             Matcher takeMatch = takePat.matcher(inputCommand);
             Matcher dropMatch = dropPat.matcher(inputCommand);
             Matcher attackMatch = attackPat.matcher(inputCommand);
-            Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
+            //Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
 
             boolean commandKnown = true;
 
@@ -54,7 +57,7 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
@@ -74,29 +77,34 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    System.out.println(floor1.getDescription(player.getXCoord(),player.getYCoord()));
                 }
             }
 
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
+                String command = inspectMatch.group(1);
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
                     String name;
-                    try {
-                        name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
-                                .getDescription();
-                        System.out.println(name);
-                    } catch (ThingNotFoundException e) {
-                        System.out.println(e.getMessage());
+                    if (command.equals("room") || command.equals("Room")){
+                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    }else{
+                        try {
+                            name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0)
+                                    .getDescription();
+                            System.out.println(name);
+                        } catch (ThingNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                 }
 
@@ -107,7 +115,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
                 int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
@@ -127,7 +135,7 @@ public class App {
             if (takeMatch.find()) {
                 int energyCost = UI.Commands.TAKE.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
@@ -137,11 +145,19 @@ public class App {
                         player.putItem(interactable);
                     } catch (ThingNotFoundException e) {
                         try {
-                            Interactable chest = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                .takeItem("Chest");
-                            Interactable thing = chest;
+                            Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
+                            Container Chest = (Container) item;
+                            Interactable thing = Chest.takeItem(takeMatch.group(1));
+                            player.putItem(thing);
                         } catch (ThingNotFoundException r) {
-                            System.out.println(r.getMessage());
+                            try {
+                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Crate");
+                                Container Chest = (Container) item;
+                                Interactable thing = Chest.takeItem(takeMatch.group(1));
+                                player.putItem(thing);
+                            } catch (ThingNotFoundException t) {
+                                System.out.println(t.getMessage());
+                            }
                         }
                     }
                 }
@@ -153,7 +169,7 @@ public class App {
             if (dropMatch.find()) {
                 int energyCost = UI.Commands.DROP.getSpeedCommand();
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
@@ -188,7 +204,7 @@ public class App {
                 String weaponString = attackMatch.group(2);
                 int energyCost = UI.Commands.ATTACK.getSpeedCommand();
                 if (energy - energyCost <= 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     if (player.isInInventory(weaponString)) {
@@ -221,14 +237,29 @@ public class App {
                 energy -= energy;
             }
 
-            // if command is not known
-            if (commandKnown && inputCommand.equals("exit") == false) {
-                System.out.println("Sorry I don't know what you wanted.");
-            }
-
             // reset turn
             if (energy <= 0) {
-                // System.out.println("Enemies do things now");
+                int randNum = rand.nextInt(5);
+                switch(randNum) {
+                    case 0:
+                        System.out.println("Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
+                        break;
+                    case 1:
+                        System.out.println("The floor doesn't seem so bad you think, as you sink to your groud. I have to be quick though.");
+                        break;
+                    case 2:
+                        System.out.println("Your eye lids droop and you can't take another step. This isn't the time to be falling asleep you think. My family can't wait");
+                        break;
+                    case 3:
+                        System.out.println("Time has flown by and you are too tired tired to think right now. You fall to the ground and start to sleep.");
+                        break;
+                    case 4:
+                        System.out.println("No more falling asleep you think. You have got to find one of those energy poitions. There might be one somewhere you think as you fall asleep.");
+                        break;
+                    case 5:
+                        System.out.println("I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
+                }
+                
                 Updates.update(player, floor1);
                 energy = player.getSpeed();
             } else {
@@ -254,6 +285,19 @@ public class App {
                 commandKnown = false;
             }
 
-        } while (inputCommand.equals(UI.Commands.EXIT.getStrCommand()) == false);
+            if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())){
+                endGame = false;;
+            }
+
+            if (player.getHealth() <= 0){
+                endGame = false;
+            }
+
+            // if command is not known
+            if (commandKnown && inputCommand.equals("exit") == false) {
+                System.out.println("Sorry I don't know what you wanted.");
+            }
+
+        } while (endGame);
     }
 }

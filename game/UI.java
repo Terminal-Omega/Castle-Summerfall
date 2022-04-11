@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class UI {
     enum Commands {
+        LOOK_AROUND("look around", 2),
         INSPECT("inspect", 0),
         TAKE("take", 4),
-        LOOK_AROUND("look around", 2),
         DROP("drop", 4),
         MOVE("move", 5),
         ATTACK("attack", 3),
@@ -35,8 +35,24 @@ public class UI {
         public int getSpeedCommand(){
             return this.speed;
         }
+    }
+    enum Colors {
+        WHITE("\u001B[37m"),
+        BLUE("\u001B[36m"),
+        YELLOW("\u001B[33m"),
+        GREEN("\u001B[32m"),
+        RED("\u001B[31m");
+
+        private String color;
+
+        public String getAnsii(){
+            return this.color;
         }
 
+        private Colors(String string){
+            this.color = string;
+        }
+    }
     
     
     /** 
@@ -154,15 +170,24 @@ public class UI {
      * @param health
      */
     public static void displayHeath(int health, int maxHealth){
-       System.out.print("\tHealth: [");
-       for (int i = 0; i<maxHealth; i++){
-           if (i <= health) {
-               System.out.print("-");
-            } else { 
-                System.out.print(" ");
+        String output = "\tHealth: [";
+        for (int i = 0; i < maxHealth; i++){
+            if (i <= health){
+                output += "-";
+            }else{
+                output += " ";
             }
-       }
-       System.out.println("]: " + health);
+        }
+        output += "] " + health;
+
+        if (health / maxHealth < 0.2){
+            output = colorString(output, Colors.RED);
+        }else if (health / maxHealth < 0.6) {
+            output = colorString(output, Colors.YELLOW);
+        } else {
+            output = colorString(output, Colors.GREEN);
+        }
+        System.out.println(output);
     }
 
     
@@ -240,5 +265,9 @@ public class UI {
             }
         }
         System.out.println("\tOr you could rest instead");
+    }
+
+    public static String colorString(String string, Colors color){
+        return color.getAnsii() + string + "\u001B[0m";
     }
 }
