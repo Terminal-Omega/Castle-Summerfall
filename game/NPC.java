@@ -82,25 +82,25 @@ public class NPC extends Actor {
             case 0:
                 if (yCoord < floorSize - 1 && yCoord >= 0) {
                     yCoord++;
-                    System.out.printf("%s moved North to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                    //System.out.printf("%s moved North to coordinates x%d, y%d%n", name, xCoord, yCoord);
                     break;
                 }
             case 1:
                 if (yCoord < floorSize - 1 && yCoord > 0) {
                     yCoord--;
-                    System.out.printf("%s moved South to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                    //System.out.printf("%s moved South to coordinates x%d, y%d%n", name, xCoord, yCoord);
                     break;
                 }
             case 2:
                 if (xCoord < floorSize - 1 && xCoord >= 0) {
                     xCoord++;
-                    System.out.printf("%s moved East to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                    //System.out.printf("%s moved East to coordinates x%d, y%d%n", name, xCoord, yCoord);
                     break;
                 }
             case 3:
                 if (xCoord < floorSize - 1 && xCoord > 0) {
                     xCoord--;
-                    System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                    //System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord, yCoord);
                     break;
                 }
             default:
