@@ -19,7 +19,13 @@ public class Player extends Actor {
      * @param interactable
      */
     public void putItem(Interactable interactable) {
-        if (inventory.size() < 5) {
+        int weight = 0;
+        for (Interactable inter : inventory){
+            weight += inter.weight;
+        }
+        weight += interactable.weight;
+
+        if (weight < 20){
             inventory.add(interactable);
             System.out.println("taken");
         } else {
