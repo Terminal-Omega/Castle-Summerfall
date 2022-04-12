@@ -5,6 +5,23 @@ import java.util.Random;
 public class Boss extends NPC {
     Random rand = new Random();
 
+    /**
+     * 
+     * @param xCoord
+     * @param yCoord
+     * @param AC
+     * @param strength
+     * @param dexterity
+     * @param constitution
+     * @param intelligence
+     * @param wisdom
+     * @param charisma
+     * @param noise
+     * @param shield
+     * @param name
+     * @param npcAllience
+     * @param description
+     */
     public Boss(int xCoord, int yCoord, int AC, int strength, int dexterity,
             int constitution, int intelligence, int wisdom, int charisma,
             int noise, int shield, String name, NpcAllience npcAllience, String description) {
@@ -14,10 +31,16 @@ public class Boss extends NPC {
 
     }
 
+    /**
+     * 
+     * @param player
+     */
     public void bossFight(Actor player) {
-        int attackChoice = rand.nextInt(3);
+        int attackChoice = 0;
         if (health < maxHealth / 2) {
             attackChoice = rand.nextInt(4);
+        } else {
+            attackChoice = rand.nextInt(3);
         }
 
         switch (attackChoice) {
@@ -34,8 +57,9 @@ public class Boss extends NPC {
                 System.out.println(weapon3.damage + "Smack");
                 closeCombat(weapon3, player);
             case 3:
-                int healAmountBase = maxHealth / 2;
-                int healAmount = rand.nextInt(healAmountBase);
+                int healAmountBaseMax = maxHealth / 2;
+                int healAmountBaseMin = maxHealth / 4;
+                int healAmount = rand.nextInt(healAmountBaseMin, healAmountBaseMax);
                 heal(healAmount);
 
             default:

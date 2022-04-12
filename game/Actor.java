@@ -448,6 +448,13 @@ public class Actor {
         }
     }
 
+    /**
+     * 
+     * @param damageMin
+     * @param damageMax
+     * @param pierce
+     * @return
+     */
     public boolean takeDamage(int damageMin, int damageMax, int pierce) {
         int finalDamage = rand.nextInt(damageMin, damageMax) + 1;
         int shieldStart = shield;
