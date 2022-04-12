@@ -30,6 +30,7 @@ public class App {
         int energy = player.getSpeed();
         Random rand = new Random();
         boolean endGame = true;
+        System.out.println(floor1.getDescription(0, 0));
 
         do {
             System.out.print("> ");
@@ -59,7 +60,7 @@ public class App {
             if (moveMatch.find()) {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -79,7 +80,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())) {
                 commandKnown = false;
                 int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -103,7 +104,7 @@ public class App {
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
                 String command = inspectMatch.group(1);
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -129,12 +130,12 @@ public class App {
             // inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
                 int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth());
+                    UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth(), player.getMaxWeight());
                 }
 
                 commandKnown = false;
@@ -155,23 +156,25 @@ public class App {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
-                    energy -= energyCost;
                     try {
                         Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord())
                                 .takeItem(takeMatch.group(1));
                         player.putItem(interactable);
+                        energy -= energyCost;
                     } catch (ThingNotFoundException e) {
                         try {
                             Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
                             Container Chest = (Container) item;
                             Interactable thing = Chest.takeItem(takeMatch.group(1));
                             player.putItem(thing);
+                            energy -= energyCost;
                         } catch (ThingNotFoundException r) {
                             try {
                                 Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Crate");
                                 Container Chest = (Container) item;
                                 Interactable thing = Chest.takeItem(takeMatch.group(1));
                                 player.putItem(thing);
+                                energy -= energyCost;
                             } catch (ThingNotFoundException t) {
                                 System.out.println(t.getMessage());
                             }
@@ -185,7 +188,7 @@ public class App {
             // drop command
             if (dropMatch.find()) {
                 int energyCost = UI.Commands.DROP.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -220,7 +223,7 @@ public class App {
                 String actorString = attackMatch.group(1);
                 String weaponString = attackMatch.group(2);
                 int energyCost = UI.Commands.ATTACK.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {

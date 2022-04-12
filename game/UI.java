@@ -67,7 +67,7 @@ public class UI {
             for (Commands name : Commands.values()){
                 System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:", name.getSpeedCommand());
             }
-            System.out.println("Use help to get back to this screen\nUse help (command name) to learn about that command\nYou can alse use (help how to play) for a description how to play\n");
+            System.out.println(colorString("Use help to get back to this screen\nUse help [command name] to learn about that command", Colors.RED) +"\nYou can alse use [help how to play] for a description how to play\n");
         } else if (command.equals(Commands.DROP.getStrCommand())){
             System.out.println("\tThis will drop an item from your inventory to the ground\n\tUse: drop (item name)");
         } else if (command.equals(Commands.LOOK_AROUND.getStrCommand())) {
@@ -98,7 +98,7 @@ public class UI {
         } else if (command.equals(Commands.ENERGY.getStrCommand())){
             System.out.println("\tThis will display how much energy you have left for your turn\n\tUse: energy");
         } else if (command.equals("how to play")){
-            System.out.println("In this game you have a set amount of time to preform your action. This is called energy.\nDifferent actions take a different amount of engergy. If you run out of energy the enemy can attack you.\nYou can use the speed command to see how much speed you have left to spend.");
+            System.out.println("The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend.\nDefeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. \nYou can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. \nThe floors are randomly generated, so you won't the get the same experience twice.");
         } else if (command.equals(Commands.REST.getStrCommand())){
             System.out.println("This will make your character rest bringing there energy back to full. But it will make it so enemies can attack you.");
         } else {
@@ -215,17 +215,17 @@ public class UI {
      * @param inventory
      * @param health
      */
-    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth){
+    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth, int maxWeight){
         String inventoryOutput = "";
         int weight = 0;
         for (Interactable name : inventory) {
-            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ",";
+            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ","; //TODO: @yomas000 make this so it will format it
             weight += name.weight;
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
-            inventoryOutput += "\n\n\tTotal Weight: " + weight;
+            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\tMax Weight: " + maxWeight;
             System.out.println(inventoryOutput);
         }
         System.out.println();
@@ -303,13 +303,20 @@ public class UI {
     public static void displayEnergy(int energy){
         System.out.println("\tYou could do these instead");
         for (Commands command : Commands.values()){
-            if (command.getSpeedCommand() <= energy){
+            if (command.getSpeedCommand() <= energy && command.getSpeedCommand() != 0){
                 System.out.println("\t" + command.getStrCommand() + ",");
             }
         }
+        System.out.println("\trest,");
         System.out.println(colorString("You could also rest to reset your energy", Colors.YELLOW));
     }
 
+    
+    /** 
+     * @param string
+     * @param color
+     * @return String
+     */
     public static String colorString(String string, Colors color){
         return color.getAnsii() + string + "\u001B[0m";
     }
