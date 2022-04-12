@@ -67,7 +67,7 @@ public class UI {
             for (Commands name : Commands.values()){
                 System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:", name.getSpeedCommand());
             }
-            System.out.println(colorString("Use help to get back to this screen\n Use help [command name] to learn about that command", Colors.RED) +"\nYou can alse use [help how to play] for a description how to play\n");
+            System.out.println(colorString("Use help to get back to this screen\nUse help [command name] to learn about that command", Colors.RED) +"\nYou can alse use [help how to play] for a description how to play\n");
         } else if (command.equals(Commands.DROP.getStrCommand())){
             System.out.println("\tThis will drop an item from your inventory to the ground\n\tUse: drop (item name)");
         } else if (command.equals(Commands.LOOK_AROUND.getStrCommand())) {
@@ -215,17 +215,17 @@ public class UI {
      * @param inventory
      * @param health
      */
-    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth){
+    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth, int maxWeight){
         String inventoryOutput = "";
         int weight = 0;
         for (Interactable name : inventory) {
-            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ",";
+            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ","; //TODO: @yomas000 make this so it will format it
             weight += name.weight;
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
-            inventoryOutput += "\n\n\tTotal Weight: " + weight;
+            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\tMax Weight: " + maxWeight;
             System.out.println(inventoryOutput);
         }
         System.out.println();
@@ -307,6 +307,7 @@ public class UI {
                 System.out.println("\t" + command.getStrCommand() + ",");
             }
         }
+        System.out.println("\trest,");
         System.out.println(colorString("You could also rest to reset your energy", Colors.YELLOW));
     }
 

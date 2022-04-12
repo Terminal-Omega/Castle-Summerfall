@@ -3,6 +3,8 @@ import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
 
+    private int maxWeight = 20;
+
     public Player(int x, int y, int constituion, int speed) {
         this.setYCoord(y);
         this.setXCoord(x);
@@ -25,7 +27,7 @@ public class Player extends Actor {
         }
         weight += interactable.weight;
 
-        if (weight < 20){
+        if (weight < maxWeight){
             inventory.add(interactable);
             System.out.println("taken");
         } else {
@@ -100,5 +102,9 @@ public class Player extends Actor {
             }
         }
         return isFound;
+    }
+
+    public int getMaxWeight(){
+        return this.maxWeight;
     }
 }
