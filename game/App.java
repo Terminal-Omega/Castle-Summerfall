@@ -59,7 +59,7 @@ public class App {
             if (moveMatch.find()) {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -79,7 +79,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())) {
                 commandKnown = false;
                 int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -103,7 +103,7 @@ public class App {
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
                 String command = inspectMatch.group(1);
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -129,7 +129,7 @@ public class App {
             // inventory command.
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
                 int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -185,7 +185,7 @@ public class App {
             // drop command
             if (dropMatch.find()) {
                 int energyCost = UI.Commands.DROP.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
@@ -220,7 +220,7 @@ public class App {
                 String actorString = attackMatch.group(1);
                 String weaponString = attackMatch.group(2);
                 int energyCost = UI.Commands.ATTACK.getSpeedCommand();
-                if (energy - energyCost <= 0) {
+                if (energy - energyCost < 0) {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {

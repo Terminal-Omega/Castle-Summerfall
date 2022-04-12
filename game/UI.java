@@ -303,7 +303,7 @@ public class UI {
     public static void displayEnergy(int energy){
         System.out.println("\tYou could do these instead");
         for (Commands command : Commands.values()){
-            if (command.getSpeedCommand() <= energy){
+            if (command.getSpeedCommand() <= energy && command.getSpeedCommand() != 0){
                 System.out.println("\t" + command.getStrCommand() + ",");
             }
         }
