@@ -232,7 +232,6 @@ public class App {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
                             NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
                             if (player.closeCombat(weapon, badGuy)) {
-                                System.out.println("Dead");
                             } else {
                                 UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
                             }

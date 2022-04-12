@@ -225,7 +225,7 @@ public class UI {
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
-            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\tMax Weight: " + maxWeight;
+            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\n\tMax Weight: " + maxWeight;
             System.out.println(inventoryOutput);
         }
         System.out.println();
