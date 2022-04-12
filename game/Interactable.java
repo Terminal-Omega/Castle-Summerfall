@@ -16,10 +16,12 @@ public class Interactable {
         this.description = description;
     }
 
+    public Interactable(String name, String description){
+        this(name, description, 0, 0, false);
+    }
+
     public Interactable(){};
 
-
-    
     /** 
      * @return String
      */

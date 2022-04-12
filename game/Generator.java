@@ -55,7 +55,6 @@ public class Generator {
             "You look around and see nothing the room is too dark to see much. But you can see that the walls are gray brick that has moss and water dripping from the old stones.",
             "The room is a massive room with wooden beams sweaping up into high arched ceilings. It has bright chandeliers glowing with hundreds of candles.\nThe wood looks dark and varneshed. It reminds you of viking archetecture.",
             "The room you walked into is dark and dank. It smells like mildew and has slime covering the floor and walls.",
-            "The room you walked into is dark and dank. It smells like mildew and has slime covering the floor and walls.",
             "You look around and see that this room looks like a storage room. There is crates and barrels of goods waiting for something to happen to them.",
             "The room is what appears to be a bedchamber. There is a massive four poster bed with red velvet curtains.\nYou don't know who would want to sleep in a dungeon though.",
             "The room you walked into has dark stone tiled floors. Rows of pews extend as far as you can see into the scatily lit room. It looks like an old cathedral.",
@@ -103,6 +102,10 @@ public class Generator {
         return result;
     }
 
+    public static Room generateRoom(){
+
+        
+    }
     
     /** 
      * This will generate a random Interactable to go in a room
@@ -148,5 +151,10 @@ public class Generator {
     }
 
     // Enemies have been moved to EnemyPresets.java
+
+    /**
+     * These are presets for rooms that come with a description and a set of special items in them.
+     */
+    
 
 }

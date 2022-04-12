@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 public class Room {
     private ArrayList<Interactable> interactables;
+    private ArrayList<Interactable> descriptionInteractables;
     private String description;
     private Door southDoor;
     private Door eastDoor;
@@ -18,6 +19,14 @@ public class Room {
         this.eastDoor = eastDoor;
         bookmarks = new Hashtable<>();
         visited = false;
+    }
+
+    public Room(RoomPreset preset, Door southDoor, Door eastDoor){
+        this.interactables = preset.interactables;
+        this.description = preset.description;
+        this.descriptionInteractables = preset.descriptionInteractables;
+        this.southDoor = southDoor;
+        this.eastDoor = eastDoor;
     }
 
     public Room(int seed){
