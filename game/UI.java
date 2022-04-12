@@ -276,7 +276,7 @@ public class UI {
                 if (k % 2 == 0){
                     String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
                     if (!bookmark[0].equals("")){
-                        bookmarkMap = "_" + bookmark[0] + "_";
+                        bookmarkMap = "_" + bookmark[0].charAt(0) + "_";
                     }
                     
                     
