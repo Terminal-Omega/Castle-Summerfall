@@ -3,6 +3,7 @@ package game;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Hashtable;
 import java.util.Random;
 
 public class App {
@@ -21,6 +22,7 @@ public class App {
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
        // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
+        Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
@@ -38,6 +40,7 @@ public class App {
             Matcher takeMatch = takePat.matcher(inputCommand);
             Matcher dropMatch = dropPat.matcher(inputCommand);
             Matcher attackMatch = attackPat.matcher(inputCommand);
+            Matcher bookMatch = bookPat.matcher(inputCommand);
             //Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
 
             boolean commandKnown = true;
@@ -85,6 +88,17 @@ public class App {
                 }
             }
 
+            //bookmark command
+            if (bookMatch.find()){
+                floor1.getRoom((FLOORSIZE - 1) - player.getYCoord(), player.getXCoord()).addBookmark(bookMatch.group(1), bookMatch.group(2));
+                commandKnown = false;
+            }
+
+            if (inputCommand.equals("where")){
+                System.out.printf("x:%d  y:%d", player.getXCoord(), player.getYCoord());
+                commandKnown = false;
+            }
+
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
@@ -101,7 +115,7 @@ public class App {
                         try {
                             name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
                             name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).weight;
-                            
+
                             System.out.println(name);
                         } catch (ThingNotFoundException e) {
                             System.out.println(e.getMessage());
@@ -125,6 +139,8 @@ public class App {
 
                 commandKnown = false;
             }
+
+
 
             // if (takeChestMatch.find()){
             //     System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
@@ -195,7 +211,7 @@ public class App {
 
             // TODO: remove unlimited command for final draft @yomas000
             if (inputCommand.equals("map")) {
-                UI.displayMap(floor1.getXSize(), floor1.getYSize(), player);
+                UI.displayMap(floor1.getXSize(), floor1.getYSize(), player, floor1);
                 commandKnown = false;
             }
 

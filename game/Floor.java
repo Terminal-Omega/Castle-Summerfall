@@ -48,11 +48,13 @@ public class Floor {
      * @return Door
      */
     // use this to get a door going in a specific direction
-    public Door getDoor(int xCoord, int yCoord, Direction direction) {
+    public Door getDoor(int xCoord, int yCoord, Direction direction) throws ThingNotFoundException {
         switch (direction) {
             case NORTH:
-                if (!(yCoord >= rooms.get(xCoord).size())) {
+                if (!(yCoord + 1 >= rooms.get(xCoord).size())) {
                     return rooms.get(xCoord).get(yCoord + 1).getDoor(Direction.SOUTH);
+                } else {
+                    throw new ThingNotFoundException("Door does not exist");
                 }
             case SOUTH:
                 return rooms.get(xCoord).get(yCoord).getDoor(Direction.SOUTH);
@@ -62,10 +64,10 @@ public class Floor {
                 if (xCoord != 0) {
                     return rooms.get(xCoord - 1).get(yCoord).getDoor(Direction.EAST);
                 } else {
-                    return null;
+                    throw new ThingNotFoundException("Door does not exist");
                 }
             default:
-                return null;
+                throw new ThingNotFoundException("Door does not exist");
         }
     }
 
@@ -107,15 +109,18 @@ public class Floor {
 
         }
         int i = 0;
-        for (Direction direction : Direction.values()) {
-            if (getDoor(xCoord, yCoord, direction) != null) {
-                i++;
+        for (Direction direction : Direction.values())  {
+            try {
+                getDoor(xCoord, yCoord, direction);
+            } catch (Exception e) {
+                
             }
         }
 
         int j = 0;
         for (Direction direction : Direction.values()) {
-            if (getDoor(xCoord, yCoord, direction) != null) {
+            try {
+                getDoor(xCoord, yCoord, direction);
                 j++;
                 String openStatus = "";
                 String directionString = direction.toString().substring(0, 1).toUpperCase()
@@ -132,6 +137,8 @@ public class Floor {
                 } else {
                     builder.append(", and " + openStatus + " door to the " + directionString);
                 }
+            } catch(Exception e){
+                
             }
         }
         builder.append(".");
