@@ -10,14 +10,13 @@ public class Room {
     private Door southDoor;
     private Door eastDoor;
     private boolean visited;
-    private Hashtable<Character, String> bookmarks;
+    private String[] bookmark = {"_", ""};
 
     public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
-        bookmarks = new Hashtable<>();
         visited = false;
     }
 
@@ -185,23 +184,25 @@ public class Room {
      * @param bookmark
      * @param description
      */
-    public void addBookmark(char bookmark, String description){
-        bookmarks.put(bookmark, description);
+    public void addBookmark(String bookmarkChar, String description){
+        bookmark[0] = bookmarkChar;
+        bookmark[1] = description;
     }
 
     
     /** 
      * @return Hashtable<Character, String> returns all of the bookmarks
      */
-    public Hashtable<Character, String> getBookmarks(){
-        return bookmarks;
+    public String[] getBookmarks(){
+        return bookmark;
     }
 
     
     /** 
      * @param toRemove
      */
-    public void removeBookmark(char toRemove){
-        bookmarks.remove(toRemove);
+    public void removeBookmark(){
+        bookmark[0] = "";
+        bookmark[1] = "";
     }
 }
