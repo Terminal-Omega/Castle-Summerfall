@@ -121,9 +121,13 @@ public class UI {
         // move north
         if (command.equals("N") || command.equals("n")) {
             if (y < (floorSize - 2) && y >= 0) {
-                if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){
-                    player.setYCoord(y + 1);
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                try {
+                    if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){ //Sorry Thomas, had to fix the doors
+                        player.setYCoord(y + 1);
+                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    }
+                } catch (ThingNotFoundException e) {
+                    System.out.println("You don't see a door in that wall. You can't move that way.");
                 }
             }else{
                 System.out.println("You don't see a door in that wall. You can't move that way.");
@@ -132,8 +136,12 @@ public class UI {
         //move south
         if (command.equals("S") || command.equals("s")) {
             if (y < floorSize - 1 && y > 0) {
-                if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()){
-                    player.setYCoord(y - 1);
+                try {
+                    if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()){
+                        player.setYCoord(y - 1);
+                    }
+                } catch (ThingNotFoundException e) {
+                    System.out.println("You don't see a door in that wall. You can't move that way.");
                 }
                 System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
             } else {
@@ -143,9 +151,13 @@ public class UI {
         //move east
         if (command.equals("E") || command.equals("e")) {
             if (x < floorSize - 1 && x >= 0) {
-                if (floor1.getDoor(x, y, Direction.EAST).isOpen()){
-                    player.setXCoord(x + 1);
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                try {
+                    if (floor1.getDoor(x, y, Direction.EAST).isOpen()){
+                        player.setXCoord(x + 1);
+                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    }
+                } catch (ThingNotFoundException e) {
+                    System.out.println("You don't see a door in that wall. You can't move that way.");
                 }
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
@@ -154,9 +166,13 @@ public class UI {
         //move west
         if (command.equals("W") || command.equals("w")) {
             if (x <= floorSize - 1 && x > 0) {
-                if (floor1.getDoor(x, y, Direction.WEST).isOpen()){
-                    player.setXCoord(x - 1);
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                try {
+                    if (floor1.getDoor(x, y, Direction.WEST).isOpen()){
+                        player.setXCoord(x - 1);
+                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    }
+                } catch (ThingNotFoundException e) {
+                    System.out.println("You don't see a door in that wall. You can't move that way.");
                 }
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
