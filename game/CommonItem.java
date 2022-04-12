@@ -82,7 +82,7 @@ public class CommonItem {
         String description = "It might hurt someone";
         int pierce = 6;
         int damage = 8;
-        Weapon result = new Weapon(2, 9, true, "Sword", "It might hurt someone", 6, 8);
+        Weapon result = new Weapon(size, weight, canBePickedUp, name, description, pierce, damage);
         return result;
     }
 
