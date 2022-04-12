@@ -104,6 +104,10 @@ public class Player extends Actor {
         return isFound;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getMaxWeight(){
         return this.maxWeight;
     }

@@ -98,7 +98,7 @@ public class UI {
         } else if (command.equals(Commands.ENERGY.getStrCommand())){
             System.out.println("\tThis will display how much energy you have left for your turn\n\tUse: energy");
         } else if (command.equals("how to play")){
-            System.out.println("The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend.\nDefeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. \nYou can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. \nThe floors are randomly generated, so you won't the get the samee experience twice.");
+            System.out.println("The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend.\nDefeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. \nYou can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. \nThe floors are randomly generated, so you won't the get the same experience twice.");
         } else if (command.equals(Commands.REST.getStrCommand())){
             System.out.println("This will make your character rest bringing there energy back to full. But it will make it so enemies can attack you.");
         } else {
@@ -311,6 +311,12 @@ public class UI {
         System.out.println(colorString("You could also rest to reset your energy", Colors.YELLOW));
     }
 
+    
+    /** 
+     * @param string
+     * @param color
+     * @return String
+     */
     public static String colorString(String string, Colors color){
         return color.getAnsii() + string + "\u001B[0m";
     }
