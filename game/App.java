@@ -95,11 +95,6 @@ public class App {
                 commandKnown = false;
             }
 
-            if (inputCommand.equals("where")){
-                System.out.printf("x:%d  y:%d", player.getXCoord(), player.getYCoord());
-                commandKnown = false;
-            }
-
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
