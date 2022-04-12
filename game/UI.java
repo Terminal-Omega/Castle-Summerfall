@@ -270,6 +270,7 @@ public class UI {
         int xP = ySize - player.getYCoord() - 1;
         int yP = player.getXCoord();
         String bookmarkMap = "";
+        String bookmarkDisplay = "\n\n\n";
 
         for (int i = 0; i<xSize; i++){
             for (int k = 0; k<ySize * 2; k++){
@@ -277,6 +278,7 @@ public class UI {
                     String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
                     if (!bookmark[0].equals("")){
                         bookmarkMap = "_" + bookmark[0].charAt(0) + "_";
+                        bookmarkDisplay += bookmark[0] + " : " + bookmark[1];
                     }
                     
                     
@@ -293,6 +295,9 @@ public class UI {
             }
             System.out.println();
         }
+        bookmarkDisplay = bookmarkDisplay.replaceAll("_ :", " ");
+        bookmarkDisplay = bookmarkDisplay.strip();
+        System.out.println(bookmarkDisplay);
     }
 
     /**
@@ -319,5 +324,21 @@ public class UI {
      */
     public static String colorString(String string, Colors color){
         return color.getAnsii() + string + "\u001B[0m";
+    }
+
+    public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
+        int width = 80;
+        System.out.printf("\033[s\033[0;%dH", width);
+        for (int i = 0; i < 6; i++){
+            System.out.printf("\033[%d;%dH", i, width);
+            System.out.print("\033[0K\033[1B");
+        }
+        System.out.printf("\033[1;%dH", width);
+        displayHeath(health, maxHealth);
+        System.out.printf("\033[2;%dH", width);
+        System.out.println("\tEnergy left: " + energy);
+        System.out.printf("\033[3;%dH", width);
+        System.out.println("\tItems in Inventory: " + inventorySize);
+        System.out.print("\033[u");
     }
 }

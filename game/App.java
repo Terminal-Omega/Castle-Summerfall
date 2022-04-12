@@ -71,7 +71,7 @@ public class App {
 
             // clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
-                System.out.print("\033[H\033[2J");
+                System.out.print("\033[H\033[2J\033[5B");
                 System.out.flush();
                 commandKnown = false;
             }
@@ -247,8 +247,10 @@ public class App {
                 commandKnown = false;
             }
 
+            //energy command
             if (inputCommand.equals(UI.Commands.ENERGY.getStrCommand())) {
-                System.out.println(energy);
+                System.out.println("\tEnergy: " + energy);
+                UI.displayEnergy(energy);
                 commandKnown = false;
             }
 
@@ -318,6 +320,8 @@ public class App {
             if (commandKnown && inputCommand.equals("exit") == false) {
                 System.out.println("Sorry I don't know what you wanted.");
             }
+
+            UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
 
         } while (endGame);
 

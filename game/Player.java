@@ -14,15 +14,7 @@ public class Player extends Actor {
         this.setSpeed(speed);
         this.setDexterity(30);
         this.setWeaponSkill();
-        this.setAC(2);
-        this.setBallisticSkill();
-        this.setCarryWeight();
-        this.setIntelligence(5);
-        this.setMana();
-        this.setName("name");
-        this.setShield(3);
-        this.setStrength(5);
-        this.setWisdom(5);
+        this.setName("Player");
     }
 
     /**
