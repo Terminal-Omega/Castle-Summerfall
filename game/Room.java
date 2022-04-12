@@ -21,9 +21,15 @@ public class Room {
     }
 
     public Room(RoomPreset preset, Door southDoor, Door eastDoor){
-        this.interactables = preset.interactables;
+        this.interactables = new ArrayList<Interactable>();
+        for(InteractablePreset interactable : preset.interactables){
+            this.interactables.add(Generator.generateInteractable(interactable));
+        }
         this.description = preset.description;
-        this.descriptionInteractables = preset.descriptionInteractables;
+        this.descriptionInteractables = new ArrayList<Interactable>();
+        for(InteractablePreset interactable : preset.descriptionInteractables){
+            this.descriptionInteractables.add(Generator.generateInteractable(interactable));
+        }
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
     }

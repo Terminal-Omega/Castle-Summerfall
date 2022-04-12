@@ -1,4 +1,7 @@
 package game;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -102,10 +105,6 @@ public class Generator {
         return result;
     }
 
-    public static Room generateRoom(){
-
-        
-    }
     
     /** 
      * This will generate a random Interactable to go in a room
@@ -141,6 +140,55 @@ public class Generator {
         return result;
     }
 
+    public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor){
+        int range = interactableMax - interactableMin;
+        Random rand = new Random();
+        int loopCount = rand.nextInt(range) + interactableMin;
+        ArrayList<Interactable> roomInventory = new ArrayList<>();
+        for(InteractablePreset interactable : preset.interactables){
+            roomInventory.add(generateInteractable(interactable));
+        }
+        ArrayList<Interactable> descriptionInteractables = new ArrayList<>();
+        for(InteractablePreset interactable : preset.descriptionInteractables){
+            descriptionInteractables.add(generateInteractable(interactable));
+        }
+        Door door1;
+        Door door2;
+        for (int i = 0; i < loopCount; i++) {
+            roomInventory.add(generateInteractable());
+        }
+        if (southDoor) {
+            door1 = new Door(true, false, false);
+        } else {
+            door1 = null;
+        }
+        if (eastDoor) {
+            door2 = new Door(true, false, false);
+        } else {
+            door2 = null;
+        }
+        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
+        return result;
+    }
+
+    public static Room generateRoom(){
+        File presetFile = new File("../data/presets/RoomPresets.json");
+        try {
+            FileReader presetIn = new FileReader(presetFile);
+            int i = 0;
+            String presetString = "";
+            while((i = presetIn.read()) !=-1){
+                presetString += (char)i;
+            }
+            ArrayList<RoomPreset> presets = PresetLoader.loadRoomPresets(presetString);
+            Random rand = new Random();
+            int choice = rand.nextInt(presets.size());
+            return generateRoom(presets.get(choice), 0, 3, true, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Room(null, null, null, null);
+    }
     
     /** 
      * This generate a default Interactable
@@ -148,6 +196,26 @@ public class Generator {
      */
     public static Interactable generateInteractable() {
         return generateInteractable(.2, .8, 0, 0, 0, 0, 5);
+    }
+
+    public static Interactable generateInteractable(InteractablePreset preset){
+        Random rand = new Random();
+        String name = preset.name;
+        String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        ArrayList<Ability> abilities = new ArrayList<>();
+        ArrayList<InteractablePreset.AbilityOption> options = new ArrayList<>();
+        for(InteractablePreset.AbilityOption abilityOption : preset.abilityOptions){
+            options.add(abilityOption);
+        }
+        for(InteractablePreset.AbilityOption abilityOption : options){
+            for(int i = 0; i< abilityOption.number;i++){
+                int choice = rand.nextInt(abilityOption.options.size());
+                abilities.add(abilityOption.options.get(choice));
+                abilityOption.options.remove(choice);
+            }
+        }
+        return new Interactable(name, description, preset.size, preset.weight, preset.canBePickedUp, abilities);
+        
     }
 
     // Enemies have been moved to EnemyPresets.java

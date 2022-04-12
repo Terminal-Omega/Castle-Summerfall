@@ -1,0 +1,54 @@
+[
+    {
+        "description": "This is the room description",
+        "description-interactables": [
+            {
+                "name": "interactable name here",
+                "type": "other",
+                "descriptions": [
+                    "first description option",
+                    "second description option"
+                ],
+                "size":5,
+                "weight":5,
+                "canbepickedup":true
+                
+
+            },
+            {
+                "name": "interactable name here",
+                "type": "container",
+                "descriptions": [
+                    "first description option",
+                    "second description option"
+                ],
+                "size":5,
+                "weight":5,
+                "canbepickedup":true,
+                "inventorysize":5
+                
+
+            },
+            {
+                "name": "interactable name here",
+                "type": "weapon",
+                "descriptions": [
+                    "first description option",
+                    "second description option"
+                ],
+                "size":5,
+                "weight":5,
+                "canbepickedup":true,
+                "damage":"5-7",
+                "range":"2-3",
+                "pierce":"5-8",
+                "weapontype":"blunt",
+                "sharp": true
+                
+
+            }
+        ],
+
+        "interactables":[]
+    }
+]
