@@ -12,6 +12,7 @@ public class PresetLoader {
      * [] Interactable Presets
      * [] Enemy Presets (Enemy Loader needs to be done first)
      */
+
     public static ArrayList<RoomPreset> loadRoomPresets(String toLoad) {
         Pattern presetPattern = Pattern.compile("{(.*)}");
         Matcher presetMatcher = presetPattern.matcher(toLoad);
@@ -70,8 +71,16 @@ public class PresetLoader {
 
         ArrayList<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
 
+        String rarityString = Parser.parseString("rarity", toLoad);
+        Generator.Rarity rarity = null;
+        for(Generator.Rarity rare: Generator.Rarity.values()){
+            if(rare.toString().toLowerCase().equals(rarityString)){
+                rarity = rare;
+            }
+        }
+
         InteractablePreset result = new InteractablePreset(name, descriptions, abilityOptions, size, weight,
-                canBePickedUp);
+                canBePickedUp, rarity);
         
         String type = Parser.parseString("type", toLoad);
 
@@ -86,11 +95,7 @@ public class PresetLoader {
 
     private static ContainerPreset loadContainerPreset(InteractablePreset preset, String toLoad) {
         ContainerPreset result = new ContainerPreset(preset);
-
-        Pattern inventorySizePattern = Pattern.compile("\\\"inventorysize\\\" *: *([0-9]*)");
-        Matcher inventorySizeMatcher = inventorySizePattern.matcher(toLoad);
-        inventorySizeMatcher.find();
-        int inventorySize = Integer.parseInt(inventorySizeMatcher.group(1));
+        int inventorySize = Parser.parseInt("inventory-size", toLoad)[0];
 
         result.setInventorySize(inventorySize);
         return result;
@@ -100,48 +105,62 @@ public class PresetLoader {
 
         WeaponPreset result = new WeaponPreset(preset);
 
-        Pattern attackSpeedPattern = Pattern.compile("\\\"attackspeed\\\" *: *\\\"([0-9]*)(-([0-9]*))?\\\"");
-        Matcher attackSpeedMatcher = attackSpeedPattern.matcher(toLoad);
-        attackSpeedMatcher.find();
-        int attackSpeed = Integer.parseInt(attackSpeedMatcher.group(1));
-        int attackSpeedRange = Integer.parseInt(attackSpeedMatcher.group(3)) - attackSpeed;
+        int[] nums = new int[2];
 
-        Pattern damagePattern = Pattern.compile("\\\"damage\\\" *: *\\\"([0-9]*)(-([0-9]*))?\\\"");
-        Matcher damageMatcher = damagePattern.matcher(toLoad);
-        damageMatcher.find();
-        int damage = Integer.parseInt(damageMatcher.group(1));
-        int damageRange = Integer.parseInt(damageMatcher.group(3)) - damage;
+        nums = Parser.parseInt("attack-speed", toLoad);
+        int attackSpeed = nums[0];
+        int attackSpeedRange = nums[1];
 
-        Pattern rangePattern = Pattern.compile("\\\"range\\\" *: *\\\"([0-9]*)(-([0-9]*))?\\\"");
-        Matcher rangeMatcher = rangePattern.matcher(toLoad);
-        rangeMatcher.find();
-        int range = Integer.parseInt(rangeMatcher.group(1));
-        int rangeRange = Integer.parseInt(rangeMatcher.group(3)) - range;
+        nums = Parser.parseInt("damage",toLoad);
+        int damage = nums[0];
+        int damageRange = nums[1];
 
-        Pattern piercePattern = Pattern.compile("\\\"pierce\\\" *: *\\\"([0-9]*)(-([0-9]*))?\\\"");
-        Matcher pierceMatcher = piercePattern.matcher(toLoad);
-        pierceMatcher.find();
-        int pierce = Integer.parseInt(pierceMatcher.group(1));
-        int pierceRange = Integer.parseInt(pierceMatcher.group(3)) - pierce;
+        nums = Parser.parseInt("range",toLoad);
+        int range = nums[0];
+        int rangeRange = nums[1];
 
-        Pattern namePattern = Pattern.compile("\\\"name\\\" *: *\\\"(.*)\\\"");
-        Matcher nameMatcher = namePattern.matcher(toLoad);
-        nameMatcher.find();
-        String name = nameMatcher.group(1);
+        nums = Parser.parseInt("Pierce",toLoad);
+        int pierce = nums[0];
+        int pierceRange = nums[1];
 
-        Pattern typePattern = Pattern.compile("\\\"weapontype\\\" *: *\\\"(.*)\\\"");
-        Matcher typeMatcher = typePattern.matcher(toLoad);
-        typeMatcher.find();
-        String type = typeMatcher.group(1);
+        String name = Parser.parseString("name", toLoad);
 
-        Pattern sharpPattern = Pattern.compile("\\\"sharp\\\" *: *(.*)");
-        Matcher sharpMatcher = sharpPattern.matcher(toLoad);
-        sharpMatcher.find();
-        boolean sharp = sharpMatcher.group(1).toLowerCase().equals("true");
+        String type = Parser.parseString("weapon-type",toLoad);
+
+        boolean sharp = Parser.parseBoolean("sharp", toLoad);
 
         result.setValues(attackSpeed, attackSpeedRange, type, damage, damageRange, range, rangeRange, name, sharp,
                 pierce, pierceRange);
         return result;
+    }
+
+    public NPCPreset loadNpcPreset(String toLoad){
+        String allianceString = Parser.parseString("alliance", toLoad);
+        NpcAllience alliance;
+        if(allianceString.equals("enemy")){
+            alliance = NpcAllience.ENEMY;
+        } else if(allianceString.equals("friendly")){
+            alliance = NpcAllience.FRIENDLY;
+        } else{
+            alliance = NpcAllience.NEUTRAL;
+        }
+
+        String descriptions[] = Parser.trimQuotes(Parser.parseArray("descriptions", toLoad));
+
+        int[] ACRange = Parser.parseInt("AC", toLoad);
+        int[] strRange = Parser.parseInt("str", toLoad);
+        int[] dexRange = Parser.parseInt("dex", toLoad);
+        int[] conRange = Parser.parseInt("con", toLoad);
+        int[] intRange = Parser.parseInt("int", toLoad);
+        int[] wisRange = Parser.parseInt("wis", toLoad);
+        int[] chaRange = Parser.parseInt("cha", toLoad);
+        int[] noiseRange = Parser.parseInt("noise", toLoad);
+        int[] shieldRange = Parser.parseInt("shield", toLoad);
+
+        String[] name = Parser.trimQuotes(Parser.parseArray("names", toLoad));
+
+        return new NPCPreset(alliance, descriptions, ACRange, strRange, dexRange, conRange, intRange, wisRange, chaRange, noiseRange, shieldRange, name);
+        
     }
 
 }

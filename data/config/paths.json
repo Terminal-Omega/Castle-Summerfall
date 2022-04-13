@@ -1,0 +1,11 @@
+{
+    "interactables":[
+        "../data/presets/InteractablePresets.json"
+    ],
+    "rooms":[
+        "../data/presets/RoomPresets.json"
+    ],
+    "npcs":[
+        "../data/presets/EnemyPresets.json"
+    ]
+}

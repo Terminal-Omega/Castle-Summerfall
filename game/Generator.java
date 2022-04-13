@@ -1,6 +1,5 @@
 package game;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
@@ -180,6 +179,7 @@ public class Generator {
             while((i = presetIn.read()) !=-1){
                 presetString += (char)i;
             }
+            presetIn.close();
             ArrayList<RoomPreset> presets = PresetLoader.loadRoomPresets(presetString);
             Random rand = new Random();
             int choice = rand.nextInt(presets.size());
@@ -218,11 +218,29 @@ public class Generator {
         
     }
 
-    // Enemies have been moved to EnemyPresets.java
+    //NPC Time!
 
-    /**
-     * These are presets for rooms that come with a description and a set of special items in them.
-     */
-    
+    public static NPC spinNPC(int xCoord, int yCoord, NPCPreset preset, int challengeRating){
+        Random rand = new Random();
+        NpcAllience npcAllience = preset.npcAllience;
+        String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        int AC = randomFromRange(preset.ACRange);
+        int strength = randomFromRange(preset.strRange);
+        int dexterity = randomFromRange(preset.dexRange);
+        int constitution = randomFromRange(preset.conRange);
+        int intelligence = randomFromRange(preset.intRange);
+        int wisdom = randomFromRange(preset.wisRange);
+        int charisma = randomFromRange(preset.chaRange);
+        int noise = randomFromRange(preset.noiseRange);
+        int shield = randomFromRange(preset.shieldRange);
+        String name = preset.name[rand.nextInt(preset.name.length)];
+
+        return new NPC(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield, name, npcAllience, description);
+    }
+
+    private static int randomFromRange(int[] range){
+        Random rand = new Random();
+        return rand.nextInt(range[1]-range[0]) + range[0]; 
+    }
 
 }
