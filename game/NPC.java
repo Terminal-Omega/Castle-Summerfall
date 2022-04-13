@@ -122,7 +122,7 @@ public class NPC extends Actor {
                 case 3:
                     if (xCoord < floorSize - 1 && xCoord > 0) {
                         xCoord--;
-                        System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                        //System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord, yCoord);
                         break;
                     }
                 default:
@@ -147,9 +147,9 @@ public class NPC extends Actor {
      */
     public void enemyTurnCombat(Actor player) {
         Weapon weapon = (Weapon) inventory.get(0);
-        System.out.println(weapon.damage);
+        System.out.println(UI.colorString("Damage: " + weapon.damage, UI.Colors.RED));
         closeCombat(weapon, player);
-        System.out.printf("%s wacked the player%n", name);
+        System.out.printf("%s wacked you%n", name);
     }
 
     public void friendlyTurnCombat() {
