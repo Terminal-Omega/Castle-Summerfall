@@ -272,7 +272,7 @@ public class UI {
         String bookmarkMap = "";
         String bookmarkDisplay = "\n\n\n";
 
-        for (int i = 0; i<xSize; i++){
+        for (int i = 0; i<xSize; i++){ //TODO: @yomas make this loop backwards
             for (int k = 0; k<ySize * 2; k++){
                 if (k % 2 == 0){
                     String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
