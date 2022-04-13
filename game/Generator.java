@@ -50,7 +50,6 @@ public class Generator {
         return result;
     }
 
-    // TODO: @yomas000 write some descriptions of rooms and stuff.
     private static String[] roomDescriptions = {
             "You look around and see nothing the room is too dark to see much. But you can see that the walls are gray brick that has moss and water dripping from the old stones.",
             "The room is a massive room with wooden beams sweaping up into high arched ceilings. It has bright chandeliers glowing with hundreds of candles.\nThe wood looks dark and varneshed. It reminds you of viking archetecture.",
