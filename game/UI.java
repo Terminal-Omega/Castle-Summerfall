@@ -274,10 +274,10 @@ public class UI {
 
         for (int i = ySize - 1; i > 0; i--){
             for (int j = 0; j < xSize - 1; j++){
-                String[] bookmark = floor.getRoom(j, i).getBookmarks();
                 String bookmarkString = "";
+                String[] bookmark = floor.getRoom(j, i).getBookmarks();
                 if (!bookmark[0].equals("")){
-                    bookmarkString += "_" + bookmark[0] + "_";
+                    bookmarkString += "_" + bookmark[0].charAt(0) + "_";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
                 }
 
@@ -285,7 +285,8 @@ public class UI {
                 if (i == yP && j == xP){
                     System.out.print("_*_");
                 }else if (!bookmarkString.equals("")){
-                    System.out.println(bookmarkString);
+                    System.out.print(bookmarkString);
+                   // bookmarkString = "";
                 }else{
                     System.out.print("___");
                 }
@@ -326,7 +327,7 @@ public class UI {
     }
 
     public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
-        int width = 80;
+        int width = 100;
         System.out.printf("\033[s\033[0;%dH", width);
         for (int i = 0; i < 6; i++){
             System.out.printf("\033[%d;%dH", i, width);
