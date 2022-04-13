@@ -100,7 +100,7 @@ public class Generator {
         } else {
             door2 = null;
         }
-        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
+        Room result = new Room(roomInventory, null, roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
         return result;
     }
 
@@ -145,11 +145,11 @@ public class Generator {
         int loopCount = rand.nextInt(range) + interactableMin;
         ArrayList<Interactable> roomInventory = new ArrayList<>();
         for(InteractablePreset interactable : preset.interactables){
-            roomInventory.add(generateInteractable(interactable));
+            roomInventory.add(spinInteractable(interactable));
         }
         ArrayList<Interactable> descriptionInteractables = new ArrayList<>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
-            descriptionInteractables.add(generateInteractable(interactable));
+            descriptionInteractables.add(spinInteractable(interactable));
         }
         Door door1;
         Door door2;
@@ -166,28 +166,80 @@ public class Generator {
         } else {
             door2 = null;
         }
-        Room result = new Room(roomInventory, roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
+        Room result = new Room(roomInventory,new ArrayList<>(), roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
         return result;
     }
 
     public static Room generateRoom(){
-        File presetFile = new File("../data/presets/RoomPresets.json");
+        File filePaths = new File("../data/config/paths.json");
+        String[] files;
+        String pathString = "";
+
         try {
-            FileReader presetIn = new FileReader(presetFile);
+            FileReader pathIn = new FileReader(filePaths);
             int i = 0;
-            String presetString = "";
-            while((i = presetIn.read()) !=-1){
-                presetString += (char)i;
+            
+            while((i = pathIn.read()) !=-1){
+                pathString += (char) i;
             }
-            presetIn.close();
-            ArrayList<RoomPreset> presets = PresetLoader.loadRoomPresets(presetString);
-            Random rand = new Random();
-            int choice = rand.nextInt(presets.size());
-            return generateRoom(presets.get(choice), 0, 3, true, true);
+            pathIn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
-        return new Room(null, null, null, null);
+
+        files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
+
+        ArrayList<RoomPreset> presets = new ArrayList<>();
+
+        for(String file : files){
+            File presetFile = new File(file);
+            String presetString = "";
+            try {
+                FileReader presetIn = new FileReader(presetFile);
+                int i = 0;
+                
+                while((i = presetIn.read()) !=-1){
+                    presetString += (char)i;
+                }
+                presetIn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            presets.addAll(PresetLoader.loadRoomPresets(presetString));
+
+        }
+
+        Random rand = new Random();
+        int choice = rand.nextInt(presets.size());
+        return generateRoom(presets.get(choice), 0, 3, true, true);
+    }
+
+    public Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
+        Random rand = new Random();
+        ArrayList<Interactable> interactables = new ArrayList<Interactable>();
+        for(InteractablePreset interactable : preset.interactables){
+            interactables.add(spinInteractable(interactable));
+        }
+        String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        ArrayList<Interactable> descriptionInteractables = new ArrayList<Interactable>();
+        for(InteractablePreset interactable : preset.descriptionInteractables){
+            descriptionInteractables.add(spinInteractable(interactable));
+        }
+        Door doorSouth;
+        Door doorEast;
+        if(southDoor){
+            doorSouth = new Door(true, false, false);
+        } else{
+            doorSouth = null;
+        }
+
+        if(eastDoor){
+            doorEast = new Door(true, false, false);
+        } else{
+            doorEast = null;
+        }
+
+        return new Room(interactables, descriptionInteractables, description, doorSouth, doorEast);
     }
     
     /** 
@@ -198,7 +250,7 @@ public class Generator {
         return generateInteractable(.2, .8, 0, 0, 0, 0, 5);
     }
 
-    public static Interactable generateInteractable(InteractablePreset preset){
+    public static Interactable spinInteractable(InteractablePreset preset){
         Random rand = new Random();
         String name = preset.name;
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];

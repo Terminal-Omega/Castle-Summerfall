@@ -13,28 +13,15 @@ public class Room {
     private boolean visited;
     private String[] bookmark = {"_", ""};
 
-    public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
+    public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
+        this.descriptionInteractables = descriptionInteractables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
         visited = false;
     }
 
-    public Room(RoomPreset preset, Door southDoor, Door eastDoor){
-        Random rand = new Random();
-        this.interactables = new ArrayList<Interactable>();
-        for(InteractablePreset interactable : preset.interactables){
-            this.interactables.add(Generator.generateInteractable(interactable));
-        }
-        this.description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
-        this.descriptionInteractables = new ArrayList<Interactable>();
-        for(InteractablePreset interactable : preset.descriptionInteractables){
-            this.descriptionInteractables.add(Generator.generateInteractable(interactable));
-        }
-        this.southDoor = southDoor;
-        this.eastDoor = eastDoor;
-    }
 
     public Room(int seed){
         
