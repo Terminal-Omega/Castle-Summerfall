@@ -9,7 +9,7 @@ public class Room {
     private Door southDoor;
     private Door eastDoor;
     private boolean visited;
-    private String[] bookmark = {"_", ""};
+    private String[] bookmark = {"", ""};
 
     public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;

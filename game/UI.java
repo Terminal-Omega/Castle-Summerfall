@@ -267,37 +267,36 @@ public class UI {
      * @param player
      */
     public static void displayMap(int xSize, int ySize, Player player, Floor floor){
-        int xP = ySize - player.getYCoord() - 1;
-        int yP = player.getXCoord();
-        String bookmarkMap = "";
+        int xP = player.getXCoord();
+        int yP = player.getYCoord() + 1;
         String bookmarkDisplay = "\n\n\n";
+       // String bookmarkString = "";
 
-        for (int i = 0; i<xSize; i++){ //TODO: @yomas make this loop backwards
-            for (int k = 0; k<ySize * 2; k++){
-                if (k % 2 == 0){
-                    String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
-                    if (!bookmark[0].equals("")){
-                        bookmarkMap = "_" + bookmark[0].charAt(0) + "_";
-                        bookmarkDisplay += bookmark[0] + " : " + bookmark[1];
-                    }
-                    
-                    
-                    if (xP == i && yP == k/2){
-                        System.out.print("_*_");
-                    }else if (!bookmarkMap.equals("")){
-                        System.out.print(bookmarkMap);
-                    }else{
-                        System.out.print("___");
-                    }
-                }else{
-                    System.out.print("|");
+        for (int i = ySize - 1; i > 0; i--){
+            for (int j = 0; j < xSize - 1; j++){
+                String[] bookmark = floor.getRoom(j, i).getBookmarks();
+                String bookmarkString = "";
+                if (!bookmark[0].equals("")){
+                    bookmarkString += "_" + bookmark[0] + "_";
+                    bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
                 }
+
+
+                if (i == yP && j == xP){
+                    System.out.print("_*_");
+                }else if (!bookmarkString.equals("")){
+                    System.out.println(bookmarkString);
+                }else{
+                    System.out.print("___");
+                }
+
+                System.out.print("|");
             }
             System.out.println();
         }
-        bookmarkDisplay = bookmarkDisplay.replaceAll("_ :", " ");
-        bookmarkDisplay = bookmarkDisplay.strip();
         System.out.println(bookmarkDisplay);
+
+        
     }
 
     /**
