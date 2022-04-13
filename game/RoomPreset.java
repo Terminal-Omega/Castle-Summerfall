@@ -3,14 +3,14 @@ package game;
 import java.util.ArrayList;
 
 public class RoomPreset {
-    public String description;
+    public String[] descriptions;
     public ArrayList<InteractablePreset> interactables;
     public ArrayList<InteractablePreset> descriptionInteractables;
     public NPC boss;
 
-    public RoomPreset(String description, ArrayList<InteractablePreset> interactables,
+    public RoomPreset(String[] descriptions, ArrayList<InteractablePreset> interactables,
             ArrayList<InteractablePreset> descriptionInteractables) {
-        this.description = description;
+        this.descriptions = descriptions;
         this.interactables = interactables;
         this.descriptionInteractables = descriptionInteractables;
     }

@@ -26,7 +26,7 @@ public class PresetLoader {
 
     private static RoomPreset LoadRoomPreset(String toLoad) {
 
-        String description = Parser.parseString("description", toLoad);
+        String[] descriptions = Parser.trimQuotes(Parser.parseArray("descriptions", toLoad));
 
         ArrayList<InteractablePreset> descriptionInteractables = new ArrayList<>();
         InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(
@@ -41,7 +41,7 @@ public class PresetLoader {
             interactables.add(preset);
         }
 
-        RoomPreset result = new RoomPreset(description, interactables, descriptionInteractables);
+        RoomPreset result = new RoomPreset(descriptions, interactables, descriptionInteractables);
         return result;
 
     }

@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 public class Room {
     private ArrayList<Interactable> interactables;
@@ -21,11 +22,12 @@ public class Room {
     }
 
     public Room(RoomPreset preset, Door southDoor, Door eastDoor){
+        Random rand = new Random();
         this.interactables = new ArrayList<Interactable>();
         for(InteractablePreset interactable : preset.interactables){
             this.interactables.add(Generator.generateInteractable(interactable));
         }
-        this.description = preset.description;
+        this.description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
         this.descriptionInteractables = new ArrayList<Interactable>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
             this.descriptionInteractables.add(Generator.generateInteractable(interactable));
