@@ -323,6 +323,7 @@ public class App {
             }
 
             UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+            floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
 
         } while (endGame);
 

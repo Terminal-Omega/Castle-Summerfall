@@ -277,21 +277,23 @@ public class UI {
                 String bookmarkString = "";
                 String[] bookmark = floor.getRoom(j, i).getBookmarks();
                 if (!bookmark[0].equals("")){
-                    bookmarkString += "_" + bookmark[0].charAt(0) + "_";
+                    bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
                 }
 
 
+
                 if (i == yP && j == xP){
-                    System.out.print("_*_");
+                    System.out.print("_*_|");
                 }else if (!bookmarkString.equals("")){
                     System.out.print(bookmarkString);
                    // bookmarkString = "";
+                } else if (floor.getRoom(j, i).isVisited()) {
+                    System.out.print("___|");
                 }else{
-                    System.out.print("___");
+                    System.out.print("    ");
                 }
 
-                System.out.print("|");
             }
             System.out.println();
         }
