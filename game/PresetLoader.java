@@ -12,138 +12,91 @@ public class PresetLoader {
      * [] Interactable Presets
      * [] Enemy Presets (Enemy Loader needs to be done first)
      */
-    public static ArrayList<RoomPreset> loadRoomPresets(String toLoad){
+    public static ArrayList<RoomPreset> loadRoomPresets(String toLoad) {
         Pattern presetPattern = Pattern.compile("{(.*)}");
         Matcher presetMatcher = presetPattern.matcher(toLoad);
         ArrayList<RoomPreset> result = new ArrayList<>();
-        while(presetMatcher.find()){
+        while (presetMatcher.find()) {
             result.add(LoadRoomPreset(presetMatcher.group(1)));
         }
 
         return result;
     }
 
-    private static RoomPreset LoadRoomPreset(String toLoad){
-        Pattern RegExInteractable = Pattern.compile("\\\"interactables\\\" *: *\\[(.*)\\],");
-        Pattern RegExBoss = Pattern.compile("\\\"boss\\\" *:.*,");
-
-        Matcher interactableMatcher = RegExInteractable.matcher(toLoad);
-        Matcher bossMatcher = RegExBoss.matcher(toLoad);
-
-
-
+    private static RoomPreset LoadRoomPreset(String toLoad) {
 
         String description = Parser.parseString("description", toLoad);
 
         ArrayList<InteractablePreset> descriptionInteractables = new ArrayList<>();
-        InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(Parser.parseArray("description-interactables", toLoad));
-        for(InteractablePreset preset : descriptionInteractablesArray){
+        InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(
+                Parser.parseArray("description-interactables", toLoad));
+        for (InteractablePreset preset : descriptionInteractablesArray) {
             descriptionInteractables.add(preset);
         }
 
         ArrayList<InteractablePreset> interactables = new ArrayList<>();
         InteractablePreset[] interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
-        for(InteractablePreset preset : interactablesArray){
-            interactables.add(preset); 
+        for (InteractablePreset preset : interactablesArray) {
+            interactables.add(preset);
         }
-
-        //bossMatcher.find();
-        //String bossString = bossMatcher.group(1);
-        // NPC boss = loadNPC(bossString);
 
         RoomPreset result = new RoomPreset(description, interactables, descriptionInteractables);
         return result;
 
     }
 
-
-    private static InteractablePreset[] loadInventoryPresets(String[] toLoad){
+    private static InteractablePreset[] loadInventoryPresets(String[] toLoad) {
         InteractablePreset[] result = new InteractablePreset[toLoad.length];
-        for(int i = 0; i<toLoad.length;i++){
+        for (int i = 0; i < toLoad.length; i++) {
             result[i] = loadInteractablePreset(toLoad[i]);
         }
         return result;
     }
 
-    private static InteractablePreset loadInteractablePreset(String toLoad){
-        Pattern typePattern = Pattern.compile("\\\"type\\\" *: * \\\"(.*)\\\"");
-        Matcher typeMatcher = typePattern.matcher(toLoad);
-        typeMatcher.find();
+    private static InteractablePreset loadInteractablePreset(String toLoad) {
 
-            //find the name of the preset
-            Pattern namePattern = Pattern.compile("\\\"name\\\" *: *\\\"(.*)\\\"");
-            Matcher nameMatcher = namePattern.matcher(toLoad);
-            nameMatcher.find();
-            String name = nameMatcher.group(1);
+        // find the name of the preset
+        String name = Parser.parseString("name", toLoad);
 
-            //find all of the description options
-            Pattern descriptionPattern = Pattern.compile("\\\"descriptions\\\" *: *[(.*)]");
-            Matcher descriptionMatcher = descriptionPattern.matcher(toLoad);
-            descriptionMatcher.find();
-            String descriptionString = descriptionMatcher.group(1);
+        // find all of the description options
 
-            Pattern descriptionPattern2 = Pattern.compile("\\\"(.*)\\\"");
-            Matcher descriptionMatcher2 = descriptionPattern2.matcher(descriptionString);
-            ArrayList<String> descriptionsArrayList = new ArrayList<>();
-            while(descriptionMatcher2.find()){
-                descriptionsArrayList.add(descriptionMatcher2.group(1));
-            }
-            int arraySize = descriptionsArrayList.size();
-            String[] descriptions = new String[arraySize];
-            for(int i = 0; i<descriptions.length;i++){
-                descriptions[i] = descriptionsArrayList.get(i);
-            }
+        String[] descriptions = Parser.trimQuotes(Parser.parseArray("descriptions", toLoad));
 
-            Pattern sizePattern = Pattern.compile("\\\"size\\\" *: *([0-9]*),");
-            Matcher sizeMatcher = sizePattern.matcher(toLoad);
-            int size;
-            if(sizeMatcher.find()){
-                size = Integer.parseInt(sizeMatcher.group(1));
-            } else{
-                size = 0;
-            }
+        int size = Parser.parseInt("size", toLoad)[0];
 
-            Pattern weightPattern = Pattern.compile("\\\"weight\\\" *: *([0-9]*),");
-            Matcher weightMatcher = weightPattern.matcher(toLoad);
-            int weight;
-            if(weightMatcher.find()){
-                weight = Integer.parseInt(weightMatcher.group(1));
-            } else{
-                weight = 0;
-            }
+        int weight = Parser.parseInt("weight",toLoad)[0];
 
-            Pattern canBePickedUpPattern = Pattern.compile("\\\"canbebickedup\\\" *: *(.*)");
-            Matcher canBePickedUpMatcher = canBePickedUpPattern.matcher(toLoad);
-            canBePickedUpMatcher.find();
-            String canBePickedUpString = canBePickedUpMatcher.group(1);
-            boolean canBePickedUp = canBePickedUpString.toLowerCase().equals("true".toLowerCase());
+        boolean canBePickedUp = Parser.parseBoolean("canbepickedup", toLoad);
 
-            ArrayList<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
+        ArrayList<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
 
-            InteractablePreset result = new InteractablePreset(name, descriptions, abilityOptions, size, weight, canBePickedUp);
+        InteractablePreset result = new InteractablePreset(name, descriptions, abilityOptions, size, weight,
+                canBePickedUp);
+        
+        String type = Parser.parseString("type", toLoad);
 
-        if(typeMatcher.group(1).toLowerCase().equals("container")){
+        if (type.toLowerCase().equals("container")) {
             return loadContainerPreset(result, toLoad);
-        } else if(typeMatcher.group(1).toLowerCase().equals("weapon")){
+        } else if (type.toLowerCase().equals("weapon")) {
             return loadWeaponPreset(result, toLoad);
-        } else{
+        } else {
             return result;
         }
     }
 
-    private static ContainerPreset loadContainerPreset(InteractablePreset preset, String toLoad){
+    private static ContainerPreset loadContainerPreset(InteractablePreset preset, String toLoad) {
         ContainerPreset result = new ContainerPreset(preset);
 
         Pattern inventorySizePattern = Pattern.compile("\\\"inventorysize\\\" *: *([0-9]*)");
         Matcher inventorySizeMatcher = inventorySizePattern.matcher(toLoad);
         inventorySizeMatcher.find();
         int inventorySize = Integer.parseInt(inventorySizeMatcher.group(1));
-        
+
         result.setInventorySize(inventorySize);
         return result;
     }
 
-    private static WeaponPreset loadWeaponPreset(InteractablePreset preset, String toLoad){
+    private static WeaponPreset loadWeaponPreset(InteractablePreset preset, String toLoad) {
 
         WeaponPreset result = new WeaponPreset(preset);
 
@@ -186,10 +139,9 @@ public class PresetLoader {
         sharpMatcher.find();
         boolean sharp = sharpMatcher.group(1).toLowerCase().equals("true");
 
-        result.setValues(attackSpeed, attackSpeedRange, type, damage, damageRange, range, rangeRange, name, sharp, pierce, pierceRange);
+        result.setValues(attackSpeed, attackSpeedRange, type, damage, damageRange, range, rangeRange, name, sharp,
+                pierce, pierceRange);
         return result;
     }
-
-    
 
 }

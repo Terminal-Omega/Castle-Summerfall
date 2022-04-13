@@ -42,6 +42,14 @@ public class Parser {
         return arrayStrings;
     }
 
+    public static String[] trimQuotes (String[] toTrim){
+        String[] result = toTrim;
+        for(String string : result){
+            string.replace("\"", "");
+        }
+        return result;
+    }
+
     public static String parseObject(String attribute, String toLoad){
         Pattern objectPattern = Pattern.compile("\"" + attribute + "\" *: *{(.*)}");
         Matcher objectMatcher = objectPattern.matcher(toLoad);
