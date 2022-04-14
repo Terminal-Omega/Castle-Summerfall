@@ -33,7 +33,7 @@ public class Parser {
     }
 
     public static String[] parseArray(String attribute, String toLoad){
-        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*:\\s*\\[(.*)\\]", Pattern.MULTILINE);
+        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*:\\s*\\[(.*)\\]",Pattern.DOTALL);
         Matcher arrayMatcher = arrayPattern.matcher(toLoad);
         arrayMatcher.find();
         String arrayString = arrayMatcher.group(1);
