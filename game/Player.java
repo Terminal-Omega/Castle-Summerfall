@@ -63,7 +63,7 @@ public class Player extends Actor {
             inventory.remove(latestIndex);
             return result;
         } else {
-            throw new ThingNotFoundException("Item not found.");
+            throw new ThingNotFoundException(interactable + " is not found in your inventory");
         }
     }
 
