@@ -74,7 +74,15 @@
                 "canbepickedup":false
             },
             {
-                
+                "name": "floor",
+                "type": "other",
+                "descriptions": [
+                    "You look at towards your feet and see that you need new shoes, becoming completely distracted by your shoes",
+                    "The floor is remarkably horizontal"
+                ],
+                "size":10,
+                "weight":15,
+                "canbepickedup":false
             }
         ]
     }
