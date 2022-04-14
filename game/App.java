@@ -316,7 +316,7 @@ public class App {
                 System.out.println("Sorry I don't know what you wanted.");
             }
 
-            UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+           // UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
             floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
 
         } while (endGame);
