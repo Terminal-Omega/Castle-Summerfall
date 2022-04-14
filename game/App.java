@@ -25,7 +25,7 @@ public class App {
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player(0, 0, 5, 20, 2);
+        Player player = new Player(0, 0, 7, 20);
         int energy = player.getSpeed();
         Random rand = new Random();
         boolean endGame = true;
