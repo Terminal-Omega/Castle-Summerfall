@@ -64,10 +64,10 @@ public class Floor {
                 if (xCoord != 0) {
                     return rooms.get(xCoord - 1).get(yCoord).getDoor(Direction.EAST);
                 } else {
-                    throw new ThingNotFoundException("Door does not exist");
+                    throw new ThingNotFoundException("You walk into a wall, but there is not door there");
                 }
             default:
-                throw new ThingNotFoundException("Door does not exist");
+                throw new ThingNotFoundException("There isn't a door there");
         }
     }
 

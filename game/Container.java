@@ -95,7 +95,7 @@ public class Container extends Interactable {
             inventory.remove(latestIndex);
             return result;
         } else{
-            throw new ThingNotFoundException("Item not found.");
+            throw new ThingNotFoundException("A " + name + " was not found in the container");
         }
     }
 

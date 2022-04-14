@@ -96,7 +96,7 @@ public class Room {
         if(latestIndex !=-1){
             return interactables.get(latestIndex);
         } else{
-            throw new ThingNotFoundException("Item not found in room");
+            throw new ThingNotFoundException("A" + name + " was not found in the room");
         }
     }
 
@@ -136,7 +136,7 @@ public class Room {
             interactables.remove(latestIndex);
             return result;
         } else{
-            throw new ThingNotFoundException("Item not Found");
+            throw new ThingNotFoundException("a " + name + " was not found in the room");
         }
     }
 
