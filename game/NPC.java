@@ -25,6 +25,8 @@ public class NPC extends Actor {
                 shield, name);
         setAllience(npcAllience);
         setDescription(description);
+        setDexterity(30);
+        setWeaponSkill();
 
     }
 

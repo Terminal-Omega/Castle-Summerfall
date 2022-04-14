@@ -3,7 +3,6 @@ package game;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Hashtable;
 import java.util.Random;
 
 public class App {
@@ -26,7 +25,7 @@ public class App {
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player(0, 0, 7, 15);
+        Player player = new Player(0, 0, 5, 20, 2);
         int energy = player.getSpeed();
         Random rand = new Random();
         boolean endGame = true;

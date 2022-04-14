@@ -5,16 +5,17 @@ public class Player extends Actor {
 
     private int maxWeight = 20;
 
-    public Player(int x, int y, int constituion, int speed) {
+    public Player(int x, int y, int constituion, int energy, int AC) {
         this.setYCoord(y);
         this.setXCoord(x);
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
-        this.setSpeed(speed);
+        this.setSpeed(energy);
         this.setDexterity(30);
         this.setWeaponSkill();
         this.setName("Player");
+        this.setAC(AC);
     }
 
     /**
