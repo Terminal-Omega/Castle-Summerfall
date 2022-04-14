@@ -105,11 +105,6 @@ public class App {
                 commandKnown = false;
             }
 
-            if (inputCommand.equals("where")) {
-                System.out.printf("x:%d  y:%d", player.getXCoord(), player.getYCoord());
-                commandKnown = false;
-            }
-
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
@@ -223,8 +218,6 @@ public class App {
                 UI.displayHeath(player.getHealth(), player.getMaxHealth());
                 commandKnown = false;
             }
-
-            // TODO: remove unlimited command for final draft @yomas000
             if (inputCommand.equals("map")) {
                 UI.displayMap(floor1.getXSize(), floor1.getYSize(), player, floor1);
                 commandKnown = false;
