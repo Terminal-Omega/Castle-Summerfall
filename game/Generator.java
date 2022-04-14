@@ -189,7 +189,7 @@ public class Generator {
         }
 
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
-
+        
         ArrayList<RoomPreset> presets = new ArrayList<>();
 
         for(String file : files){

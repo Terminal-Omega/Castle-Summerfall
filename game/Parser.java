@@ -43,9 +43,9 @@ public class Parser {
     }
 
     public static String[] trimQuotes (String[] toTrim){
-        String[] result = toTrim;
-        for(String string : result){
-            string.replace("\"", "");
+        String[] result = new String[toTrim.length];
+        for(int i = 0; i< toTrim.length;i++){
+            result[i] = toTrim[i].replace("\"", "");
         }
         return result;
     }
