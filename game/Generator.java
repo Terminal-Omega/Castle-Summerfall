@@ -37,7 +37,7 @@ public class Generator {
                 if (i != xSize - 1) {
                     eastDoor = true;
                 }
-                column.add(generateRoom(1, 3, southDoor, eastDoor));
+                column.add(generateRoom());
             }
             rooms.add(column);
         }
@@ -171,7 +171,7 @@ public class Generator {
     }
 
     public static Room generateRoom(){
-        File filePaths = new File("../data/config/paths.json");
+        File filePaths = new File("data/config/paths.json");
         String[] files;
         String pathString = "";
 
@@ -183,8 +183,9 @@ public class Generator {
                 pathString += (char) i;
             }
             pathIn.close();
+            System.out.println(pathString);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));

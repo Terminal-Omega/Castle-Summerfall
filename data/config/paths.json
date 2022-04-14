@@ -2,7 +2,7 @@
     "interactables":[
         "../data/presets/InteractablePresets.json"
     ],
-    "room-presets":[
+    "room-presets" : [
         "../data/presets/RoomPresets.json"
     ],
     "npcs":[
