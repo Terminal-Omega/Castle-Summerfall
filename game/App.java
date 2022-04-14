@@ -20,13 +20,14 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-       // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].* ([A-Za-z].*)");
+        // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].*
+        // ([A-Za-z].*)");
         Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
-        int energy = player.getSpeed();
+        int energy = player.getEnergy();
         Random rand = new Random();
         boolean endGame = true;
         System.out.println(floor1.getDescription(0, 0));
@@ -41,7 +42,7 @@ public class App {
             Matcher dropMatch = dropPat.matcher(inputCommand);
             Matcher attackMatch = attackPat.matcher(inputCommand);
             Matcher bookMatch = bookPat.matcher(inputCommand);
-            //Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
+            // Matcher takeChestMatch = takeChestPat.matcher(inputCommand);
 
             boolean commandKnown = true;
 
@@ -84,18 +85,19 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    System.out.println(floor1.getDescription(player.getXCoord(),player.getYCoord()));
+                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             }
 
-            //bookmark command
-            if (bookMatch.find()){
-                floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1), bookMatch.group(2));
+            // bookmark command
+            if (bookMatch.find()) {
+                floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1),
+                        bookMatch.group(2));
                 System.out.println("This room is bookmarked with the character: " + bookMatch.group(1).charAt(0));
                 commandKnown = false;
             }
 
-            if (inputCommand.equals("where")){
+            if (inputCommand.equals("where")) {
                 System.out.printf("x:%d  y:%d", player.getXCoord(), player.getYCoord());
                 commandKnown = false;
             }
@@ -110,12 +112,14 @@ public class App {
                 } else {
                     energy -= energyCost;
                     String name;
-                    if (command.equals("room") || command.equals("Room")){
+                    if (command.equals("room") || command.equals("Room")) {
                         System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-                    }else{
+                    } else {
                         try {
-                            name = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).getDescription();
-                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0).weight;
+                            name = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                                    .getItem(inspectMatch.group(1), 0).getDescription();
+                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord())
+                                    .getItem(inspectMatch.group(1), 0).weight;
 
                             System.out.println(name);
                         } catch (ThingNotFoundException e) {
@@ -135,18 +139,17 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth(), player.getMaxWeight());
+                    UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth(),
+                            player.getMaxWeight());
                 }
 
                 commandKnown = false;
             }
 
-
-
             // if (takeChestMatch.find()){
-            //     System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
-            //     commandKnown = false;
-            //     continue;
+            // System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
+            // commandKnown = false;
+            // continue;
             // }
 
             // take command
@@ -170,7 +173,8 @@ public class App {
                             energy -= energyCost;
                         } catch (ThingNotFoundException r) {
                             try {
-                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Crate");
+                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                                        .getItem("Crate");
                                 Container Chest = (Container) item;
                                 Interactable thing = Chest.takeItem(takeMatch.group(1));
                                 player.putItem(thing);
@@ -247,7 +251,7 @@ public class App {
                 commandKnown = false;
             }
 
-            //energy command
+            // energy command
             if (inputCommand.equals(UI.Commands.ENERGY.getStrCommand())) {
                 System.out.println("\tEnergy: " + energy);
                 UI.displayEnergy(energy);
@@ -262,28 +266,34 @@ public class App {
             // reset turn
             if (energy <= 0) {
                 int randNum = rand.nextInt(5);
-                switch(randNum) {
+                switch (randNum) {
                     case 0:
-                        System.out.println("Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
+                        System.out.println(
+                                "Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
                         break;
                     case 1:
-                        System.out.println("The floor doesn't seem so bad you think, as you sink to your ground. I have to be quick though.");
+                        System.out.println(
+                                "The floor doesn't seem so bad you think, as you sink to your ground. I have to be quick though.");
                         break;
                     case 2:
-                        System.out.println("Your eye lids droop and you can't take another step. This isn't the time to be falling asleep you think. My family can't wait");
+                        System.out.println(
+                                "Your eye lids droop and you can't take another step. This isn't the time to be falling asleep you think. My family can't wait");
                         break;
                     case 3:
-                        System.out.println("Time has flown by and you are too tired tired to think right now. You fall to the ground and start to sleep.");
+                        System.out.println(
+                                "Time has flown by and you are too tired tired to think right now. You fall to the ground and start to sleep.");
                         break;
                     case 4:
-                        System.out.println("No more falling asleep you think. You have got to find one of those energy potions. There might be one somewhere you think as you fall asleep.");
+                        System.out.println(
+                                "No more falling asleep you think. You have got to find one of those energy potions. There might be one somewhere you think as you fall asleep.");
                         break;
                     case 5:
-                        System.out.println("I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
+                        System.out.println(
+                                "I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
                 }
-                
+
                 Updates.update(player, floor1);
-                energy = player.getSpeed();
+                energy = player.getEnergy();
             } else {
                 Updates.actionUpdate(floor1);
             }
@@ -307,11 +317,12 @@ public class App {
                 commandKnown = false;
             }
 
-            if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())){
-                endGame = false;;
+            if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())) {
+                endGame = false;
+                ;
             }
 
-            if (player.getHealth() <= 0){
+            if (player.getHealth() <= 0) {
                 endGame = false;
                 UI.displayEnding();
             }

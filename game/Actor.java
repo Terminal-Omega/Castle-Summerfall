@@ -8,7 +8,7 @@ public class Actor {
     protected int yCoord;
     protected int health;
     protected int AC;
-    protected int speed;
+    protected int energy;
     protected int mana;
     protected int strength;
     protected int dexterity;
@@ -25,7 +25,7 @@ public class Actor {
     protected ArrayList<Interactable> inventory;
     protected int shield;
     protected int maxHealth;
-    protected int maxSpeed;
+    protected int maxEnergy;
     protected int maxMana;
     protected int maxShield;
     protected int shieldRegen;
@@ -320,9 +320,9 @@ public class Actor {
      * 
      * @param speed
      */
-    public void setSpeed() {
-        speed = dexterity * 2;
-        maxSpeed = speed;
+    public void setEnergy() {
+        energy = dexterity * 2;
+        maxEnergy = energy;
     }
 
     /**
@@ -333,13 +333,13 @@ public class Actor {
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
         setWeaponSkill();
-        setSpeed();
+        setEnergy();
     }
 
     public void modifyDexterity(int amount) {
         dexterity += amount;
         setWeaponSkill();
-        setSpeed();
+        setEnergy();
     }
 
     public void setWeaponSkill() {
@@ -360,8 +360,8 @@ public class Actor {
      * 
      * @return int
      */
-    public int getSpeed() {
-        return speed;
+    public int getEnergy() {
+        return energy;
     }
 
     /**
@@ -378,8 +378,8 @@ public class Actor {
      * 
      * @return int
      */
-    public int getMaxSpeed() {
-        return maxSpeed;
+    public int getMaxEnergy() {
+        return maxEnergy;
     }
 
     // Everything dealing with wisdom of the
