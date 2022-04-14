@@ -5,16 +5,17 @@ public class Player extends Actor {
 
     private int maxWeight = 20;
 
-    public Player(int x, int y, int constituion, int speed) {
+    public Player(int x, int y, int constituion, int energy, int AC) {
         this.setYCoord(y);
         this.setXCoord(x);
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
-        this.setSpeed(speed);
+        this.setSpeed(energy);
         this.setDexterity(30);
         this.setWeaponSkill();
         this.setName("Player");
+        this.setAC(AC);
     }
 
     /**
@@ -27,7 +28,7 @@ public class Player extends Actor {
         }
         weight += interactable.weight;
 
-        if (weight < maxWeight){
+        if (weight <= maxWeight){
             if (inventory.size() < 5){
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
@@ -62,7 +63,7 @@ public class Player extends Actor {
             inventory.remove(latestIndex);
             return result;
         } else {
-            throw new ThingNotFoundException(interactable + " not found in inventory"); //TODO: clean up exeptions
+            throw new ThingNotFoundException(interactable + " is not found in your inventory");
         }
     }
 

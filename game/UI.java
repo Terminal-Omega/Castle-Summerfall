@@ -267,37 +267,39 @@ public class UI {
      * @param player
      */
     public static void displayMap(int xSize, int ySize, Player player, Floor floor){
-        int xP = ySize - player.getYCoord() - 1;
-        int yP = player.getXCoord();
-        String bookmarkMap = "";
+        int xP = player.getXCoord();
+        int yP = player.getYCoord() + 1;
         String bookmarkDisplay = "\n\n\n";
+       // String bookmarkString = "";
 
-        for (int i = 0; i<xSize; i++){
-            for (int k = 0; k<ySize * 2; k++){
-                if (k % 2 == 0){
-                    String[] bookmark = floor.getRoom(i, k/2).getBookmarks();
-                    if (!bookmark[0].equals("")){
-                        bookmarkMap = "_" + bookmark[0].charAt(0) + "_";
-                        bookmarkDisplay += bookmark[0] + " : " + bookmark[1];
-                    }
-                    
-                    
-                    if (xP == i && yP == k/2){
-                        System.out.print("_*_");
-                    }else if (!bookmarkMap.equals("")){
-                        System.out.print(bookmarkMap);
-                    }else{
-                        System.out.print("___");
-                    }
-                }else{
-                    System.out.print("|");
+        for (int i = ySize - 1; i > 0; i--){
+            for (int j = 0; j < xSize - 1; j++){
+                String bookmarkString = "";
+                String[] bookmark = floor.getRoom(j, i).getBookmarks();
+                if (!bookmark[0].equals("")){
+                    bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
+                    bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
                 }
+
+
+
+                if (i == yP && j == xP){
+                    System.out.print("_*_|");
+                }else if (!bookmarkString.equals("")){
+                    System.out.print(bookmarkString);
+                   // bookmarkString = "";
+                } else if (floor.getRoom(j, i).isVisited()) {
+                    System.out.print("___|");
+                }else{
+                    System.out.print("    ");
+                }
+
             }
             System.out.println();
         }
-        bookmarkDisplay = bookmarkDisplay.replaceAll("_ :", " ");
-        bookmarkDisplay = bookmarkDisplay.strip();
         System.out.println(bookmarkDisplay);
+
+        
     }
 
     /**
@@ -327,7 +329,7 @@ public class UI {
     }
 
     public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
-        int width = 80;
+        int width = 100;
         System.out.printf("\033[s\033[0;%dH", width);
         for (int i = 0; i < 6; i++){
             System.out.printf("\033[%d;%dH", i, width);
