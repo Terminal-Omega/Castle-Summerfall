@@ -16,7 +16,7 @@ public class Updates {
 
         Pattern damage = Pattern.compile("damage\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern heal = Pattern.compile("heal\\(([0-9]*(-([0-9]*))?)\\)");
-        Pattern damageNoAC = Pattern.compile("damageNoAc\\(([0-9]*(-([0-9]*))?)\\)");
+        Pattern damageNoAC = Pattern.compile("damageNoAC\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern statChanger = Pattern.compile("stat");
 
         Matcher damageMatcher = damage.matcher(effect);
