@@ -267,7 +267,7 @@ public class App {
                         System.out.println("Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
                         break;
                     case 1:
-                        System.out.println("The floor doesn't seem so bad you think, as you sink to your groud. I have to be quick though.");
+                        System.out.println("The floor doesn't seem so bad you think, as you sink to your ground. I have to be quick though.");
                         break;
                     case 2:
                         System.out.println("Your eye lids droop and you can't take another step. This isn't the time to be falling asleep you think. My family can't wait");
@@ -276,7 +276,7 @@ public class App {
                         System.out.println("Time has flown by and you are too tired tired to think right now. You fall to the ground and start to sleep.");
                         break;
                     case 4:
-                        System.out.println("No more falling asleep you think. You have got to find one of those energy poitions. There might be one somewhere you think as you fall asleep.");
+                        System.out.println("No more falling asleep you think. You have got to find one of those energy potions. There might be one somewhere you think as you fall asleep.");
                         break;
                     case 5:
                         System.out.println("I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
