@@ -31,6 +31,7 @@ public class App {
         Random rand = new Random();
         boolean endGame = true;
         System.out.println(floor1.getDescription(0, 0));
+        final String OSNAME = System.getProperty("os.name");
 
         do {
             System.out.print("> ");
@@ -71,8 +72,15 @@ public class App {
 
             // clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
-                System.out.print("\033[H\033[2J\033[5B");
-                System.out.flush();
+                int height = 12;
+                if (OSNAME.equals("Windows 10")){
+                    System.out.print("\033[H\033[2J\033[5B");
+                    System.out.flush();
+                }else{
+                    for (int i = 0; i < height; i++){
+                        System.out.println();
+                    }
+                }
                 commandKnown = false;
             }
 
@@ -332,7 +340,9 @@ public class App {
                 System.out.println("Sorry I don't know what you wanted.");
             }
 
-            UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+            if (!OSNAME.equals("Windows 10")){
+                UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+            }
             floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
 
         } while (endGame);
