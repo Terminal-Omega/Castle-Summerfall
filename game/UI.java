@@ -273,7 +273,7 @@ public class UI {
        // String bookmarkString = "";
 
         for (int i = ySize - 1; i > 0; i--){
-            for (int j = 0; j < xSize - 1; j++){
+            for (int j = 0; j < xSize; j++){
                 String bookmarkString = "";
                 String[] bookmark = floor.getRoom(j, i).getBookmarks();
                 if (!bookmark[0].equals("")){
