@@ -1,4 +1,5 @@
 package game;
+
 import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
@@ -11,7 +12,7 @@ public class Player extends Actor {
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
-        this.setSpeed(energy);
+        this.setSpeed();
         this.setDexterity(30);
         this.setWeaponSkill();
         this.setName("Player");
@@ -23,13 +24,13 @@ public class Player extends Actor {
      */
     public void putItem(Interactable interactable) {
         int weight = 0;
-        for (Interactable inter : inventory){
+        for (Interactable inter : inventory) {
             weight += inter.weight;
         }
         weight += interactable.weight;
 
-        if (weight <= maxWeight){
-            if (inventory.size() < 5){
+        if (weight <= maxWeight) {
+            if (inventory.size() < 5) {
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
             }
@@ -107,11 +108,10 @@ public class Player extends Actor {
         return isFound;
     }
 
-    
-    /** 
+    /**
      * @return int
      */
-    public int getMaxWeight(){
+    public int getMaxWeight() {
         return this.maxWeight;
     }
 }

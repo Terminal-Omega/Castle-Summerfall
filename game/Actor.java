@@ -46,18 +46,15 @@ public class Actor {
         setXCoord(xCoord);
         setYCoord(yCoord);
         setAC(AC);
-        setSpeed(speed);
-        setMana();
         setNoise(noise);
-        setCarryWeight();
-        setInventory();
         setShield(sheild);
         setHealth();
         setName(name);
-        setWeaponSkill();
-        setBallisticSkill();
         inventory = new ArrayList<Interactable>();
     }
+
+    // everything dealing with
+    // xCoord--------------------------------------------------------------------
 
     /**
      * This will set the x coordinate of the Actor
@@ -69,13 +66,16 @@ public class Actor {
     }
 
     /**
-     * This will set the name of the Actor
+     * This gets the x coordinate of the Actor
      * 
-     * @param name
+     * @return int
      */
-    public void setName(String name) {
-        this.name = name;
+    public int getXCoord() {
+        return xCoord;
     }
+
+    // everything dealing with
+    // yCoord---------------------------------------------------------------------
 
     /**
      * This will set the y coordinate of the player
@@ -86,52 +86,37 @@ public class Actor {
         this.yCoord = yCoord;
     }
 
-    public void setHealth() {
-        health = constitution * 2;
-        maxHealth = health;
+    /**
+     * This gets the y coordinate of the Actor
+     * 
+     * @return int
+     */
+    public int getYCoord() {
+        return yCoord;
+    }
+
+    // Everything dealing with
+    // name-------------------------------------------------------------------
+    /**
+     * This will set the name of the Actor
+     * 
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     * This will set the Armor Class of the Actor
+     * This will return the name of the Actor
      * 
-     * @param AC
+     * @return String
      */
-    public void setAC(int AC) {
-        this.AC = AC;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * This will set the speed of the Actor
-     * 
-     * @param speed
-     */
-    public void setSpeed(int speed) {
-        this.speed = speed;
-        maxSpeed = speed;
-    }
-
-    public void setMana() {
-        mana = intelligence * 2;
-        maxMana = mana;
-    }
-
-    /**
-     * This sets the strength of the Actor
-     * 
-     * @param strength
-     */
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    /**
-     * This sets the dexterity of the Actor
-     * 
-     * @param dexterity
-     */
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
+    // Everything dealing with
+    // Constituion----------------------------------------------------------
 
     /**
      * This will set the constituion of the Actor
@@ -140,48 +125,97 @@ public class Actor {
      */
     public void setConstitution(int constituion) {
         this.constitution = constituion;
+        setHealth();
     }
 
     /**
-     * This sets the intelligence of the Actor
      * 
-     * @param intelligence
+     * 
+     * @param amount
      */
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
+    public void modifyConstitution(int amount) {
+        constitution += amount;
+        setHealth();
     }
 
     /**
-     * This sets the wisdom of the Actor
+     * This will get the constitution of the Actor
      * 
-     * @param wisdom
+     * @return int
      */
-    public void setWisdom(int wisdom) {
-        this.wisdom = wisdom;
+    public int getConstitution() {
+        return constitution;
     }
 
     /**
-     * This sets the charisma of the Actor
+     * This will set the health of the player
      * 
-     * @param charisma
      */
-    public void setCharisma(int charisma) {
-        this.charisma = charisma;
+    public void setHealth() {
+        health = constitution * 2;
+        maxHealth = health;
     }
 
     /**
-     * This sets the Noise level the Actor will make
+     * This gets the current health of the Actor
      * 
-     * @param noise
+     * @return int
      */
-    public void setNoise(int noise) {
-        this.noise = noise;
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * This will return the max health of the Actor
+     * 
+     * @return int
+     */
+    public int getMaxHealth() {
+        return maxHealth;
+
+    }
+
+    // Everything dealing with strength of the
+    // Actor------------------------------------------------------
+    /**
+     * This sets the strength of the Actor
+     * 
+     * @param strength
+     */
+    public void setStrength(int strength) {
+        this.strength = strength;
+        setCarryWeight();
+    }
+
+    public void modifiyStrength(int amount) {
+        strength += amount;
+        setCarryWeight();
     }
 
     public void setCarryWeight() {
         carryWeight = strength * 2;
     }
 
+    /**
+     * This returns the strength of the Actor
+     * 
+     * @return int
+     */
+    public int getStrength() {
+        return strength;
+    }
+
+    /**
+     * This will return how much the Actor can carry
+     * 
+     * @return int
+     */
+    public int getCarryWeight() {
+        return carryWeight;
+    }
+
+    // Everything dealing with
+    // inventory--------------------------------------------------------------
     public void setInventory() {
         inventory = new ArrayList<Interactable>();
 
@@ -197,66 +231,49 @@ public class Actor {
     }
 
     /**
-     * This sets the sheild value of the Actor
+     * This will return the inventory of the Actor
      * 
-     * @param sheild
+     * @return ArrayList<Interactable>
      */
-    public void setShield(int sheild) {
-        this.shield = sheild;
-        maxShield = shield;
+    public ArrayList<Interactable> getInventory() {
+        return inventory;
+    }
+
+    /**
+     * This will put an Iteractable in the Actors Inventory
+     * 
+     * @param interactable
+     */
+    public void putItem(Interactable interactable) {
+        inventory.add(interactable);
+    }
+
+    // This is everything dealing with intelligence
+    // ---------------------------------------------------------
+    /**
+     * This sets the intelligence of the Actor
+     * 
+     * @param intelligence
+     */
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+        setMana();
+        setBallisticSkill();
+    }
+
+    public void modifyIntellignce(int amount) {
+        intelligence += amount;
+        setMana();
+        setBallisticSkill();
+    }
+
+    public void setMana() {
+        mana = intelligence * 2;
+        maxMana = mana;
     }
 
     public void setBallisticSkill() {
         ballisticSkill = intelligence * 2;
-    }
-
-    public void setWeaponSkill() {
-        weaponSkill = dexterity * 2;
-    }
-
-    /**
-     * This gets the x coordinate of the Actor
-     * 
-     * @return int
-     */
-    public int getXCoord() {
-        return xCoord;
-    }
-
-    /**
-     * This gets the y coordinate of the Actor
-     * 
-     * @return int
-     */
-    public int getYCoord() {
-        return yCoord;
-    }
-
-    /**
-     * This gets the current health of the Actor
-     * 
-     * @return int
-     */
-    public int getHealth() {
-        return health;
-    }
-
-    /**
-     * This returns the Armor Class of the Actor
-     * 
-     * @return int
-     */
-    public int getAC() {
-        return AC;
-    }
-
-    /**
-     * This will get the speed of the Actor
-     * 
-     * @return int
-     */
-    public int getSpeed() {
-        return speed;
     }
 
     /**
@@ -269,102 +286,12 @@ public class Actor {
     }
 
     /**
-     * This returns the strength of the Actor
-     * 
-     * @return int
-     */
-    public int getStrength() {
-        return strength;
-    }
-
-    /**
-     * This return the dexterity of the Actor
-     * 
-     * @return int
-     */
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    /**
-     * This will get the constitution of the Actor
-     * 
-     * @return int
-     */
-    public int getConstitution() {
-        return constitution;
-    }
-
-    /**
      * This will get the intelligece of the Actor
      * 
      * @return int
      */
     public int getIntelligence() {
         return intelligence;
-    }
-
-    /**
-     * This will get the wisdom of the Actor
-     * 
-     * @return int
-     */
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    /**
-     * This will get the Charisma of the Actor
-     * 
-     * @return int
-     */
-    public int getCharisma() {
-        return charisma;
-    }
-
-    /**
-     * This will get the amount of noise the Actor makes
-     * 
-     * @return int
-     */
-    public int getNoise() {
-        return noise;
-    }
-
-    /**
-     * This will return how much the Actor can carry
-     * 
-     * @return int
-     */
-    public int getCarryWeight() {
-        return carryWeight;
-    }
-
-    /**
-     * This will return the name of the Actor
-     * 
-     * @return String
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * This will return the inventory of the Actor
-     * 
-     * @return ArrayList<Interactable>
-     */
-    public ArrayList<Interactable> getInventory() {
-        return inventory;
-    }
-
-    /**
-     * This will return the sheild strength of the Actor
-     * 
-     * @return int
-     */
-    public int getShield() {
-        return shield;
     }
 
     /**
@@ -377,6 +304,49 @@ public class Actor {
     }
 
     /**
+     * This will return the max mana of the Actor
+     * 
+     * @return int
+     */
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    // Everything dealing with Dexterity
+    // ------------------------------------------------
+
+    /**
+     * This will set the speed of the Actor
+     * 
+     * @param speed
+     */
+    public void setSpeed() {
+        speed = dexterity * 2;
+        maxSpeed = speed;
+    }
+
+    /**
+     * This sets the dexterity of the Actor
+     * 
+     * @param dexterity
+     */
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+        setWeaponSkill();
+        setSpeed();
+    }
+
+    public void modifyDexterity(int amount) {
+        dexterity += amount;
+        setWeaponSkill();
+        setSpeed();
+    }
+
+    public void setWeaponSkill() {
+        weaponSkill = dexterity * 2;
+    }
+
+    /**
      * This will return the weapon skill of the Actor
      * 
      * @return int
@@ -386,13 +356,21 @@ public class Actor {
     }
 
     /**
-     * This will return the max health of the Actor
+     * This will get the speed of the Actor
      * 
      * @return int
      */
-    public int getMaxHealth() {
-        return maxHealth;
+    public int getSpeed() {
+        return speed;
+    }
 
+    /**
+     * This return the dexterity of the Actor
+     * 
+     * @return int
+     */
+    public int getDexterity() {
+        return dexterity;
     }
 
     /**
@@ -404,24 +382,127 @@ public class Actor {
         return maxSpeed;
     }
 
+    // Everything dealing with wisdom of the
+    // Actor------------------------------------------------------
     /**
-     * This will return the max mana of the Actor
+     * This sets the wisdom of the Actor
+     * 
+     * @param wisdom
+     */
+    public void setWisdom(int wisdom) {
+        this.wisdom = wisdom;
+    }
+
+    public void modifyWisdom(int amount) {
+        wisdom += amount;
+    }
+
+    /**
+     * This will get the wisdom of the Actor
      * 
      * @return int
      */
-    public int getMaxMana() {
-        return maxMana;
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    // Everything dealing with the charisma of the
+    // Actor---------------------------------------------------
+    /**
+     * This sets the charisma of the Actor
+     * 
+     * @param charisma
+     */
+    public void setCharisma(int charisma) {
+        this.charisma = charisma;
+    }
+
+    public void modifyCharisma(int amount) {
+        charisma += amount;
     }
 
     /**
-     * This will put an Iteractable in the Actors Inventory
+     * This will get the Charisma of the Actor
      * 
-     * @param interactable
+     * @return int
      */
-    public void putItem(Interactable interactable) {
-        inventory.add(interactable);
+    public int getCharisma() {
+        return charisma;
     }
 
+    // Everything dealing with Armour Class
+    /**
+     * This will set the Armor Class of the Actor
+     * 
+     * @param AC
+     */
+    public void setAC(int AC) {
+        this.AC = AC;
+    }
+
+    public void modifyAC(int amount) {
+        AC += amount;
+    }
+
+    /**
+     * This returns the Armor Class of the Actor
+     * 
+     * @return int
+     */
+    public int getAC() {
+        return AC;
+    }
+
+    // Everything dealing with the noise level of the
+    // Actor----------------------------------------------------------
+    /**
+     * This sets the Noise level the Actor will make
+     * 
+     * @param noise
+     */
+    public void setNoise(int noise) {
+        this.noise = noise;
+    }
+
+    /**
+     * This is used to adjust the amount of noise the actor is making
+     * 
+     * @param amount
+     */
+    public void modifyNoise(int amount) {
+        noise += amount;
+    }
+
+    /**
+     * This will get the amount of noise the Actor makes
+     * 
+     * @return int
+     */
+    public int getNoise() {
+        return noise;
+    }
+
+    // Everything dealing with the shield of the Actor
+    /**
+     * This sets the sheild value of the Actor
+     * 
+     * @param sheild
+     */
+    public void setShield(int sheild) {
+        this.shield = sheild;
+        maxShield = shield;
+    }
+
+    /**
+     * This will return the sheild strength of the Actor
+     * 
+     * @return int
+     */
+    public int getShield() {
+        return shield;
+    }
+
+    // Everything dealing with combat and damage/healing
     /**
      * This will make the Actor take damage decreaseing their health
      * 
