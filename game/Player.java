@@ -28,7 +28,7 @@ public class Player extends Actor {
         }
         weight += interactable.weight;
 
-        if (weight < maxWeight){
+        if (weight <= maxWeight){
             if (inventory.size() < 5){
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
