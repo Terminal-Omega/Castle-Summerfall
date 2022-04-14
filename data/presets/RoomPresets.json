@@ -58,5 +58,24 @@
             }
         ],
         "interactables":[]
+    },
+    {
+        "description": "The room you walked into is dark and dank. It smells like mildew and has Slime covering the Floor and walls.",
+        "description-interactables": [
+            {
+                "name": "Slime",
+                "type": "other",
+                "descriptions": [
+                    "this looks to slimly to touch, you decide to save yourself and not touch it",
+                    "The slime is gelatinous and looks like it could be alive"
+                ],
+                "size":2,
+                "weight":5,
+                "canbepickedup":false
+            },
+            {
+                
+            }
+        ]
     }
 ]
