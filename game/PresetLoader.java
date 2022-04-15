@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,23 +15,21 @@ public class PresetLoader {
      */
 
     public static ArrayList<RoomPreset> loadRoomPresets(String toLoad) {
-        Pattern presetPattern = Pattern.compile("\\{(.*?)\\},",Pattern.DOTALL);
-        Matcher presetMatcher = presetPattern.matcher(toLoad);
+        String[] presets = Parser.parseArray("rooms", toLoad);
         ArrayList<RoomPreset> result = new ArrayList<>();
-        while (presetMatcher.find()) {
-            result.add(LoadRoomPreset(presetMatcher.group(1)));
+        for(String string : presets){
+            result.add(loadRoomPreset(string));
         }
 
         return result;
     }
 
-    private static RoomPreset LoadRoomPreset(String toLoad) {
+    private static RoomPreset loadRoomPreset(String toLoad) {
 
         String[] descriptions = Parser.trimQuotes(Parser.parseArray("descriptions", toLoad));
 
         ArrayList<InteractablePreset> descriptionInteractables = new ArrayList<>();
-        InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(
-                Parser.parseArray("description-interactables", toLoad));
+        InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(Parser.parseArray("description-interactables", toLoad));
         for (InteractablePreset preset : descriptionInteractablesArray) {
             descriptionInteractables.add(preset);
         }
@@ -38,11 +37,11 @@ public class PresetLoader {
         ArrayList<InteractablePreset> interactables = new ArrayList<>();
         InteractablePreset[] interactablesArray;
         
-        if(!loadInventoryPresets(Parser.parseArray("interactables", toLoad)).equals(null)){
+        if(!Objects.isNull(loadInventoryPresets(Parser.parseArray("interactables", toLoad)))){
             interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
         } else{
             InteractablePreset[] toSet = {};
-            interactablesArray = toSet;
+            interactablesArray = null;
         }
 
         for (InteractablePreset preset : interactablesArray) {
@@ -55,7 +54,7 @@ public class PresetLoader {
     }
 
     private static InteractablePreset[] loadInventoryPresets(String[] toLoad) {
-        if(!toLoad.equals(null)){
+        if(!Objects.isNull(toLoad)){
             InteractablePreset[] result = new InteractablePreset[toLoad.length];
             for (int i = 0; i < toLoad.length; i++) {
                 result[i] = loadInteractablePreset(toLoad[i]);

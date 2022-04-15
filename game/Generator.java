@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 //this is a grouping of methods to randomly generate any given game object.
@@ -146,7 +147,9 @@ public class Generator {
         int loopCount = rand.nextInt(range) + interactableMin;
         ArrayList<Interactable> roomInventory = new ArrayList<>();
         for(InteractablePreset interactable : preset.interactables){
-            roomInventory.add(spinInteractable(interactable));
+            if(!Objects.isNull(spinInteractable(interactable))){
+                roomInventory.add(spinInteractable(interactable));
+            }
         }
         ArrayList<Interactable> descriptionInteractables = new ArrayList<>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
@@ -254,8 +257,14 @@ public class Generator {
     }
 
     public static Interactable spinInteractable(InteractablePreset preset){
+        if(Objects.isNull(preset)){
+            return null;
+        }
         Random rand = new Random();
         String name = preset.name;
+        if(Objects.isNull(preset.descriptions)){
+            return null;
+        }
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
         ArrayList<Ability> abilities = new ArrayList<>();
         ArrayList<InteractablePreset.AbilityOption> options = new ArrayList<>();

@@ -1,6 +1,8 @@
-[
+{"rooms":[
     {
-        "description": "You look around and see nothing, the room is too dark to see much,\nbut you can see that the Walls are gray brick that has moss and water dripping from the old Stones.",
+        "descriptions": [
+            "You look around and see nothing, the room is too dark to see much,\nbut you can see that the Walls are gray brick that has moss and water dripping from the old Stones."
+        ],
         "description-interactables": [
             {
                 "name": "walls",
@@ -87,3 +89,4 @@
         "interactables":[]
     }
 ]
+}
