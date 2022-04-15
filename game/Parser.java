@@ -55,6 +55,9 @@ public class Parser {
     }
 
     public static String[] trimQuotes (String[] toTrim){
+        if(toTrim.equals(null)){
+            return null;
+        }
         String[] result = new String[toTrim.length];
         for(int i = 0; i< toTrim.length;i++){
             String stringToAdd = toTrim[i].replaceAll("\"", "");
