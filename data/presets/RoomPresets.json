@@ -9,8 +9,8 @@
                     "these are alarmingly vertical walls",
                     "these would make good castle walls you think"
                 ],
-                "size":5,
-                "weight":5,
+                "size":"5",
+                "weight":"5",
                 "canbepickedup":false
                 
 
@@ -22,12 +22,11 @@
                     "This ain't no philosopher's stone",
                     "you see a stone that's shaped like a kidney,\nthis must be a kidney stone you think"
                 ],
-                "size":5,
-                "weight":5,
+                "size":"5",
+                "weight":"5",
                 "canbepickedup":false
-                
+            } 
 
-            }  
         ],
         "interactables":[]
     },
@@ -41,8 +40,8 @@
                     "They are too bright to look at, so you don't",
                     "The metal looks like gold. Too bad you don't have a ladder"
                 ],
-                "size":8,
-                "weight":9,
+                "size":"8",
+                "weight":"9",
                 "canbepickedup":false
             },
             {
@@ -52,8 +51,8 @@
                     "The wood looks a little rotted, you might want to get out. Fast",
                     "This wood doesn't look up to with buildings now. You might want to get out, and fast"
                 ],
-                "size":9,
-                "weight":10,
+                "size":"9",
+                "weight":"10",
                 "canbepickedup":false
             }
         ],
@@ -69,8 +68,8 @@
                     "this looks to slimly to touch, you decide to save yourself and not touch it",
                     "The slime is gelatinous and looks like it could be alive"
                 ],
-                "size":2,
-                "weight":5,
+                "size":"2",
+                "weight":"5",
                 "canbepickedup":false
             },
             {
@@ -80,8 +79,8 @@
                     "You look at towards your feet and see that you need new shoes, becoming completely distracted by your shoes",
                     "The floor is remarkably horizontal"
                 ],
-                "size":10,
-                "weight":15,
+                "size":"10",
+                "weight":"15",
                 "canbepickedup":false
             }
         ],

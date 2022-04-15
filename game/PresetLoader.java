@@ -14,7 +14,7 @@ public class PresetLoader {
      */
 
     public static ArrayList<RoomPreset> loadRoomPresets(String toLoad) {
-        Pattern presetPattern = Pattern.compile("{(.*?)}");
+        Pattern presetPattern = Pattern.compile("\\{(.*?)\\},",Pattern.DOTALL);
         Matcher presetMatcher = presetPattern.matcher(toLoad);
         ArrayList<RoomPreset> result = new ArrayList<>();
         while (presetMatcher.find()) {

@@ -2,6 +2,7 @@ package game;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 //this is a grouping of methods to randomly generate any given game object.
@@ -189,6 +190,7 @@ public class Generator {
         }
 
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
+        System.out.println(Arrays.toString(files));
         
         ArrayList<RoomPreset> presets = new ArrayList<>();
 

@@ -2,42 +2,52 @@ package game;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Objects;
 
 public class Parser {
     public static String parseString(String attribute, String toLoad){
         Pattern stringPattern = Pattern.compile("\"" + attribute + "\" *?: *?\"(.*?)\"");
         Matcher stringMatcher = stringPattern.matcher(toLoad);
-        stringMatcher.find();
-        return stringMatcher.group(1);
+        if(stringMatcher.find()){
+            return stringMatcher.group(1);
+        } else{
+            return "";
+        }
     }
 
     public static int[] parseInt(String attribute, String toLoad){
-        Pattern intPattern = Pattern.compile("\"" + attribute + "\" *?: *?\"([0-9]+)(-([0-9]+))?\"");
+        Pattern intPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\"([0-9]+)(-([0-9]+))?\"");
         Matcher intMatcher = intPattern.matcher(toLoad);
-        intMatcher.find();
         int[] result = new int[2];
-        result[0] = Integer.parseInt(intMatcher.group(1));
-        if(!intMatcher.group(3).toLowerCase().equals("")){
-            result[1] = Integer.parseInt(intMatcher.group(3));
-        } else{
-            result[1] = -1;
+        if(intMatcher.find()){
+            result[0] = Integer.parseInt(intMatcher.group(1));
+
+            if(!Objects.isNull(intMatcher.group(4).toLowerCase())){
+                result[1] = Integer.parseInt(intMatcher.group(3));
+            } else{
+                result[1] = -1;
+            }
         }
         return result;
     }
 
     public static boolean parseBoolean(String attribute, String toLoad){
-        Pattern boolPattern = Pattern.compile("\"" + attribute + "\" *: *\"(.*?)\"");
+        Pattern boolPattern = Pattern.compile("\"" + attribute + "\"\\s*:\\s*\"(.*?)\"");
         Matcher boolMatcher = boolPattern.matcher(toLoad);
-        boolMatcher.find();
-        return Boolean.parseBoolean(boolMatcher.group(1));
+        if(boolMatcher.find()){
+            return Boolean.parseBoolean(boolMatcher.group(1));
+        } else{
+            return false;
+        }
     }
 
     public static String[] parseArray(String attribute, String toLoad){
-        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*:\\s*\\[(.*)\\]",Pattern.DOTALL);
+        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\\[\\s*(.*?)\\s*\\]",Pattern.DOTALL);
         Matcher arrayMatcher = arrayPattern.matcher(toLoad);
-        arrayMatcher.find();
-        String arrayString = arrayMatcher.group(1);
-
+        String arrayString = "";
+        if(arrayMatcher.find()){
+            arrayString = arrayMatcher.group(1);
+        }
         String[] arrayStrings = arrayString.split(",");
         return arrayStrings;
     }
@@ -45,7 +55,8 @@ public class Parser {
     public static String[] trimQuotes (String[] toTrim){
         String[] result = new String[toTrim.length];
         for(int i = 0; i< toTrim.length;i++){
-            result[i] = toTrim[i].replace("\"", "");
+            String stringToAdd = toTrim[i].replaceAll("\"", "");
+            result[i] = stringToAdd;
         }
         return result;
     }
