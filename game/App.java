@@ -33,6 +33,8 @@ public class App {
         System.out.println(floor1.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
 
+        System.out.println(OSNAME);
+
         do {
             System.out.print("> ");
             inputCommand = input.nextLine();
@@ -73,7 +75,7 @@ public class App {
             // clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
                 int height = 12;
-                if (OSNAME.equals("Windows 10")){
+                if (!OSNAME.equals("Windows 10")){
                     System.out.print("\033[H\033[2J\033[5B");
                     System.out.flush();
                 }else{
