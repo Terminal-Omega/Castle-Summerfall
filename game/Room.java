@@ -200,4 +200,27 @@ public class Room {
         bookmark[0] = "";
         bookmark[1] = "";
     }
+
+    public Interactable getDescriptionInteractable(String name, int index) throws ThingNotFoundException{
+        int timesFound = -1;
+        int latestIndex = -1;
+        for(int i = 0;i<descriptionInteractables.size();i++){
+            if(descriptionInteractables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    return descriptionInteractables.get(i);
+                }
+            }
+        }
+        if(latestIndex !=-1){
+            return descriptionInteractables.get(latestIndex);
+        } else{
+            throw new ThingNotFoundException("Item not found in room");
+        }
+    }
+
+    public Interactable getDescriptionInteractable(String name) throws ThingNotFoundException{
+        return getDescriptionInteractable(name, 0);
+    }
 }

@@ -42,11 +42,13 @@ public class Parser {
     }
 
     public static String[] parseArray(String attribute, String toLoad){
-        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\\[\\s*(.*?)\\s*\\]",Pattern.DOTALL);
+        Pattern arrayPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\\[\\s*(.*?)\\s*\\]", Pattern.DOTALL);
         Matcher arrayMatcher = arrayPattern.matcher(toLoad);
         String arrayString = "";
         if(arrayMatcher.find()){
             arrayString = arrayMatcher.group(1);
+        } else {
+            return null;
         }
         String[] arrayStrings = arrayString.split(",");
         return arrayStrings;

@@ -36,7 +36,15 @@ public class PresetLoader {
         }
 
         ArrayList<InteractablePreset> interactables = new ArrayList<>();
-        InteractablePreset[] interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
+        InteractablePreset[] interactablesArray;
+        
+        if(!loadInventoryPresets(Parser.parseArray("interactables", toLoad)).equals(null)){
+            interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
+        } else{
+            InteractablePreset[] toSet = {};
+            interactablesArray = toSet;
+        }
+
         for (InteractablePreset preset : interactablesArray) {
             interactables.add(preset);
         }
@@ -47,11 +55,15 @@ public class PresetLoader {
     }
 
     private static InteractablePreset[] loadInventoryPresets(String[] toLoad) {
-        InteractablePreset[] result = new InteractablePreset[toLoad.length];
-        for (int i = 0; i < toLoad.length; i++) {
-            result[i] = loadInteractablePreset(toLoad[i]);
+        if(!toLoad.equals(null)){
+            InteractablePreset[] result = new InteractablePreset[toLoad.length];
+            for (int i = 0; i < toLoad.length; i++) {
+                result[i] = loadInteractablePreset(toLoad[i]);
+            }
+            return result;
+        } else {
+            return null;
         }
-        return result;
     }
 
     private static InteractablePreset loadInteractablePreset(String toLoad) {
