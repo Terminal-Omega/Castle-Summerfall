@@ -25,6 +25,8 @@ public class NPC extends Actor {
                 shield, name);
         setAllience(npcAllience);
         setDescription(description);
+        setDexterity(30);
+        setWeaponSkill();
 
     }
 
@@ -58,20 +60,24 @@ public class NPC extends Actor {
                 shield = maxShield;
             }
         }
-        if (npcAllience == NpcAllience.ENEMY) {
-            if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
-                enemyTurnCombat(player);
-            } else {
-                enemyTurnNoneCombat(floorSize, player);
-            }
-        } else if (npcAllience == NpcAllience.FRIENDLY) {
+        while (energy >= 0) {
+            if (npcAllience == NpcAllience.ENEMY) {
+                if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
+                    enemyTurnCombat(player);
+                    energy -= 10;
+                } else {
+                    enemyTurnNoneCombat(floorSize, player);
+                    energy -= 10;
+                }
+            } else if (npcAllience == NpcAllience.FRIENDLY) {
 
-        } else if (npcAllience == NpcAllience.BOSS) {
-            if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
-                boss.bossFight(player);
-            }
-        } else if (npcAllience == NpcAllience.NEUTRAL) {
+            } else if (npcAllience == NpcAllience.BOSS) {
+                if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
+                    boss.bossFight(player);
+                }
+            } else if (npcAllience == NpcAllience.NEUTRAL) {
 
+            }
         }
     }
 
@@ -82,7 +88,6 @@ public class NPC extends Actor {
      * @param player
      */
     public void enemyTurnNoneCombat(int floorSize, Actor player) {
-
         if (player.getXCoord() - 3 < xCoord || player.getXCoord() + 3 > xCoord && player.getYCoord() + 3 > yCoord
                 || player.getYCoord() - 3 < yCoord) {
             if (player.getXCoord() - 3 < xCoord) {
@@ -122,7 +127,8 @@ public class NPC extends Actor {
                 case 3:
                     if (xCoord < floorSize - 1 && xCoord > 0) {
                         xCoord--;
-                        //System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord, yCoord);
+                        // System.out.printf("%s moved West to coordinates x%d, y%d%n", name, xCoord,
+                        // yCoord);
                         break;
                     }
                 default:

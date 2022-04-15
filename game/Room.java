@@ -11,7 +11,7 @@ public class Room {
     private Door southDoor;
     private Door eastDoor;
     private boolean visited;
-    private String[] bookmark = {"_", ""};
+    private String[] bookmark = {"", ""};
 
     public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
@@ -100,7 +100,7 @@ public class Room {
         if(latestIndex !=-1){
             return interactables.get(latestIndex);
         } else{
-            throw new ThingNotFoundException("Item not found in room");
+            throw new ThingNotFoundException("A" + name + " was not found in the room");
         }
     }
 
@@ -140,7 +140,7 @@ public class Room {
             interactables.remove(latestIndex);
             return result;
         } else{
-            throw new ThingNotFoundException("Item not Found");
+            throw new ThingNotFoundException("a " + name + " was not found in the room");
         }
     }
 

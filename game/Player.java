@@ -1,18 +1,22 @@
 package game;
+
 import javax.lang.model.type.NullType;
 
 public class Player extends Actor {
 
-    public Player(int x, int y, int constituion, int speed) {
+    private int maxWeight = 20;
+
+    public Player(int x, int y, int constituion, int energy, int AC) {
         this.setYCoord(y);
         this.setXCoord(x);
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
-        this.setSpeed(speed);
+        this.setEnergy();
         this.setDexterity(30);
         this.setWeaponSkill();
-        this.setAC(0);
+        this.setName("Player");
+        this.setAC(AC);
     }
 
     /**
@@ -20,14 +24,16 @@ public class Player extends Actor {
      */
     public void putItem(Interactable interactable) {
         int weight = 0;
-        for (Interactable inter : inventory){
+        for (Interactable inter : inventory) {
             weight += inter.weight;
         }
         weight += interactable.weight;
 
-        if (weight < 20){
-            inventory.add(interactable);
-            System.out.println("taken");
+        if (weight <= maxWeight) {
+            if (inventory.size() < 5) {
+                inventory.add(interactable);
+                System.out.println("You put the " + interactable.getName() + " in your bag");
+            }
         } else {
             System.out.println("Your bag feels to heavy. You can't add any more.");
         }
@@ -43,7 +49,7 @@ public class Player extends Actor {
         int timesFound = -1;
         int latestIndex = 0;
         for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+            if (inventory.get(i).getName().toLowerCase().equals(interactable.toLowerCase())) {
                 latestIndex = i;
                 timesFound++;
                 if (timesFound == index) {
@@ -58,7 +64,7 @@ public class Player extends Actor {
             inventory.remove(latestIndex);
             return result;
         } else {
-            throw new ThingNotFoundException("Item not found.");
+            throw new ThingNotFoundException(interactable + " is not found in your inventory");
         }
     }
 
@@ -100,5 +106,12 @@ public class Player extends Actor {
             }
         }
         return isFound;
+    }
+
+    /**
+     * @return int
+     */
+    public int getMaxWeight() {
+        return this.maxWeight;
     }
 }

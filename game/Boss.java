@@ -37,7 +37,7 @@ public class Boss extends NPC {
      */
     public void bossFight(Actor player) {
         int attackChoice = 0;
-        if (health < maxHealth / 2) {
+        if (health <= maxHealth / 2) {
             attackChoice = rand.nextInt(4);
         } else {
             attackChoice = rand.nextInt(3);
