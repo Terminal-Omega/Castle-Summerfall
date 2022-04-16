@@ -400,13 +400,22 @@ public class Generator {
         int noise = randomFromRange(preset.noiseRange);
         int shield = randomFromRange(preset.shieldRange);
         String name = preset.name[rand.nextInt(preset.name.length)];
+        
+        NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield, name, npcAllience, description);
+        for(InteractablePreset itemPreset : preset.inventory){
+            result.addInventory(spinInteractable(itemPreset));
+        }
 
-        return new NPC(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield, name, npcAllience, description);
+        return result;
     }
 
     private static int randomFromRange(int[] range){
         Random rand = new Random();
-        return rand.nextInt(range[1]-range[0]) + range[0]; 
+        if(range[1] > range[0]){
+            return rand.nextInt(range[1]-range[0]) + range[0];
+        } else{
+            return range[0];
+        }
     }
 
     private static NPC generateEnemy(int xCoord, int yCoord, int challenge){

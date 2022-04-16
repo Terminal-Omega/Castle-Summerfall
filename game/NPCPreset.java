@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 public class NPCPreset {
     public NpcAllience npcAllience;
     public String[] descriptions;
@@ -13,10 +15,11 @@ public class NPCPreset {
     public int[] noiseRange;
     public int[] shieldRange;
     public String[] name;
+    public ArrayList<InteractablePreset> inventory;
 
     public NPCPreset(NpcAllience npcAllience, String[] descriptions, int[] ACRange,
             int[] strRange, int[] dexRange, int[] conRange, int[] intRange, int[] wisRange, int[] chaRange,
-            int[] noiseRange, int[] shieldRange, String[] name) {
+            int[] noiseRange, int[] shieldRange, String[] name, ArrayList<InteractablePreset> inventory) {
         this.npcAllience = npcAllience;
         this.descriptions = descriptions;
         this.ACRange = ACRange;
@@ -29,6 +32,7 @@ public class NPCPreset {
         this.noiseRange = noiseRange;
         this.shieldRange = shieldRange;
         this.name = name;
+        this.inventory = inventory;
     }
 
 }

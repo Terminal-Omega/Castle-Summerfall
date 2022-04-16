@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -169,7 +170,11 @@ public class PresetLoader {
 
         String[] name = Parser.trimQuotes(Parser.parseArray("names", toLoad));
 
-        return new NPCPreset(alliance, descriptions, ACRange, strRange, dexRange, conRange, intRange, wisRange, chaRange, noiseRange, shieldRange, name);
+        InteractablePreset[] inventoryArray = loadInventoryPresets(Parser.parseArray("inventory", toLoad));
+        ArrayList<InteractablePreset> inventory = new ArrayList<>();
+        inventory.addAll(Arrays.asList(inventoryArray));
+
+        return new NPCPreset(alliance, descriptions, ACRange, strRange, dexRange, conRange, intRange, wisRange, chaRange, noiseRange, shieldRange, name, inventory);
         
     }
 
