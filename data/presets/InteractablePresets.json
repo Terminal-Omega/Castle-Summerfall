@@ -5,7 +5,7 @@
             "name":"Knife",
             "size":"1",
             "weight":"5",
-            "canbepickedup":"false",
+            "canbepickedup":"true",
             "descriptions":[
                 "It's kinda sharp",
                 "Careful, it might be pointy",
@@ -18,6 +18,24 @@
             "attack-speed":"7",
             "sharp":"true",
             "rarity":"10"
+        },
+        {
+            "type":"weapon",
+            "name":"sword",
+            "size":"2",
+            "weight":"3",
+            "descriptions":[
+                "It seems to be made of cardboard.",
+                "does this thing work?"
+            ],
+            "canbepickedup":"true",
+            "pierce":"1",
+            "damage":"5-6",
+            "range":"1-2",
+            "weapon-type":"cardboard",
+            "attack-speed":"5",
+            "sharp":"false",
+            "rarity":"7"
         }
     ]
 }
