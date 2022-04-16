@@ -144,7 +144,7 @@ public class PresetLoader {
         return result;
     }
 
-    public NPCPreset loadNpcPreset(String toLoad){
+    public static NPCPreset loadNpcPreset(String toLoad){
         String allianceString = Parser.parseString("alliance", toLoad);
         NpcAllience alliance;
         if(allianceString.equals("enemy")){

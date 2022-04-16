@@ -1,0 +1,43 @@
+{
+    "enemy-presets":[
+        {
+            "alliance":"enemy",
+            "descriptions":[
+                "mean"
+            ],
+            "names":[
+                "goblin"
+            ],
+            "AC":"5",
+            "str":"5",
+            "dex":"5",
+            "con":"5",
+            "int":"5",
+            "wis":"5",
+            "cha":"5",
+            "noise":"5",
+            "shield":"0",
+            "inventory":[
+                {
+                    "type":"weapon",
+                    "name":"Knife",
+                    "size":"1",
+                    "weight":"5",
+                    "canbepickedup":"false",
+                    "descriptions":[
+                        "It's kinda sharp",
+                        "Careful, it might be pointy",
+                        "It looks slightly tasty"
+                    ],
+                    "pierce":"3",
+                    "damage":"4",
+                    "range":"2",
+                    "weapon-type":"pointy",
+                    "attack-speed":"7",
+                    "sharp":"true",
+                    "rarity":"10"
+                }
+            ]
+        }
+    ]
+}

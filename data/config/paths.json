@@ -5,7 +5,7 @@
     "room-presets" : [
         "data/presets/roompresets.json"
     ],
-    "npcs":[
+    "enemy-presets":[
         "data/presets/EnemyPresets.json"
     ],
     "containers":[

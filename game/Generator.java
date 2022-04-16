@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
+import javax.annotation.processing.Filer;
+
 //this is a grouping of methods to randomly generate any given game object.
 //A room, an interactable, a floor, an enemy, etc.
 public class Generator {
@@ -49,7 +51,7 @@ public class Generator {
         for (int i = 0; i < enemyCount; i++) {
             int x = rand.nextInt(xSize);
             int y = rand.nextInt(ySize);
-            result.addNPC(EnemyPresets.generateEnemy(x, y));
+            result.addNPC(generateEnemy(x, y, 0));
         }
         return result;
     }
@@ -405,6 +407,53 @@ public class Generator {
     private static int randomFromRange(int[] range){
         Random rand = new Random();
         return rand.nextInt(range[1]-range[0]) + range[0]; 
+    }
+
+    private static NPC generateEnemy(int xCoord, int yCoord, int challenge){
+        Random rand = new Random();
+        File filePaths = new File("data/config/paths.json");
+        String[] files;
+        String pathString = "";
+
+        try {
+            FileReader pathIn = new FileReader(filePaths);
+            int i = 0;
+            
+            while((i = pathIn.read()) !=-1){
+                pathString += (char) i;
+            }
+            pathIn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        files = Parser.trimQuotes(Parser.parseArray("enemy-presets", pathString));
+        try{
+            ArrayList<String> enemyChoices = new ArrayList<>();
+            for(String fileString : files){
+                File file = new File(fileString);
+                FileReader reader = new FileReader(file);
+                String string = "";
+
+                int i = 0;
+                while((i = reader.read()) != -1){
+                    string += (char) i;
+                }
+
+                String[] stringsToAdd = Parser.parseArray("enemy-presets", string);
+                for(String stringToAdd : stringsToAdd){
+                    enemyChoices.add(stringToAdd);
+                }
+
+            }
+
+            String choice = enemyChoices.get(rand.nextInt(enemyChoices.size()));
+            return spinNPC(xCoord, yCoord, PresetLoader.loadNpcPreset(choice), 0);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
