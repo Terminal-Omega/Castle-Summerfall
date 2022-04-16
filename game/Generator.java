@@ -211,31 +211,24 @@ public class Generator {
         Random rand = new Random();
         int loopCount = rand.nextInt(range) + interactableMin;
         ArrayList<Interactable> roomInventory = new ArrayList<>();
+        
         for(InteractablePreset interactable : preset.interactables){
             if(!Objects.isNull(spinInteractable(interactable))){
                 roomInventory.add(spinInteractable(interactable));
             }
         }
+
         ArrayList<Interactable> descriptionInteractables = new ArrayList<>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
             descriptionInteractables.add(spinInteractable(interactable));
         }
-        Door door1;
-        Door door2;
+
+        Room result = spinRoom(preset, southDoor, eastDoor);
+
         for (int i = 0; i < loopCount; i++) {
-            roomInventory.add(generateInteractable());
+            result.addItem(generateInteractable());
         }
-        if (southDoor) {
-            door1 = new Door(true, false, false);
-        } else {
-            door1 = null;
-        }
-        if (eastDoor) {
-            door2 = new Door(true, false, false);
-        } else {
-            door2 = null;
-        }
-        Room result = new Room(roomInventory,new ArrayList<>(), roomDescriptions[rand.nextInt(roomDescriptions.length)], door1, door2);
+
         return result;
     }
 
@@ -283,7 +276,7 @@ public class Generator {
         return generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor);
     }
 
-    public Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
+    public static Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
         Random rand = new Random();
         ArrayList<Interactable> interactables = new ArrayList<Interactable>();
         for(InteractablePreset interactable : preset.interactables){
