@@ -387,8 +387,14 @@ public class Generator {
         } else{
             damage = preset.damage;
         }
+        int range = 0;
+        if(!(preset.rangeRange <= 0)){
+            range = rand.nextInt(preset.rangeRange) + preset.range;
+        } else{
+            range = preset.range;
+        }
 
-        return new Weapon(preset.size, preset.weight, preset.canBePickedUp, preset.name, description, pierce, damage);
+        return new Weapon(preset.size, preset.weight, preset.canBePickedUp, preset.name, description, pierce, damage, range);
     }
 
     //NPC Time!

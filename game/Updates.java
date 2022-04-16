@@ -79,10 +79,11 @@ public class Updates {
             NPC npc = floor.getNPCs().get(i);
             doPassives(npc);
             if (npc.getHealth() <= 0) {
-                floor.getNPCs().remove(i);
+                floor.removeNPC(i);
                 System.out.println(npc.getName() + " was killed.");
             }
             npc.npcTurnAllience(player, floor.getXSize());
+            npc.setEnergy();
             // TODO: @Corbanator notify player if NPC enters the room
         }
     }

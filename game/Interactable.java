@@ -26,7 +26,6 @@ public class Interactable {
         this(name, description, 0, 0, false);
     }
 
-    public Interactable(){};
 
     /** 
      * @return String

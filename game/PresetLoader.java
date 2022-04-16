@@ -130,7 +130,7 @@ public class PresetLoader {
         int range = nums[0];
         int rangeRange = nums[1];
 
-        nums = Parser.parseInt("Pierce",toLoad);
+        nums = Parser.parseInt("pierce",toLoad);
         int pierce = nums[0];
         int pierceRange = nums[1];
 

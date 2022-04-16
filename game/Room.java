@@ -23,9 +23,6 @@ public class Room {
     }
 
 
-    public Room(int seed){
-        
-    }
     
     /**
      * very simple, just gets the description of the room, saying which objects are in it.
