@@ -1,0 +1,23 @@
+{
+    "interactables":[
+        {
+            "type":"weapon",
+            "name":"Knife",
+            "size":"1",
+            "weight":"5",
+            "canbepickedup":"false",
+            "descriptions":[
+                "It's kinda sharp",
+                "Careful, it might be pointy",
+                "It looks slightly tasty"
+            ],
+            "pierce":"3",
+            "damage":"4",
+            "range":"2",
+            "weapon-type":"pointy",
+            "attack-speed":"7",
+            "sharp":"true",
+            "rarity":"10"
+        }
+    ]
+}

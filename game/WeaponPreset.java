@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class WeaponPreset extends InteractablePreset{
 
     public WeaponPreset(String name, String[] descriptions, ArrayList<AbilityOption> abilityOptions, int size,
-            int weight, boolean canBePickedUp) {
-        super(name, descriptions, abilityOptions, size, weight, canBePickedUp);
+            int weight, boolean canBePickedUp, int rarity) {
+        super(name, descriptions, abilityOptions, size, weight, canBePickedUp, rarity);
     }
 
     public WeaponPreset(InteractablePreset preset){
-        this(preset.name,preset.descriptions, preset.abilityOptions, preset.size, preset.weight, preset.canBePickedUp);
+        this(preset.name,preset.descriptions, preset.abilityOptions, preset.size, preset.weight, preset.canBePickedUp, preset.rarity);
     }
     public int attackSpeed;
     public int attackSpeedRange;

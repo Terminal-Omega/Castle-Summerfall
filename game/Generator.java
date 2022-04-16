@@ -39,7 +39,7 @@ public class Generator {
                 if (i != xSize - 1) {
                     eastDoor = true;
                 }
-                column.add(generateRoom());
+                column.add(generateRoom(southDoor, eastDoor));
             }
             rooms.add(column);
         }
@@ -118,26 +118,90 @@ public class Generator {
      * @return Interactable
      */
     // below this is all the interactable generation.
-    public static Interactable generateInteractable(double containerWeight, double commonWeight, double uncommonWeight,
-            double rareWeight, double veryRareWeight, double legendaryWeight, int containerValue) {
+    public static Interactable generateInteractable(double containerWeight) {
         Random rand = new Random();
         Interactable result;
-        double commonWeightModified = containerWeight + commonWeight;
-        double uncommonWeightModified = commonWeightModified + uncommonWeight;
-        double rareWeightModified = uncommonWeightModified + rareWeight;
-        double veryRareWeightModified = rareWeightModified + veryRareWeight;
-        double legendaryWeightModified = veryRareWeightModified + legendaryWeight;
-        double randNum = rand.nextDouble(legendaryWeightModified);
+        double randNum = rand.nextDouble();
 
-        if (randNum < containerWeight) {
-            result = ContainerPresets.Random(containerValue);
-        } else if (randNum < commonWeightModified) {
-            result = CommonItem.Random();
-        } else {
-            result = null;
+        try{
+            File pathFile = new File("data/config/paths.json");
+            FileReader pathReader = new FileReader(pathFile);
+            int i;
+            String pathString = "";
+            while((i = pathReader.read()) != -1){
+                pathString += (char) i;
+            }
+            
+            if (randNum < containerWeight) {
+                String[] containerPaths = Parser.trimQuotes(Parser.parseArray("containers", pathString));
+                ArrayList<ContainerPreset> containers = new ArrayList<>();
+
+                for(String path : containerPaths){
+                    File file = new File(path);
+                    FileReader reader = new FileReader(file);
+                    int j;
+                    String containerString = "";
+                    while((j = reader.read()) !=-1){
+                        containerString += (char) j;
+                    }
+                    String[] containerStrings = Parser.parseArray("containers", containerString);
+
+                    for(String string : containerStrings){
+                        containers.add((ContainerPreset)PresetLoader.loadInteractablePreset(string));
+                    }
+                }
+                long totalWeight = 0;
+                for(InteractablePreset preset : containers){
+                    totalWeight += preset.rarity;
+                }
+                Long choice = rand.nextLong(totalWeight + 1);
+
+                for(InteractablePreset preset : containers){
+                    choice -= preset.rarity;
+                    if(choice<=0){
+                        result = spinInteractable(preset);
+                        return result;
+                    }
+                }
+                return null;
+            } else{
+                String[] interactablePaths = Parser.trimQuotes(Parser.parseArray("interactables", pathString));
+                ArrayList<InteractablePreset> interactables = new ArrayList<>();
+
+                for(String path : interactablePaths){
+                    File file = new File(path);
+                    FileReader reader = new FileReader(file);
+                    int j;
+                    String interactableString = "";
+                    while((j = reader.read()) !=-1){
+                        interactableString += (char) j;
+                    }
+                    String[] interactableStrings = Parser.parseArray("interactables", interactableString);
+
+                    for(String string : interactableStrings){
+                        interactables.add(PresetLoader.loadInteractablePreset(string));
+                    }
+                }
+                long totalWeight = 0;
+                for(InteractablePreset preset : interactables){
+                    totalWeight += preset.rarity;
+                }
+                Long choice = rand.nextLong(totalWeight + 1);
+
+                for(InteractablePreset preset : interactables){
+                    choice -= preset.rarity;
+                    if(choice<=0){
+                        result = spinInteractable(preset);
+                        return result;
+                    }
+                }
+                return null;
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
-        return result;
+        return null;
     }
 
     public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor){
@@ -173,7 +237,7 @@ public class Generator {
         return result;
     }
 
-    public static Room generateRoom(){
+    public static Room generateRoom(boolean southDoor, boolean eastDoor){
         File filePaths = new File("data/config/paths.json");
         String[] files;
         String pathString = "";
@@ -186,13 +250,11 @@ public class Generator {
                 pathString += (char) i;
             }
             pathIn.close();
-            System.out.println(pathString);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
-        System.out.println(Arrays.toString(files));
         
         ArrayList<RoomPreset> presets = new ArrayList<>();
 
@@ -216,7 +278,7 @@ public class Generator {
 
         Random rand = new Random();
         int choice = rand.nextInt(presets.size());
-        return generateRoom(presets.get(choice), 0, 3, true, true);
+        return generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor);
     }
 
     public Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
@@ -252,7 +314,7 @@ public class Generator {
      * @return Interactable
      */
     public static Interactable generateInteractable() {
-        return generateInteractable(.2, .8, 0, 0, 0, 0, 5);
+        return generateInteractable(.2);
     }
 
     public static Interactable spinInteractable(InteractablePreset preset){
@@ -277,8 +339,47 @@ public class Generator {
                 abilityOption.options.remove(choice);
             }
         }
+        if(preset instanceof ContainerPreset){
+            return spinContainer((ContainerPreset)preset);
+        }
+        if(preset instanceof WeaponPreset){
+            return spinWeapon((WeaponPreset)preset);
+        }
         return new Interactable(name, description, preset.size, preset.weight, preset.canBePickedUp, abilities);
         
+    }
+
+    public static Container spinContainer(ContainerPreset preset){
+        Random rand = new Random();
+        String name = preset.name;
+        String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        ArrayList<Interactable> inventory = new ArrayList<>();
+        int loopCount = rand.nextInt(preset.maxItems - preset.minItems) + preset.minItems;
+        for(int i = 0; i< loopCount; i++){
+            inventory.add(generateInteractable());
+        }
+        return new Container(name, description, preset.size, preset.weight, preset.canBePickedUp, inventory, preset.inventorySize);
+    }
+
+    public static Weapon spinWeapon(WeaponPreset preset){
+        Random rand = new Random();
+        String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        int pierce = 0;
+
+        if(preset.pierceRange != 0){
+            pierce = rand.nextInt(preset.pierceRange) + preset.pierce;
+        } else{
+            pierce = preset.pierce;
+        }
+
+        int damage = 0;
+        if(preset.damageRange != 0){
+            damage = rand.nextInt(preset.damageRange) + preset.damage;
+        } else{
+            damage = preset.pierce;
+        }
+
+        return new Weapon(preset.size, preset.weight, preset.canBePickedUp, preset.name, description, pierce, damage);
     }
 
     //NPC Time!

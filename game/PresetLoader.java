@@ -40,12 +40,13 @@ public class PresetLoader {
         if(!Objects.isNull(loadInventoryPresets(Parser.parseArray("interactables", toLoad)))){
             interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
         } else{
-            InteractablePreset[] toSet = {};
             interactablesArray = null;
         }
+        if(!Objects.isNull(interactablesArray)){
+            for (InteractablePreset preset : interactablesArray) {
+                interactables.add(preset);
 
-        for (InteractablePreset preset : interactablesArray) {
-            interactables.add(preset);
+            }
         }
 
         RoomPreset result = new RoomPreset(descriptions, interactables, descriptionInteractables);
@@ -54,7 +55,7 @@ public class PresetLoader {
     }
 
     private static InteractablePreset[] loadInventoryPresets(String[] toLoad) {
-        if(!Objects.isNull(toLoad)){
+        if(!Objects.isNull(toLoad) && !(toLoad[0].equals("") && toLoad.length == 1)){
             InteractablePreset[] result = new InteractablePreset[toLoad.length];
             for (int i = 0; i < toLoad.length; i++) {
                 result[i] = loadInteractablePreset(toLoad[i]);
@@ -65,7 +66,7 @@ public class PresetLoader {
         }
     }
 
-    private static InteractablePreset loadInteractablePreset(String toLoad) {
+    public static InteractablePreset loadInteractablePreset(String toLoad) {
 
         // find the name of the preset
         String name = Parser.parseString("name", toLoad);
@@ -81,14 +82,9 @@ public class PresetLoader {
         boolean canBePickedUp = Parser.parseBoolean("canbepickedup", toLoad);
 
         ArrayList<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
+        
+        int rarity = Parser.parseInt("rarity", toLoad)[0];
 
-        String rarityString = Parser.parseString("rarity", toLoad);
-        Generator.Rarity rarity = null;
-        for(Generator.Rarity rare: Generator.Rarity.values()){
-            if(rare.toString().toLowerCase().equals(rarityString)){
-                rarity = rare;
-            }
-        }
 
         InteractablePreset result = new InteractablePreset(name, descriptions, abilityOptions, size, weight,
                 canBePickedUp, rarity);
@@ -107,7 +103,10 @@ public class PresetLoader {
     private static ContainerPreset loadContainerPreset(InteractablePreset preset, String toLoad) {
         ContainerPreset result = new ContainerPreset(preset);
         int inventorySize = Parser.parseInt("inventory-size", toLoad)[0];
+        int[] startingItems = Parser.parseInt("starting-items",toLoad);
 
+        result.minItems = startingItems[0];
+        result.maxItems = startingItems[1];
         result.setInventorySize(inventorySize);
         return result;
     }

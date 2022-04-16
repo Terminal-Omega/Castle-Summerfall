@@ -26,7 +26,7 @@ public class Parser {
             if(!Objects.isNull(intMatcher.group(3))){
                 result[1] = Integer.parseInt(intMatcher.group(3));
             } else{
-                result[1] = -1;
+                result[1] = 0;
             }
         }
         return result;
