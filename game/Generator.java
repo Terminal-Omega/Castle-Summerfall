@@ -323,17 +323,22 @@ public class Generator {
         if(Objects.isNull(preset)){
             return null;
         }
+
         Random rand = new Random();
         String name = preset.name;
+
         if(Objects.isNull(preset.descriptions)){
             return null;
         }
+
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
         ArrayList<Ability> abilities = new ArrayList<>();
+
         ArrayList<InteractablePreset.AbilityOption> options = new ArrayList<>();
         for(InteractablePreset.AbilityOption abilityOption : preset.abilityOptions){
             options.add(abilityOption);
         }
+
         for(InteractablePreset.AbilityOption abilityOption : options){
             for(int i = 0; i< abilityOption.number;i++){
                 int choice = rand.nextInt(abilityOption.options.size());
@@ -341,6 +346,8 @@ public class Generator {
                 abilityOption.options.remove(choice);
             }
         }
+
+
         if(preset instanceof ContainerPreset){
             return spinContainer((ContainerPreset)preset);
         }
@@ -378,7 +385,7 @@ public class Generator {
         if(preset.damageRange != 0){
             damage = rand.nextInt(preset.damageRange) + preset.damage;
         } else{
-            damage = preset.pierce;
+            damage = preset.damage;
         }
 
         return new Weapon(preset.size, preset.weight, preset.canBePickedUp, preset.name, description, pierce, damage);
