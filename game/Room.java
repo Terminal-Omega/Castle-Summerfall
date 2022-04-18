@@ -213,7 +213,7 @@ public class Room {
         if(latestIndex !=-1){
             return descriptionInteractables.get(latestIndex);
         } else{
-            throw new ThingNotFoundException("Item not found in room");
+            throw new ThingNotFoundException("A " + name + " was not found in the room");
         }
     }
 
