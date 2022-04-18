@@ -33,7 +33,7 @@
         "interactables":[]
     },
     {
-        "description": "The room is a massive room with Wooden Beams sweeping up into high arched ceilings.\nIt has bright Chandeliers glowing with hundreds of candles.\nThe wood looks dark and varnished. It reminds you of viking architecture.",
+        "descriptions": "The room is a massive room with Wooden Beams sweeping up into high arched ceilings.\nIt has bright Chandeliers glowing with hundreds of candles.\nThe wood looks dark and varnished. It reminds you of viking architecture.",
         "description-interactables": [
             {
                 "name": "chandeliers",
@@ -61,7 +61,7 @@
         "interactables":[]
     },
     {
-        "description": "The room you walked into is dark and dank. It smells like mildew and has Slime covering the Floor and walls.",
+        "descriptions": "The room you walked into is dark and dank. It smells like mildew and has Slime covering the Floor and walls.",
         "description-interactables": [
             {
                 "name": "Slime",
