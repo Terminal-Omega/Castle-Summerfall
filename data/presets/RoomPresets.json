@@ -101,7 +101,7 @@
                 "name": "Barrels",
                 "type": "other",
                 "descriptions": [
-                    "this looks to slimly to touch, you decide to save yourself and not touch it",
+                    "It is an impeccably round barrel. It looks like it will roll.",
                     "The slime is gelatinous and looks like it could be alive"
                 ],
                 "size": "2",
@@ -109,10 +109,10 @@
                 "canbepickedup": false
             },
             {
-                "name": "floor",
+                "name": "Crates",
                 "type": "other",
                 "descriptions": [
-                    "You look at towards your feet and see that you need new shoes, becoming completely distracted by your shoes",
+                    "Its a box. A completely unremarkable box. It has very boxy features.",
                     "The floor is remarkably horizontal"
                 ],
                 "size": "10",
@@ -121,6 +121,67 @@
             }
         ],
         "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room is what appears to be a bedchamber. There is a massive four poster Bed with red velvet Curtains.\nYou don't know who would want to sleep in a dungeon though."
+        ],
+        "description-interactables": [
+            {
+                "name": "Bed",
+                "type": "other",
+                "descriptions": [
+                    "This bed looks like it was straight up stolen from wizarding school",
+                    "I wonder what spell you would have to cast to make that bed float"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Curtains",
+                "type": "other",
+                "descriptions": [
+                    "The curtains look bloody and violent",
+                    "The way the curtains moved in the wind looked like a ghost, i would know, I'm friends with a few"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            }
+        ],
+        "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room you walked into feels sterile. It has whitewashed walls with steel Tables in the center.\nSmaller tables hold all sorts of deadly looking Tools."
+        ],
+        "description-interactables": [
+            {
+                "name": "Tables",
+                "type": "other",
+                "descriptions": [
+                    "The steel tables looked as cold and heartless as the enemies you slaughtered on your way to this room",
+                    "This table looks a lot heavier than a duck"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Tools",
+                "type": "other",
+                "descriptions": [
+                    "The tools look deadly, you don't want to move any closer.",
+                    "The tools look razor sharp. Like they could cut down the hearts of your enemies"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": true
+            }
+        ],
+        "interactables": []
     }
+    
 ]
 }
