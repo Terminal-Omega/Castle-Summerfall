@@ -131,7 +131,12 @@ public class App {
 
                             System.out.println(name);
                         } catch (ThingNotFoundException e) {
-                            System.out.println(e.getMessage());
+                            try {
+                                Interactable description = floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
+                                System.out.println(description.getDescription());
+                            }catch (ThingNotFoundException g){
+                                System.out.println(g.getMessage());
+                            }
                         }
                     }
                 }
