@@ -48,19 +48,23 @@ public class Boss extends NPC {
                 Weapon weapon1 = (Weapon) inventory.get(0);
                 System.out.println(weapon1.damage + "Slam");
                 closeCombat(weapon1, player);
+                break;
             case 1:
                 Weapon weapon2 = (Weapon) inventory.get(1);
                 System.out.println(weapon2.damage + "Swish");
                 closeCombat(weapon2, player);
+                break;
             case 2:
                 Weapon weapon3 = (Weapon) inventory.get(2);
                 System.out.println(weapon3.damage + "Smack");
                 closeCombat(weapon3, player);
+                break;
             case 3:
                 int healAmountBaseMax = maxHealth / 2;
                 int healAmountBaseMin = maxHealth / 4;
                 int healAmount = rand.nextInt(healAmountBaseMin, healAmountBaseMax);
                 heal(healAmount);
+                break;
 
             default:
                 System.out.println("uh Something broke... well that is annoying");
