@@ -94,7 +94,8 @@
     },
     {
         "descriptions": [
-            "You look around and see that this room looks like a storage room. There is Crates and Barrels of goods waiting for something to happen to them."
+            "You look around and see that this room looks like a storage room. There is Crates and Barrels of goods waiting for something to happen to them.",
+            "Barrels and Crates stack the side of the dock. There is a roaring River that flows from one end of the cavern to the other."
         ],
         "description-interactables": [
             {
@@ -114,6 +115,17 @@
                 "descriptions": [
                     "Its a box. A completely unremarkable box. It has very boxy features.",
                     "These crates are great"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            },
+            {
+                "name": "River",
+                "type": "other",
+                "descriptions": [
+                    "The river is as clear as the crystals you see in the walls around you",
+                    "The river is so loud and boisterous you wonder why anybody ships crates down it"
                 ],
                 "size": "10",
                 "weight": "15",

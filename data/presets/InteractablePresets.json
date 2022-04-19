@@ -21,7 +21,7 @@
         },
         {
             "type":"weapon",
-            "name":"sword",
+            "name":"Sword",
             "size":"2",
             "weight":"3",
             "descriptions":[
@@ -36,6 +36,24 @@
             "attack-speed":"5",
             "sharp":"false",
             "rarity":"7"
+        },
+        {
+            "type": "weapon",
+            "name": "GreatSword",
+            "size": "2",
+            "weight": "11",
+            "descriptions": [
+                "It seems to be made of cardboard.",
+                "does this thing work?"
+            ],
+            "canbepickedup": "true",
+            "pierce": "1",
+            "damage": "5-6",
+            "range": "1-2",
+            "weapon-type": "cardboard",
+            "attack-speed": "5",
+            "sharp": "false",
+            "rarity": "10"
         }
     ]
 }
