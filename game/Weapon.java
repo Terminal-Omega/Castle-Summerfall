@@ -17,6 +17,10 @@ public class Weapon extends Interactable {
     protected String name;
     protected boolean sharp;
     protected int pierce;
+    
+    /** 
+     * @return int
+     */
     // Knife type:CC, damage:3-5, name:knife, pierce:3
     // Short Sword type:CC, damage:5-8, name:Short Sword, pierce:5
     // Sword type:CC, damage:6-9, name:Sword, Pierce:6
@@ -25,12 +29,24 @@ public class Weapon extends Interactable {
     public int getDamage() {
         return damage;
     }
+    
+    /** 
+     * @param damage
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
+    
+    /** 
+     * @return int
+     */
     public int getRange() {
         return range;
     }
+    
+    /** 
+     * @return int
+     */
     public int getPierce(){
         return pierce;
     }

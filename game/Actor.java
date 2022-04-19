@@ -187,6 +187,10 @@ public class Actor {
         setCarryWeight();
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifiyStrength(int amount) {
         strength += amount;
         setCarryWeight();
@@ -261,6 +265,10 @@ public class Actor {
         setBallisticSkill();
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifyIntellignce(int amount) {
         intelligence += amount;
         setMana();
@@ -336,6 +344,10 @@ public class Actor {
         setEnergy();
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifyDexterity(int amount) {
         dexterity += amount;
         setWeaponSkill();
@@ -393,6 +405,10 @@ public class Actor {
         this.wisdom = wisdom;
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifyWisdom(int amount) {
         wisdom += amount;
     }
@@ -417,6 +433,10 @@ public class Actor {
         this.charisma = charisma;
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifyCharisma(int amount) {
         charisma += amount;
     }
@@ -440,6 +460,10 @@ public class Actor {
         this.AC = AC;
     }
 
+    
+    /** 
+     * @param amount
+     */
     public void modifyAC(int amount) {
         AC += amount;
     }

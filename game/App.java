@@ -20,21 +20,19 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-        // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].*
-        // ([A-Za-z].*)");
         Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
-        Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
+        Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
         int energy = player.getEnergy();
         Random rand = new Random();
         boolean endGame = true;
-        System.out.println(floor1.getDescription(0, 0));
+        System.out.println(floor.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
 
         do {
-            System.out.print("> ");
+            System.out.print("\n> ");
             inputCommand = input.nextLine();
             Matcher helpMatch = helpPat.matcher(inputCommand);
             Matcher moveMatch = movePat.matcher(inputCommand);
@@ -66,7 +64,7 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
+                    UI.move(moveMatch.group(1), player, floor, FLOORSIZE);
                 }
             }
 
@@ -93,13 +91,13 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    System.out.println(floor.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             }
 
             // bookmark command
             if (bookMatch.find()) {
-                floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1),
+                floor.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1),
                         bookMatch.group(2));
                 System.out.println("This room is bookmarked with the character: " + bookMatch.group(1).charAt(0));
                 commandKnown = false;
@@ -121,7 +119,7 @@ public class App {
                     energy -= energyCost;
                     String output;
                     try {
-                        Interactable thing = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
+                        Interactable thing = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
                         output = thing.getDescription();
                         output += "\nWeight: " + thing.weight + "\n";
                         if (thing instanceof Weapon){
@@ -133,7 +131,7 @@ public class App {
                         System.out.println(output);
                     } catch (ThingNotFoundException e) {
                         try {
-                            Interactable description = floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
+                            Interactable description = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
                             System.out.println(description.getDescription());
                         }catch (ThingNotFoundException g){
                             System.out.println(g.getMessage());
@@ -167,20 +165,20 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     try {
-                        Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                        Interactable interactable = floor.getRoom(player.getXCoord(), player.getYCoord())
                                 .takeItem(takeMatch.group(1));
                         player.putItem(interactable);
                         energy -= energyCost;
                     } catch (ThingNotFoundException e) {
                         try {
-                            Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
+                            Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
                             Container Chest = (Container) item;
                             Interactable thing = Chest.takeItem(takeMatch.group(1));
                             player.putItem(thing);
                             energy -= energyCost;
                         } catch (ThingNotFoundException r) {
                             try {
-                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord())
+                                Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord())
                                         .getItem("Crate");
                                 Container Chest = (Container) item;
                                 Interactable thing = Chest.takeItem(takeMatch.group(1));
@@ -206,7 +204,7 @@ public class App {
                     energy -= energyCost;
                     try {
                         Interactable item = player.dropItem(dropMatch.group(1), 0);
-                        floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
+                        floor.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
                         System.out.println("dropped");
                     } catch (ThingNotFoundException e) {
                         System.out.println(e.getMessage());
@@ -225,7 +223,7 @@ public class App {
 
             // TODO: remove unlimited command for final draft @yomas000
             if (inputCommand.equals("map")) {
-                UI.displayMap(floor1.getXSize(), floor1.getYSize(), player, floor1);
+                UI.displayMap(floor.getXSize(), floor.getYSize(), player, floor);
                 commandKnown = false;
             }
 
@@ -241,7 +239,7 @@ public class App {
                     if (player.isInInventory(weaponString)) {
                         try {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
-                            NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                            NPC badGuy = floor.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
                             if (player.closeCombat(weapon, badGuy)) {
                             } else {
                                 UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
@@ -299,10 +297,10 @@ public class App {
                                 "I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
                 }
 
-                Updates.update(player, floor1);
+                Updates.update(player, floor);
                 energy = player.getEnergy();
             } else {
-                Updates.actionUpdate(floor1);
+                Updates.actionUpdate(floor);
             }
 
             // Easter eggs
@@ -342,7 +340,8 @@ public class App {
             if (!OSNAME.equals("Windows 10")){
                 UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
             }
-            floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
+            floor.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
+            //System.out.println();
 
         } while (endGame);
 

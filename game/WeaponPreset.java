@@ -25,6 +25,20 @@ public class WeaponPreset extends InteractablePreset{
         this(preset.name,preset.descriptions, preset.abilityOptions, preset.size, preset.weight, preset.canBePickedUp, preset.rarity);
     }
 
+    
+    /** 
+     * @param attackSpeed
+     * @param attackSpeedRange
+     * @param type
+     * @param damage
+     * @param damageRange
+     * @param range
+     * @param rangeRange
+     * @param name
+     * @param sharp
+     * @param pierce
+     * @param pierceRange
+     */
     public void setValues(int attackSpeed, int attackSpeedRange, String type, int damage, int damageRange, int range, int rangeRange, String name, boolean sharp, int pierce, int pierceRange){
         this.attackSpeed = attackSpeed;
         this.attackSpeedRange = attackSpeedRange;

@@ -85,7 +85,7 @@ public class UI {
         } else if (command.equals(Commands.MOVE.getStrCommand())) {
             System.out.println("\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move [direction]");
         } else if (command.equals(Commands.ATTACK.getStrCommand())) {
-            System.out.println("\tThis will attack an Actor in the room with a spesificed weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
+            System.out.println("\tThis will attack an Actor in the room with a specified weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
         } else if (command.equals(Commands.CLEAR.getStrCommand())) {
             System.out.println("\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
         } else if (command.equals(Commands.HEALTH.getStrCommand())) {
@@ -218,9 +218,15 @@ public class UI {
     public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth, int maxWeight){
         String inventoryOutput = "";
         int weight = 0;
-        for (Interactable name : inventory) {
-            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ","; //TODO: @yomas000 make this so it will format it
-            weight += name.weight;
+        System.out.println();
+        for (Interactable inter : inventory) {
+            if (inter instanceof Weapon){
+                Weapon weapon = (Weapon) inter;
+                inventoryOutput += String.format("\t%-10s: Weight: %-2d / Pierce: %-2d / Damage: %-2d\n", weapon.getName(), weapon.weight, weapon.getPierce(), weapon.getDamage());
+            }else{
+                inventoryOutput += String.format("\t%-10s: Weight: %-2d\n", inter.getName(), inter.weight);
+            }
+            weight += inter.weight;
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
@@ -230,11 +236,12 @@ public class UI {
         }
         System.out.println();
         displayHeath(health, maxHealth);
+        System.out.println("\n");
     }
 
     public static void displayOpening(){
         System.out.println("\n\nYour breath comes heavy as you break your way out of the haunted forest\nYour goal lies on ahead. A forboding dark castle made of black stone rises like a mountain in front of you.");
-        System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man flooors the castle actullay has, each of them gaurded impossible guards going progressivly deeper");
+        System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man floors the castle actually has, each of them guarded impossible guards going progressively deeper");
         System.out.println("But what ever it takes you will reach your goal. The dark wizard of the castle has captured your family because you refused to bow to him.\nAnd now he was going to pay.\n\n");
         System.out.printf("%50s", "WELCOME TO\n\n\n");
 
@@ -328,6 +335,13 @@ public class UI {
         return color.getAnsii() + string + "\u001B[0m";
     }
 
+    
+    /** 
+     * @param health
+     * @param maxHealth
+     * @param energy
+     * @param inventorySize
+     */
     public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
         int width = 100;
         System.out.printf("\033[s\033[0;%dH", width);
