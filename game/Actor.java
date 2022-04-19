@@ -329,7 +329,7 @@ public class Actor {
      * @param speed
      */
     public void setEnergy() {
-        energy = dexterity * 2;
+        energy = dexterity;
         maxEnergy = energy;
     }
 
@@ -355,7 +355,7 @@ public class Actor {
     }
 
     public void setWeaponSkill() {
-        weaponSkill = dexterity * 2;
+        weaponSkill = dexterity * 3;
     }
 
     /**
