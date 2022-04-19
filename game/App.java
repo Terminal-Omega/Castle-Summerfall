@@ -159,12 +159,6 @@ public class App {
                 commandKnown = false;
             }
 
-            // if (takeChestMatch.find()){
-            // System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
-            // commandKnown = false;
-            // continue;
-            // }
-
             // take command
             if (takeMatch.find()) {
                 int energyCost = UI.Commands.TAKE.getSpeedCommand();
