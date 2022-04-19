@@ -22,5 +22,16 @@ public class Weapon extends Interactable {
     // Sword type:CC, damage:6-9, name:Sword, Pierce:6
     // Great Sword type:CC, damage:10-15, name:Great Sword, Pierce, 10
     // Rapier type:CC, damage:6-9, name:Rapier, Pierce: 13
-
+    public int getDamage() {
+        return damage;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    public int getRange() {
+        return range;
+    }
+    public int getPierce(){
+        return pierce;
+    }
 }

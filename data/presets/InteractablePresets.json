@@ -47,8 +47,8 @@
                 "does this thing work?"
             ],
             "canbepickedup": "true",
-            "pierce": "1",
-            "damage": "5-6",
+            "pierce": "0",
+            "damage": "7-10",
             "range": "1-2",
             "weapon-type": "cardboard",
             "attack-speed": "5",

@@ -42,12 +42,12 @@
         {
             "alliance": "enemy",
             "descriptions": [
-                "mean"
+                "He looks kinda clattery"
             ],
             "names": [
-                ""
+                "Skeleton"
             ],
-            "AC": "5",
+            "AC": "3",
             "str": "5",
             "dex": "9",
             "con": "5",
@@ -59,13 +59,14 @@
             "inventory": [
                 {
                     "type": "weapon",
-                    "name": "Greatsword",
+                    "name": "Knife",
                     "size": "1",
                     "weight": "5",
                     "canbepickedup": "false",
                     "descriptions": [
                         "It's kinda sharp",
-                        "Careful, it might be pointy"
+                        "Careful, it might be pointy",
+                        "It looks slightly tasty"
                     ],
                     "pierce": "3",
                     "damage": "4",

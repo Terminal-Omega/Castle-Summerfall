@@ -119,24 +119,24 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    String name;
-                    if (command.equals("room") || command.equals("Room")) {
-                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-                    } else {
-                        try {
-                            name = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).getDescription();
-                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).weight;
+                    String output;
+                    try {
+                        Interactable thing = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
+                        output = thing.getDescription();
+                        output += "\nWeight: " + thing.weight + "\n";
+                        if (thing instanceof Weapon){
+                            Weapon weapon = (Weapon) thing;
+                            output += "Pierce: " + weapon.getPierce() + "\n";
+                            output += "Damage: " + weapon.getDamage() + "\n";
+                        }
 
-                            System.out.println(name);
-                        } catch (ThingNotFoundException e) {
-                            try {
-                                Interactable description = floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
-                                System.out.println(description.getDescription());
-                            }catch (ThingNotFoundException g){
-                                System.out.println(g.getMessage());
-                            }
+                        System.out.println(output);
+                    } catch (ThingNotFoundException e) {
+                        try {
+                            Interactable description = floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
+                            System.out.println(description.getDescription());
+                        }catch (ThingNotFoundException g){
+                            System.out.println(g.getMessage());
                         }
                     }
                 }
