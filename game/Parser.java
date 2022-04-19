@@ -87,7 +87,7 @@ public class Parser {
 
         String[] arrayStrings = new String[strings.size()];
         for(int i = 0;i<strings.size();i++){
-            arrayStrings[i] = strings.get(i);
+            arrayStrings[i] = strings.get(i).replace("\\n", "\n");
         }
         return arrayStrings;
     }
