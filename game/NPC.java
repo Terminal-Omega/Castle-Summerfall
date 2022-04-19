@@ -166,4 +166,8 @@ public class NPC extends Actor {
 
     }
 
+    public String getDescription(){
+        return description;
+    }
+
 }
