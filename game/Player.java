@@ -12,8 +12,8 @@ public class Player extends Actor {
         this.setConstitution(constituion);
         this.setHealth();
         this.setInventory();
+        this.setDexterity(energy / 2);
         this.setEnergy();
-        this.setDexterity(30);
         this.setWeaponSkill();
         this.setName("Player");
         this.setAC(AC);
