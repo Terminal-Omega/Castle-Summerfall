@@ -23,19 +23,6 @@ public class Floor {
     /** 
      * @return Room
      */
-    // public Floor(){
-    // ArrayList<ArrayList<Room>> rooms;
-    // ArrayList<Room> roomList;
-    // for (int i = 0; i < 5; i++){
-    // for (int j = 0; j < 5; j++){
-    // Room room = new Room();
-    // roomList.add(room);
-    // }
-    // rooms.add(roomList);
-    // }
-    // Floor(rooms);
-    // }
-
     public Room getRoom(int xCoord, int yCoord) {
         return rooms.get(xCoord).get(yCoord);
     }
@@ -185,5 +172,9 @@ public class Floor {
             }
         }
         throw new ThingNotFoundException("Enemy not found.");
+    }
+
+    public void removeNPC(int index){
+        NPCS.remove(index);
     }
 }

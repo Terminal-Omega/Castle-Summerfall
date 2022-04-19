@@ -31,6 +31,7 @@ public class App {
         Random rand = new Random();
         boolean endGame = true;
         System.out.println(floor1.getDescription(0, 0));
+        final String OSNAME = System.getProperty("os.name");
 
         do {
             System.out.print("> ");
@@ -71,8 +72,15 @@ public class App {
 
             // clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
-                System.out.print("\033[H\033[2J\033[5B");
-                System.out.flush();
+                int height = 12;
+                if (OSNAME.equals("Windows 10")){
+                    System.out.print("\033[H\033[2J\033[5B");
+                    System.out.flush();
+                }else{
+                    for (int i = 0; i < height; i++){
+                        System.out.println();
+                    }
+                }
                 commandKnown = false;
             }
 
@@ -111,19 +119,24 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    String name;
-                    if (command.equals("room") || command.equals("Room")) {
-                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-                    } else {
-                        try {
-                            name = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).getDescription();
-                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).weight;
+                    String output;
+                    try {
+                        Interactable thing = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
+                        output = thing.getDescription();
+                        output += "\nWeight: " + thing.weight + "\n";
+                        if (thing instanceof Weapon){
+                            Weapon weapon = (Weapon) thing;
+                            output += "Pierce: " + weapon.getPierce() + "\n";
+                            output += "Damage: " + weapon.getDamage() + "\n";
+                        }
 
-                            System.out.println(name);
-                        } catch (ThingNotFoundException e) {
-                            System.out.println(e.getMessage());
+                        System.out.println(output);
+                    } catch (ThingNotFoundException e) {
+                        try {
+                            Interactable description = floor1.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
+                            System.out.println(description.getDescription());
+                        }catch (ThingNotFoundException g){
+                            System.out.println(g.getMessage());
                         }
                     }
                 }
@@ -145,12 +158,6 @@ public class App {
 
                 commandKnown = false;
             }
-
-            // if (takeChestMatch.find()){
-            // System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
-            // commandKnown = false;
-            // continue;
-            // }
 
             // take command
             if (takeMatch.find()) {
@@ -332,7 +339,9 @@ public class App {
                 System.out.println("Sorry I don't know what you wanted.");
             }
 
-            UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+            if (!OSNAME.equals("Windows 10")){
+                UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
+            }
             floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
 
         } while (endGame);

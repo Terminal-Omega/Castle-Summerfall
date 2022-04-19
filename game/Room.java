@@ -2,26 +2,27 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 public class Room {
     private ArrayList<Interactable> interactables;
+    private ArrayList<Interactable> descriptionInteractables;
     private String description;
     private Door southDoor;
     private Door eastDoor;
     private boolean visited;
     private String[] bookmark = {"", ""};
 
-    public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
+    public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
+        this.descriptionInteractables = descriptionInteractables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
         visited = false;
     }
 
-    public Room(int seed){
-        
-    }
+
     
     /**
      * very simple, just gets the description of the room, saying which objects are in it.
@@ -40,7 +41,7 @@ public class Room {
             describe.append("There is a " + interactables.get(0).getName() + " in the room.");
             break;
             case 2:
-            describe.append("\n");
+            describe.append("\n\n");
             describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(1).getName()));
             break;
             default:
@@ -195,5 +196,28 @@ public class Room {
     public void removeBookmark(){
         bookmark[0] = "";
         bookmark[1] = "";
+    }
+
+    public Interactable getDescriptionInteractable(String name, int index) throws ThingNotFoundException{
+        int timesFound = -1;
+        int latestIndex = -1;
+        for(int i = 0;i<descriptionInteractables.size();i++){
+            if(descriptionInteractables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    return descriptionInteractables.get(i);
+                }
+            }
+        }
+        if(latestIndex !=-1){
+            return descriptionInteractables.get(latestIndex);
+        } else{
+            throw new ThingNotFoundException("A " + name + " was not found in the room");
+        }
+    }
+
+    public Interactable getDescriptionInteractable(String name) throws ThingNotFoundException{
+        return getDescriptionInteractable(name, 0);
     }
 }

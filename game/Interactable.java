@@ -6,20 +6,27 @@ public class Interactable {
     protected boolean canBePickedUp;
     protected String name;
     protected String description;
+    ArrayList<Ability> abilities;
 
     //Constructors
-    public Interactable(String name, String description, int size, int weight, boolean canBePickedUp){
+    public Interactable(String name, String description, int size, int weight, boolean canBePickedUp, ArrayList<Ability> abilities){
         this.size = size;
         this.weight = weight;
         this.canBePickedUp = canBePickedUp;
         this.name = name;
         this.description = description;
+        this.abilities = abilities;
     }
 
-    public Interactable(){};
+    public Interactable(String name, String description, int size, int weight, boolean canBePickedUp){
+        this(name, description, size, weight, canBePickedUp, new ArrayList<>());
+    }
+
+    public Interactable(String name, String description){
+        this(name, description, 0, 0, false);
+    }
 
 
-    
     /** 
      * @return String
      */

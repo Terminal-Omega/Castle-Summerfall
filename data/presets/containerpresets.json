@@ -1,0 +1,17 @@
+{"containers":[
+    {
+        "type":"container",
+        "name":"chest",
+        "descriptions":[
+            "The chest is old, nearly to the point of rotting.",
+            "The chest is oddly clean, out of place in this dark and dingy dungeon.", 
+            "It's a chest."
+        ],
+        "size":"10",
+        "weight":"15",
+        "canbepickedup":"false",
+        "inventory-size":"10",
+        "starting-items":"0-3",
+        "rarity":"10"
+    }
+]}

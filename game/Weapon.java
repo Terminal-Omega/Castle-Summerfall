@@ -2,9 +2,11 @@ package game;
 
 public class Weapon extends Interactable {
     public Weapon(int size, int weight, boolean canBePickedUp, String name, String description, int pierce,
-            int damage) {
+            int damage, int range) {
         super(name, description, size, weight, canBePickedUp);
         this.damage = damage;
+        this.pierce = pierce;
+        this.range = range;
     }
 
     protected int attackSpeed;
@@ -20,5 +22,16 @@ public class Weapon extends Interactable {
     // Sword type:CC, damage:6-9, name:Sword, Pierce:6
     // Great Sword type:CC, damage:10-15, name:Great Sword, Pierce, 10
     // Rapier type:CC, damage:6-9, name:Rapier, Pierce: 13
-
+    public int getDamage() {
+        return damage;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    public int getRange() {
+        return range;
+    }
+    public int getPierce(){
+        return pierce;
+    }
 }
