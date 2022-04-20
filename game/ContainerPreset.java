@@ -13,6 +13,10 @@ public class ContainerPreset extends InteractablePreset{
         this(preset.name,preset.descriptions, preset.abilityOptions, preset.size, preset.weight, preset.canBePickedUp, preset.rarity);
     }
 
+    
+    /** 
+     * @param size
+     */
     public void setInventorySize(int size){
         inventorySize = size;
     }

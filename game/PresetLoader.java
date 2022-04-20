@@ -25,6 +25,11 @@ public class PresetLoader {
         return result;
     }
 
+    
+    /** 
+     * @param toLoad
+     * @return RoomPreset
+     */
     private static RoomPreset loadRoomPreset(String toLoad) {
 
         String[] descriptions = Parser.trimQuotes(Parser.parseArray("descriptions", toLoad));
@@ -60,6 +65,11 @@ public class PresetLoader {
 
     }
 
+    
+    /** 
+     * @param toLoad
+     * @return InteractablePreset[]
+     */
     private static InteractablePreset[] loadInventoryPresets(String[] toLoad) {
         if(!Objects.isNull(toLoad) && !(toLoad[0].equals("") && toLoad.length == 1)){
             InteractablePreset[] result = new InteractablePreset[toLoad.length];
@@ -72,6 +82,11 @@ public class PresetLoader {
         }
     }
 
+    
+    /** 
+     * @param toLoad
+     * @return InteractablePreset
+     */
     public static InteractablePreset loadInteractablePreset(String toLoad) {
 
         // find the name of the preset
@@ -106,6 +121,12 @@ public class PresetLoader {
         }
     }
 
+    
+    /** 
+     * @param preset
+     * @param toLoad
+     * @return ContainerPreset
+     */
     private static ContainerPreset loadContainerPreset(InteractablePreset preset, String toLoad) {
         ContainerPreset result = new ContainerPreset(preset);
         int inventorySize = Parser.parseInt("inventory-size", toLoad)[0];
@@ -117,6 +138,12 @@ public class PresetLoader {
         return result;
     }
 
+    
+    /** 
+     * @param preset
+     * @param toLoad
+     * @return WeaponPreset
+     */
     private static WeaponPreset loadWeaponPreset(InteractablePreset preset, String toLoad) {
 
         WeaponPreset result = new WeaponPreset(preset);
@@ -150,6 +177,11 @@ public class PresetLoader {
         return result;
     }
 
+    
+    /** 
+     * @param toLoad
+     * @return NPCPreset
+     */
     public static NPCPreset loadNpcPreset(String toLoad){
         if(Objects.isNull(toLoad)){
             return null;

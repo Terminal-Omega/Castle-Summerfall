@@ -179,6 +179,10 @@ public class Floor {
         throw new ThingNotFoundException("Enemy not found.");
     }
 
+    
+    /** 
+     * @param index
+     */
     public void removeNPC(int index){
         NPCS.remove(index);
     }

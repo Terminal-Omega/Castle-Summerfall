@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Parser {
+    
+    /** 
+     * @param attribute
+     * @param toLoad
+     * @return String
+     */
     public static String parseString(String attribute, String toLoad){
         Pattern stringPattern = Pattern.compile("\"" + attribute + "\" *?: *?\"(.*?)\"");
         Matcher stringMatcher = stringPattern.matcher(toLoad);
@@ -16,6 +22,12 @@ public class Parser {
         }
     }
 
+    
+    /** 
+     * @param attribute
+     * @param toLoad
+     * @return int[]
+     */
     public static int[] parseInt(String attribute, String toLoad){
         Pattern intPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\"([0-9]+)(-([0-9]+))?\"");
         Matcher intMatcher = intPattern.matcher(toLoad);
@@ -32,6 +44,12 @@ public class Parser {
         return result;
     }
 
+    
+    /** 
+     * @param attribute
+     * @param toLoad
+     * @return boolean
+     */
     public static boolean parseBoolean(String attribute, String toLoad){
         Pattern boolPattern = Pattern.compile("\"" + attribute + "\"\\s*:\\s*\"(.*?)\"");
         Matcher boolMatcher = boolPattern.matcher(toLoad);
@@ -42,6 +60,12 @@ public class Parser {
         }
     }
 
+    
+    /** 
+     * @param attribute
+     * @param toLoad
+     * @return String[]
+     */
     public static String[] parseArray(String attribute, String toLoad){
         String arrayString;
         if(Objects.isNull(attribute)){
@@ -93,6 +117,11 @@ public class Parser {
     }
 
 
+    
+    /** 
+     * @param toTrim
+     * @return String[]
+     */
     public static String[] trimQuotes (String[] toTrim){
         if(Objects.isNull(toTrim)){
             return null;
@@ -105,6 +134,12 @@ public class Parser {
         return result;
     }
 
+    
+    /** 
+     * @param attribute
+     * @param toLoad
+     * @return String
+     */
     public static String parseObject(String attribute, String toLoad){
         Pattern objectPattern = Pattern.compile("\"" + attribute + "\" *: *(\\{.*)", Pattern.DOTALL);
         Matcher objectMatcher = objectPattern.matcher(toLoad);

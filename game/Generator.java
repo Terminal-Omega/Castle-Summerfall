@@ -327,6 +327,13 @@ public class Generator {
         return result;
     }
 
+    
+    /** 
+     * @param preset
+     * @param southDoor
+     * @param eastDoor
+     * @return Room
+     */
     public static Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
         Random rand = new Random();
         ArrayList<Interactable> interactables = new ArrayList<Interactable>();
@@ -367,6 +374,11 @@ public class Generator {
         return generateInteractable(.2);
     }
 
+    
+    /** 
+     * @param preset
+     * @return Interactable
+     */
     public static Interactable spinInteractable(InteractablePreset preset){
         if(Objects.isNull(preset)){
             return null;
@@ -406,6 +418,11 @@ public class Generator {
         
     }
 
+    
+    /** 
+     * @param preset
+     * @return Container
+     */
     public static Container spinContainer(ContainerPreset preset){
         Random rand = new Random();
         String name = preset.name;
@@ -418,6 +435,11 @@ public class Generator {
         return new Container(name, description, preset.size, preset.weight, preset.canBePickedUp, inventory, preset.inventorySize);
     }
 
+    
+    /** 
+     * @param preset
+     * @return Weapon
+     */
     public static Weapon spinWeapon(WeaponPreset preset){
         Random rand = new Random();
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
@@ -445,6 +467,14 @@ public class Generator {
         return new Weapon(preset.size, preset.weight, preset.canBePickedUp, preset.name, description, pierce, damage, range);
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @param preset
+     * @param challengeRating
+     * @return NPC
+     */
     //NPC Time!
 
     public static NPC spinNPC(int xCoord, int yCoord, NPCPreset preset, int challengeRating){
@@ -473,6 +503,11 @@ public class Generator {
         return result;
     }
 
+    
+    /** 
+     * @param range
+     * @return int
+     */
     private static int randomFromRange(int[] range){
         Random rand = new Random();
         if(range[1] > range[0]){
@@ -482,6 +517,13 @@ public class Generator {
         }
     }
 
+    
+    /** 
+     * @param xCoord
+     * @param yCoord
+     * @param challenge
+     * @return NPC
+     */
     private static NPC generateEnemy(int xCoord, int yCoord, int challenge){
         Random rand = new Random();
         File filePaths = new File("data/config/paths.json");

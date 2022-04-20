@@ -1,7 +1,7 @@
 {"rooms":[
     {
         "descriptions": [
-            "You look around and see nothing, the room is too dark to see much,\nbut you can see that the Walls are gray brick that has moss and water dripping from the old Stones."
+            "You look around and see nothing, the room is too dark to see much,\nbut you can see that the WALLS are gray brick that has moss and water dripping from the old STONES."
         ],
         "description-interactables": [
             {
@@ -34,7 +34,7 @@
     },
     {
         "descriptions": [
-            "The room is a massive room with Wooden Beams sweeping up into high arched ceilings.\nIt has bright Chandeliers glowing with hundreds of candles.\nThe wood looks dark and varnished. It reminds you of viking architecture."
+            "The room is a massive room with WOODEN BEAMS sweeping up into high arched ceilings.\nIt has bright CHANDELIERS glowing with hundreds of candles.\nThe wood looks dark and varnished. It reminds you of viking architecture."
         ],
         "description-interactables": [
             {
@@ -53,7 +53,7 @@
                 "type": "other",
                 "descriptions": [
                     "The wood looks a little rotted, you might want to get out. Fast",
-                    "This wood doesn't look up to with buildings now. You might want to get out, and fast"
+                    "This wood doesn't look safe enough to be under. You might want to get out, and fast"
                 ],
                 "size":"9",
                 "weight":"10",
@@ -64,7 +64,7 @@
     },
     {
         "descriptions": [
-            "The room you walked into is dark and dank. It smells like mildew and has Slime covering the Floor and walls."
+            "The room you walked into is dark and dank. It smells like mildew and has SLIME covering the FLOOR and walls."
         ],
         "description-interactables": [
             {
@@ -94,8 +94,8 @@
     },
     {
         "descriptions": [
-            "You look around and see that this room looks like a storage room. There is Crates and Barrels of goods waiting for something to happen to them.",
-            "Barrels and Crates stack the side of the dock. There is a roaring River that flows from one end of the cavern to the other."
+            "You look around and see that this room looks like a storage room. There is CRATES and BARRELS of goods waiting for something to happen to them.",
+            "BARRELS and CRATES stack the side of the dock. There is a roaring RIVER that flows from one end of the cavern to the other."
         ],
         "description-interactables": [
             {
@@ -136,7 +136,7 @@
     },
     {
         "descriptions": [
-            "The room is what appears to be a bedchamber. There is a massive four poster Bed with red velvet Curtains.\nYou don't know who would want to sleep in a dungeon though."
+            "The room is what appears to be a bedchamber. There is a massive four poster BED with red velvet CURTAINS.\nYou don't know who would want to sleep in a dungeon though."
         ],
         "description-interactables": [
             {
@@ -166,7 +166,7 @@
     },
     {
         "descriptions": [
-            "The room you walked into feels sterile. It has whitewashed walls with steel Tables in the center.\nSmaller tables hold all sorts of deadly looking Tools."
+            "The room you walked into feels sterile. It has whitewashed walls with steel TABLES in the center.\nSmaller tables hold all sorts of deadly looking TOOLS."
         ],
         "description-interactables": [
             {
@@ -237,7 +237,48 @@
                 }
             ]
         }
-    }
+        },
+        {
+            "descriptions": [
+                "The room is a hotel you realize. Torch SCONCES line the very expensive mahogany hallway.\nThe DOORS have brass name PLATES numbering 1 through 25"
+            ],
+            "description-interactables": [
+                {
+                    "name": "Sconces",
+                    "type": "other",
+                    "descriptions": [
+                        "No they are not scones",
+                        "Not what you get at a sconecutter"
+                    ],
+                    "size": "2",
+                    "weight": "5",
+                    "canbepickedup": true
+                },
+                {
+                    "name": "Plates",
+                    "type": "other",
+                    "descriptions": [
+                        "It shines like a mirror you wonder who polishes these.",
+                        "The plate is coldly unresponsive"
+                    ],
+                    "size": "10",
+                    "weight": "15",
+                    "canbepickedup": true
+                },
+                {
+                    "name": "Doors",
+                    "type": "other",
+                    "descriptions": [
+                        "Do these doors even go anywhere. You eventually conclude these are not doors.",
+                        "These doors are opaque."
+                    ],
+                    "size": "10",
+                    "weight": "15",
+                    "canbepickedup": true
+                }
+            ],
+            "interactables": []
+        }
     
-]
+    ]
 }

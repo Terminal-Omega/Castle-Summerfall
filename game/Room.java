@@ -43,7 +43,7 @@ public class Room {
             describe.append("There is a " + interactables.get(0).getName() + " in the room.");
             break;
             case 2:
-            describe.append("\n\n");
+            describe.append("\n");
             describe.append(String.format("In the room is a %s and a %s", interactables.get(0).getName(),interactables.get(1).getName()));
             break;
             default:
@@ -200,6 +200,13 @@ public class Room {
         bookmark[1] = "";
     }
 
+    
+    /** 
+     * @param name
+     * @param index
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable getDescriptionInteractable(String name, int index) throws ThingNotFoundException{
         int timesFound = -1;
         int latestIndex = -1;
@@ -219,6 +226,12 @@ public class Room {
         }
     }
 
+    
+    /** 
+     * @param name
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
     public Interactable getDescriptionInteractable(String name) throws ThingNotFoundException{
         return getDescriptionInteractable(name, 0);
     }
