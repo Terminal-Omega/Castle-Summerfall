@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
+import java.util.Objects;
 
 public class App {
 
@@ -168,15 +169,27 @@ public class App {
                     itemString = " " + itemString;
                     Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
                     Matcher matcher = takePattern.matcher(itemString);
-                    Interactable firstItem;
+                    Interactable firstItem = null;
+                    String toFind = "";
                     try {
                         matcher.find();
                         firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
-                        itemString = itemString.replace(matcher.group(1), "");
                     } catch (ThingNotFoundException e) {
                         System.out.print(e.getMessage());
                     }
 
+                    if (null != firstItem){
+                        while(matcher.find()){
+                            System.out.println("x");
+                            if (firstItem instanceof Container){
+                                Container contain = (Container) firstItem;
+                                firstItem = contain.getItem(matcher.group(1));
+                            }else{
+                                System.out.println("player");
+                                player.putItem(firstItem);
+                            }
+                        }
+                    }
                 }
 
                 commandKnown = false;
