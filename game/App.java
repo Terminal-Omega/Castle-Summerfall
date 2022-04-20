@@ -164,31 +164,19 @@ public class App {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
+                    String itemString = takeMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem;
                     try {
-                        Interactable interactable = floor.getRoom(player.getXCoord(), player.getYCoord())
-                                .takeItem(takeMatch.group(1));
-                        player.putItem(interactable);
-                        energy -= energyCost;
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        itemString = itemString.replace(matcher.group(1), "");
                     } catch (ThingNotFoundException e) {
-                        try {
-                            Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
-                            Container Chest = (Container) item;
-                            Interactable thing = Chest.takeItem(takeMatch.group(1));
-                            player.putItem(thing);
-                            energy -= energyCost;
-                        } catch (ThingNotFoundException r) {
-                            try {
-                                Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord())
-                                        .getItem("Crate");
-                                Container Chest = (Container) item;
-                                Interactable thing = Chest.takeItem(takeMatch.group(1));
-                                player.putItem(thing);
-                                energy -= energyCost;
-                            } catch (ThingNotFoundException t) {
-                                System.out.println(t.getMessage());
-                            }
-                        }
+                        System.out.print(e.getMessage());
                     }
+
                 }
 
                 commandKnown = false;
