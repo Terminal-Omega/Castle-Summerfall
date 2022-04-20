@@ -13,5 +13,20 @@
         "inventory-size":"10",
         "starting-items":"0-3",
         "rarity":"10"
+    },
+    {
+        "type": "container",
+        "name": "crate",
+        "descriptions": [
+            "The crate is old and boxy. It looks like it came straight off a caravan",
+            "The boxy object is huge. It looks like a lion could be inside",
+            "It's a crate."
+        ],
+        "size": "10",
+        "weight": "20",
+        "canbepickedup": "false",
+        "inventory-size": "10",
+        "starting-items": "0-5",
+        "rarity": "10"
     }
 ]}
