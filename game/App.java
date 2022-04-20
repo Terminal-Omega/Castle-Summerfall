@@ -11,6 +11,9 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
+        //sorry thomas, needed to test some things so I added a debug option.
+        boolean debug = true;
+
         UI.displayOpening();
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
@@ -25,6 +28,9 @@ public class App {
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
+        if(debug){
+            player = new Player(0,0,100,100,20);
+        }
         int energy = player.getEnergy();
         Random rand = new Random();
         boolean endGame = true;

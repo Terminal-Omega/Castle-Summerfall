@@ -43,12 +43,12 @@ public class Generator {
                 if (i != xSize - 1) {
                     eastDoor = true;
                 }
-                boolean boss = false;
+                boolean hasBoss = false;
                 if(i == xBoss && j == yBoss){
-                    boss = true;
+                    hasBoss = true;
                 }
-                Room toAdd = generateRoom(southDoor, eastDoor, boss);
-                if(boss){
+                Room toAdd = generateRoom(southDoor, eastDoor, hasBoss);
+                if(hasBoss){
                     toAdd.makeStairs();
                 }
                 column.add(toAdd);
