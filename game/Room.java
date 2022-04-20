@@ -12,6 +12,7 @@ public class Room {
     private Door eastDoor;
     private boolean visited;
     private String[] bookmark = {"", ""};
+    private boolean stairs;
 
     public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
@@ -20,6 +21,7 @@ public class Room {
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
         visited = false;
+        stairs = false;
     }
 
 
@@ -219,5 +221,13 @@ public class Room {
 
     public Interactable getDescriptionInteractable(String name) throws ThingNotFoundException{
         return getDescriptionInteractable(name, 0);
+    }
+
+    public boolean isStairs(){
+        return stairs;
+    }
+
+    public void makeStairs(){
+        stairs = true;
     }
 }

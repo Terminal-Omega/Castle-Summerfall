@@ -2,11 +2,8 @@ package game;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
-
-import javax.annotation.processing.Filer;
 
 //this is a grouping of methods to randomly generate any given game object.
 //A room, an interactable, a floor, an enemy, etc.
@@ -20,6 +17,8 @@ public class Generator {
         LEGENDARY
     }
 
+    private static NPC boss;
+
     
     /** 
      * This will generate a floor
@@ -30,6 +29,9 @@ public class Generator {
     public static Floor generateFloor(int xSize, int ySize) {
         Random rand = new Random();
         ArrayList<ArrayList<Room>> rooms = new ArrayList<>();
+        int xBoss = rand.nextInt(xSize);
+        int yBoss = rand.nextInt(ySize);
+
         for (int i = 0; i < xSize; i++) {
             ArrayList<Room> column = new ArrayList<>();
             for (int j = 0; j < ySize; j++) {
@@ -41,7 +43,15 @@ public class Generator {
                 if (i != xSize - 1) {
                     eastDoor = true;
                 }
-                column.add(generateRoom(southDoor, eastDoor));
+                boolean boss = false;
+                if(i == xBoss && j == yBoss){
+                    boss = true;
+                }
+                Room toAdd = generateRoom(southDoor, eastDoor, boss);
+                if(boss){
+                    toAdd.makeStairs();
+                }
+                column.add(toAdd);
             }
             rooms.add(column);
         }
@@ -51,8 +61,17 @@ public class Generator {
         for (int i = 0; i < enemyCount; i++) {
             int x = rand.nextInt(xSize);
             int y = rand.nextInt(ySize);
-            result.addNPC(generateEnemy(x, y, 0));
+            if(!(x == xBoss && y == yBoss)){
+                result.addNPC(generateEnemy(x, y, 0));
+            }
         }
+        
+        if(!Objects.isNull(boss)){
+            boss.setXCoord(xBoss);
+            boss.setYCoord(yBoss);
+            result.addNPC(boss);
+        }
+
         return result;
     }
 
@@ -206,12 +225,18 @@ public class Generator {
         return null;
     }
 
-    public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor){
+    public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor, boolean boss){
+
         int range = interactableMax - interactableMin;
         Random rand = new Random();
-        int loopCount = rand.nextInt(range) + interactableMin;
+        int loopCount;
+        if(interactableMax > interactableMin){
+            loopCount = rand.nextInt(range) + interactableMin;
+        } else{
+            loopCount = interactableMin;
+        }
+
         ArrayList<Interactable> roomInventory = new ArrayList<>();
-        
         for(InteractablePreset interactable : preset.interactables){
             if(!Objects.isNull(spinInteractable(interactable))){
                 roomInventory.add(spinInteractable(interactable));
@@ -225,14 +250,16 @@ public class Generator {
 
         Room result = spinRoom(preset, southDoor, eastDoor);
 
-        for (int i = 0; i < loopCount; i++) {
-            result.addItem(generateInteractable());
+        if(!boss){
+            for (int i = 0; i < loopCount; i++) {
+                result.addItem(generateInteractable());
+            }
         }
 
         return result;
     }
 
-    public static Room generateRoom(boolean southDoor, boolean eastDoor){
+    public static Room generateRoom(boolean southDoor, boolean eastDoor, boolean boss){
         File filePaths = new File("data/config/paths.json");
         String[] files;
         String pathString = "";
@@ -252,6 +279,7 @@ public class Generator {
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
         
         ArrayList<RoomPreset> presets = new ArrayList<>();
+        ArrayList<RoomPreset> bossPresets = new ArrayList<>();
 
         for(String file : files){
             File presetFile = new File(file);
@@ -267,13 +295,36 @@ public class Generator {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            presets.addAll(PresetLoader.loadRoomPresets(presetString));
+            ArrayList<RoomPreset> toAdd = PresetLoader.loadRoomPresets(presetString);
+            
+            for(RoomPreset roomPreset : toAdd){
+                if(Objects.isNull(roomPreset.boss)){
+                    presets.add(roomPreset);
+                } else{
+                    bossPresets.add(roomPreset);
+                }
+            }
 
         }
 
         Random rand = new Random();
-        int choice = rand.nextInt(presets.size());
-        return generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor);
+        int choice;
+        Room result;
+        if(boss){
+            if(bossPresets.size()>1){
+                choice = rand.nextInt(bossPresets.size());
+                result = generateRoom(bossPresets.get(choice), 0,0, southDoor, eastDoor, boss);
+            } else{
+                choice = 0;
+                result = generateRoom(bossPresets.get(choice), 0,0, southDoor, eastDoor, boss);
+                
+            }
+        } else{
+            choice = rand.nextInt(presets.size());
+            result = generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor, boss);
+        }
+
+        return result;
     }
 
     public static Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
@@ -299,6 +350,10 @@ public class Generator {
             doorEast = new Door(true, false, false);
         } else{
             doorEast = null;
+        }
+
+        if(!Objects.isNull(preset.boss)){
+            boss = preset.boss;
         }
 
         return new Room(interactables, descriptionInteractables, description, doorSouth, doorEast);
@@ -393,6 +448,9 @@ public class Generator {
     //NPC Time!
 
     public static NPC spinNPC(int xCoord, int yCoord, NPCPreset preset, int challengeRating){
+        if(Objects.isNull(preset)){
+            return null;
+        }
         Random rand = new Random();
         NpcAllience npcAllience = preset.npcAllience;
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];

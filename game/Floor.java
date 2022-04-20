@@ -65,7 +65,12 @@ public class Floor {
      * @return String
      */
     public String getDescription(int xCoord, int yCoord) {
+       
+
         StringBuilder builder = new StringBuilder(rooms.get(xCoord).get(yCoord).getDescription());
+        if(getRoom(xCoord, yCoord).isStairs()){
+            builder.append("\nThis is the exit. Fight the boss to escape.");
+        }
         ArrayList<NPC> localNPC = new ArrayList<>();
         for (NPC NPC : NPCS) {
             if (NPC.getXCoord() == xCoord && NPC.getYCoord() == yCoord) {
