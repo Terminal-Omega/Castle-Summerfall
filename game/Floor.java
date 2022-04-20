@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Floor {
     private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the vector.
@@ -68,8 +69,12 @@ public class Floor {
        
 
         StringBuilder builder = new StringBuilder(rooms.get(xCoord).get(yCoord).getDescription());
-        if(getRoom(xCoord, yCoord).isStairs()){
-            builder.append("\nThis is the exit. Fight the boss to escape.");
+        if(rooms.get(xCoord).get(yCoord).isStairs()){
+            if((!Objects.isNull(getBoss()))){
+                builder.append("\nThis is the exit. Fight the boss to escape.");
+            } else{
+                builder.append("\nThe boss has been defeated! Use \"descend\" to move to the next floor.");
+            }
         }
         ArrayList<NPC> localNPC = new ArrayList<>();
         for (NPC NPC : NPCS) {
@@ -185,5 +190,14 @@ public class Floor {
      */
     public void removeNPC(int index){
         NPCS.remove(index);
+    }
+
+    public NPC getBoss(){
+        for(NPC npc : NPCS){
+            if(npc instanceof Boss){
+                return npc;
+            }
+        }
+        return null;
     }
 }
