@@ -234,6 +234,47 @@
             }
         ],
         "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room you came to is a black stone room with a huge BONFIRE at one end. There were thick wooden TABLES on either end that held INSTRUMENTS of some dark profession."
+        ],
+        "description-interactables": [
+            {
+                "name": "Bonfire",
+                "type": "other",
+                "descriptions": [
+                    "It reminds you of the thing your burned yourself on long ago",
+                    "The fire reminds you of the time you and your brother set fire to the wheat felids, what? you were young"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Tables",
+                "type": "other",
+                "descriptions": [
+                    "It has four legs, a strong table top, all made of dark wood. Looks just like a table",
+                    "The table continues to be table, no matter how long you stare"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            },
+            {
+                "name": "Instruments",
+                "type": "other",
+                "descriptions": [
+                    "You are not in a dark profession, so you can't tell what they are",
+                    "These look like they could torture you looked at them wrong. But the metal they are made of doesn't look like steel"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            }
+        ],
+        "interactables": []
     }
     
 ]
