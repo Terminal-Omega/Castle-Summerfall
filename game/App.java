@@ -239,8 +239,22 @@ public class App {
 
                     if (null != secondItem || null != firstItem) {
                         if (num == -1) {
+                            Container temp = (Container) firstItem;
+                            try {
+                                secondItem = temp.takeItem(secondItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                             player.putItem(secondItem);
                         } else {
+                            Container temp = (Container) secondItem;
+                            try {
+                                firstItem = temp.takeItem(firstItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                             player.putItem(firstItem);
                         }
                     }
