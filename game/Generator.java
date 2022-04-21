@@ -9,7 +9,7 @@ import java.util.Random;
 //A room, an interactable, a floor, an enemy, etc.
 public class Generator {
 
-    private static String pathPath = "/data/config/paths.json";
+    private static String pathPath = "/data/config/paths.json";//TODO: add .. to this for the binaries @yomas000
 
     public enum Rarity {
         COMMON,
