@@ -117,26 +117,57 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    String output;
+                    String itemString = inspectMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
                     try {
-                        Interactable thing = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
-                        output = thing.getDescription();
-                        output += "\nWeight: " + thing.weight + "\n";
-                        if (thing instanceof Weapon){
-                            Weapon weapon = (Weapon) thing;
-                            output += "Pierce: " + weapon.getPierce() + "\n";
-                            output += "Damage: " + weapon.getDamage() + "\n";
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        if (!(firstItem instanceof Container)) {
+                           System.out.println(firstItem.getDescription());
+                            firstItem = null;
                         }
-
-                        System.out.println(output);
                     } catch (ThingNotFoundException e) {
-                        try {
-                            Interactable description = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
-                            System.out.println(description.getDescription());
-                        }catch (ThingNotFoundException g){
-                            System.out.println(g.getMessage());
+                        try{
+                            Interactable name = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(matcher.group(1));
+                            System.out.println(name.getDescription());
+                        }catch(ThingNotFoundException j){
+                            System.out.println(j.getMessage());
                         }
                     }
+                    if (null != firstItem) {
+                        while (matcher.find()) {
+                            if (num == 1) {
+                                if (firstItem instanceof Container) {
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }
+                            if (num == -1) {
+                                if (null != secondItem) {
+                                    if (secondItem instanceof Container) {
+                                        Container container = (Container) secondItem;
+                                        firstItem = container.getItem(matcher.group(1));
+                                    }
+                                }
+                            }
+                            num = num * -1;
+                        }
+                    }
+
+                    if (null != secondItem || null != firstItem){
+                        if (num == -1){
+                            System.out.println(secondItem.getDescription());
+                        }else{
+                            System.out.println(firstItem.getDescription());
+                        }
+                    }
+
+                    
                 }
 
                 commandKnown = false;
@@ -168,14 +199,52 @@ public class App {
                     itemString = " " + itemString;
                     Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
                     Matcher matcher = takePattern.matcher(itemString);
-                    Interactable firstItem;
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
                     try {
                         matcher.find();
                         firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
-                        itemString = itemString.replace(matcher.group(1), "");
+                        if (!(firstItem instanceof Container)){
+                            player.putItem(firstItem);
+                            floor.getRoom(player.getXCoord(), player.getYCoord()).takeItem(matcher.group(1));
+                            firstItem = null;
+                        }
                     } catch (ThingNotFoundException e) {
                         System.out.print(e.getMessage());
                     }
+
+                   
+
+                    if (null != firstItem){
+                        while(matcher.find()){
+                            if (num == 1){
+                                if (firstItem instanceof Container){
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }
+                            if (num == -1){
+                                if (null != secondItem){
+                                    if (secondItem instanceof Container) {
+                                        Container container = (Container) secondItem;
+                                        firstItem = container.getItem(matcher.group(1));
+                                    }
+                                }
+                            }
+                            num = num * -1;
+                        }
+                    }
+
+                    if (null != secondItem || null != firstItem) {
+                        if (num == -1) {
+                            player.putItem(secondItem);
+                        } else {
+                            player.putItem(firstItem);
+                        }
+                    }
+
+                    
 
                 }
 
