@@ -135,7 +135,7 @@ public class UI {
         }
         //move south
         if (command.equals("S") || command.equals("s")) {
-            if (y < floorSize - 1 && y > 0) {
+            if (y <= (floorSize - 1) && y > 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()){
                         player.setYCoord(y - 1);
@@ -150,7 +150,7 @@ public class UI {
         }
         //move east
         if (command.equals("E") || command.equals("e")) {
-            if (x < floorSize - 1 && x >= 0) {
+            if (x < (floorSize - 1) && x >= 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.EAST).isOpen()){
                         player.setXCoord(x + 1);
@@ -282,8 +282,7 @@ public class UI {
         for (int i = ySize - 1; i >= 0; i--){
             for (int j = 0; j < xSize; j++){
                 String bookmarkString = "";
-                String[] bookmark = floor.getRoom(j, i)
-                .getBookmarks();
+                String[] bookmark = floor.getRoom(j, i).getBookmarks();
                 if (!bookmark[0].equals("")){
                     bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";

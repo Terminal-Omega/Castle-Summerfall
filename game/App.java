@@ -36,6 +36,7 @@ public class App {
         boolean endGame = true;
         System.out.println(floor.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
+        floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
 
         do {
             System.out.print("\n> ");
