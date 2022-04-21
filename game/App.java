@@ -12,7 +12,7 @@ public class App {
      */
     public static void main(String[] args) {
         //sorry thomas, needed to test some things so I added a debug option.
-        boolean debug = true;
+        boolean debug = false;
 
         UI.displayOpening();
         UI.helpCommand("all");
