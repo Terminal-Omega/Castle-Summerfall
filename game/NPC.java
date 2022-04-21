@@ -11,7 +11,7 @@ public class NPC extends Actor {
     protected boolean playerSeen;
     protected boolean playerHeard;
     protected Direction playerDirection;
-    private Boss boss;
+    private boolean boss;
 
     public NPC() {
 
@@ -27,6 +27,7 @@ public class NPC extends Actor {
         setDescription(description);
         setDexterity(dexterity);
         setWeaponSkill();
+        boss = false;
 
     }
 
@@ -71,10 +72,6 @@ public class NPC extends Actor {
                 }
             } else if (npcAllience == NpcAllience.FRIENDLY) {
 
-            } else if (npcAllience == NpcAllience.BOSS) {
-                if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
-                    boss.bossFight(player);
-                }
             } else if (npcAllience == NpcAllience.NEUTRAL) {
 
             }
@@ -168,6 +165,14 @@ public class NPC extends Actor {
 
     public String getDescription(){
         return description;
+    }
+
+    public boolean isBoss(){
+        return boss;
+    }
+
+    public void makeBoss(){
+        boss = true;
     }
 
 }

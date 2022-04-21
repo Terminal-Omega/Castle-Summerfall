@@ -194,7 +194,7 @@ public class Floor {
 
     public NPC getBoss(){
         for(NPC npc : NPCS){
-            if(npc instanceof Boss){
+            if(npc.isBoss()){
                 return npc;
             }
         }

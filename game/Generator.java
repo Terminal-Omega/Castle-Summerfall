@@ -9,6 +9,8 @@ import java.util.Random;
 //A room, an interactable, a floor, an enemy, etc.
 public class Generator {
 
+    private static String pathPath = "/data/config/paths.json";
+
     public enum Rarity {
         COMMON,
         UNCOMMON,
@@ -145,7 +147,7 @@ public class Generator {
         double randNum = rand.nextDouble();
 
         try{
-            File pathFile = new File("data/config/paths.json");
+            File pathFile = new File(pathPath);
             FileReader pathReader = new FileReader(pathFile);
             int i;
             String pathString = "";
@@ -260,7 +262,7 @@ public class Generator {
     }
 
     public static Room generateRoom(boolean southDoor, boolean eastDoor, boolean boss){
-        File filePaths = new File("data/config/paths.json");
+        File filePaths = new File(pathPath);
         String[] files;
         String pathString = "";
 
@@ -526,7 +528,7 @@ public class Generator {
      */
     private static NPC generateEnemy(int xCoord, int yCoord, int challenge){
         Random rand = new Random();
-        File filePaths = new File("data/config/paths.json");
+        File filePaths = new File(pathPath);
         String[] files;
         String pathString = "";
 
