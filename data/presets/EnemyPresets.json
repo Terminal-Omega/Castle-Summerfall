@@ -77,6 +77,83 @@
                     "rarity": "10"
                 }
             ]
+        },
+        {
+            "alliance": "enemy",
+            "descriptions": [
+                "He is big and ugly. Looks kinda like your dad in the morning."
+            ],
+            "names": [
+                "Troll"
+            ],
+            "AC": "5",
+            "str": "5",
+            "dex": "2",
+            "con": "2",
+            "int": "2",
+            "wis": "2",
+            "cha": "2",
+            "noise": "7",
+            "shield": "0",
+            "inventory": [
+                {
+                    "type": "weapon",
+                    "name": "Greatsword",
+                    "size": "2",
+                    "weight": "11",
+                    "descriptions": [
+                        "It seems to be made of cardboard.",
+                        "does this thing work?"
+                    ],
+                    "canbepickedup": "true",
+                    "pierce": "0",
+                    "damage": "7-10",
+                    "range": "1-2",
+                    "weapon-type": "cardboard",
+                    "attack-speed": "5",
+                    "sharp": "false",
+                    "rarity": "10"
+                }
+            ]
+        },
+        {
+            "alliance": "enemy",
+            "descriptions": [
+                "That thing look small and dangerous."
+            ],
+            "names": [
+                "Sewer Rat"
+            ],
+            "AC": "1",
+            "str": "1",
+            "dex": "6",
+            "con": "3",
+            "int": "2",
+            "wis": "2",
+            "cha": "2",
+            "noise": "3",
+            "shield": "0",
+            "inventory": [
+                {
+                    "type": "weapon",
+                    "name": "Knife",
+                    "size": "1",
+                    "weight": "5",
+                    "canbepickedup": "true",
+                    "descriptions": [
+                        "It's kinda sharp",
+                        "Careful, it might be pointy",
+                        "It looks slightly tasty"
+                    ],
+                    "pierce": "3",
+                    "damage": "4",
+                    "range": "2",
+                    "weapon-type": "pointy",
+                    "attack-speed": "7",
+                    "sharp": "true",
+                    "rarity": "10"
+                }
+            ]
         }
     ]
 }

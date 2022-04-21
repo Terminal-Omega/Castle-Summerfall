@@ -43,8 +43,8 @@
             "size": "2",
             "weight": "11",
             "descriptions": [
-                "It seems to be made of cardboard.",
-                "does this thing work?"
+                "This thing looks too big to be held",
+                "Now this is a sword"
             ],
             "canbepickedup": "true",
             "pierce": "0",
