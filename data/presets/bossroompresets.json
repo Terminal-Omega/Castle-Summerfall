@@ -1,8 +1,12 @@
 {
     "rooms":[
         {
-            "descriptions":[],
-            "description-interactables":[],
+            "descriptions":[
+                "This is a boss ROOM"
+            ],
+            "description-interactables":[
+                
+            ],
             "interactables":[],
             "boss":{
                 "alliance":"enemy",

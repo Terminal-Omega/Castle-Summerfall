@@ -120,7 +120,7 @@ public class UI {
 
         // move north
         if (command.equals("N") || command.equals("n")) {
-            if (y < (floorSize - 2) && y >= 0) {
+            if (y < (floorSize - 1) && y >= 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){ //Sorry Thomas, had to fix the doors
                         player.setYCoord(y + 1);
@@ -275,14 +275,15 @@ public class UI {
      */
     public static void displayMap(int xSize, int ySize, Player player, Floor floor){
         int xP = player.getXCoord();
-        int yP = player.getYCoord() + 1;
+        int yP = player.getYCoord();
         String bookmarkDisplay = "\n\n\n";
        // String bookmarkString = "";
 
-        for (int i = ySize - 1; i > 0; i--){
+        for (int i = ySize - 1; i >= 0; i--){
             for (int j = 0; j < xSize; j++){
                 String bookmarkString = "";
-                String[] bookmark = floor.getRoom(j, i).getBookmarks();
+                String[] bookmark = floor.getRoom(j, i)
+                .getBookmarks();
                 if (!bookmark[0].equals("")){
                     bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
