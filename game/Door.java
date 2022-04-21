@@ -15,8 +15,12 @@ public class Door {
      * @return String
      */
     public String open() {
-        open = true;
-        return "You open the Door";
+        if(!locked){
+            open = true;
+            return "You open the door";
+        } else{
+            return "The door appears to be locked.";
+        }
     }
 
     public void close() {
@@ -37,6 +41,10 @@ public class Door {
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public void unlock(){
+        locked = false;
     }
 
     

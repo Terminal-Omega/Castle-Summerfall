@@ -11,11 +11,14 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
+        //sorry thomas, needed to test some things so I added a debug option.
+        boolean debug = true;
+
         UI.displayOpening();
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
-        final int FLOORSIZE = 5;
+        final int FLOORSIZE = 3;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
@@ -25,11 +28,15 @@ public class App {
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
         Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
+        if(debug){
+            player = new Player(0,0,100,100,20);
+        }
         int energy = player.getEnergy();
         Random rand = new Random();
         boolean endGame = true;
         System.out.println(floor.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
+        floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
 
         do {
             System.out.print("\n> ");
@@ -97,7 +104,7 @@ public class App {
 
             // bookmark command
             if (bookMatch.find()) {
-                floor.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1),
+                floor.getRoom(player.getXCoord(), player.getYCoord()).addBookmark(bookMatch.group(1),
                         bookMatch.group(2));
                 System.out.println("This room is bookmarked with the character: " + bookMatch.group(1).charAt(0));
                 commandKnown = false;
@@ -340,7 +347,7 @@ public class App {
             if (!OSNAME.equals("Windows 10")){
                 UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
             }
-            floor.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
+            floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
             //System.out.println();
 
         } while (endGame);

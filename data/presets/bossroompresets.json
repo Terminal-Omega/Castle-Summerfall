@@ -1,0 +1,52 @@
+{
+    "rooms":[
+        {
+            "descriptions":[
+                "This is a boss ROOM"
+            ],
+            "description-interactables":[
+                
+            ],
+            "interactables":[],
+            "boss":{
+                "alliance":"enemy",
+                "descriptions":[
+                    "mean"
+                ],
+                "names":[
+                    "goblin-boss"
+                ],
+                "AC":"5",
+                "str":"5",
+                "dex":"9",
+                "con":"5",
+                "int":"5",
+                "wis":"5",
+                "cha":"5",
+                "noise":"5",
+                "shield":"0",
+                "inventory":[
+                    {
+                        "type":"weapon",
+                        "name":"Super Knife",
+                        "size":"1",
+                        "weight":"5",
+                        "canbepickedup":"false",
+                        "descriptions":[
+                            "It's kinda sharp",
+                            "Careful, it might be pointy",
+                            "It looks slightly tasty"
+                        ],
+                        "pierce":"5",
+                        "damage":"8",
+                        "range":"3",
+                        "weapon-type":"pointy",
+                        "attack-speed":"7",
+                        "sharp":"true",
+                        "rarity":"10"
+                    }
+                ]
+            }
+        }
+    ]
+}

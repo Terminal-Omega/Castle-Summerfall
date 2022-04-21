@@ -36,8 +36,10 @@ public class PresetLoader {
 
         ArrayList<InteractablePreset> descriptionInteractables = new ArrayList<>();
         InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(Parser.parseArray("description-interactables", toLoad));
-        for (InteractablePreset preset : descriptionInteractablesArray) {
-            descriptionInteractables.add(preset);
+        if(!Objects.isNull(descriptionInteractablesArray)){
+            for (InteractablePreset preset : descriptionInteractablesArray) {
+                descriptionInteractables.add(preset);
+            }
         }
 
         ArrayList<InteractablePreset> interactables = new ArrayList<>();
@@ -55,7 +57,10 @@ public class PresetLoader {
             }
         }
 
+        NPCPreset boss = loadNpcPreset(Parser.parseObject("boss", toLoad));
+
         RoomPreset result = new RoomPreset(descriptions, interactables, descriptionInteractables);
+        result.addBoss(boss);
         return result;
 
     }
@@ -178,6 +183,9 @@ public class PresetLoader {
      * @return NPCPreset
      */
     public static NPCPreset loadNpcPreset(String toLoad){
+        if(Objects.isNull(toLoad)){
+            return null;
+        }
         String allianceString = Parser.parseString("alliance", toLoad);
         NpcAllience alliance;
         if(allianceString.equals("enemy")){

@@ -141,10 +141,14 @@ public class Parser {
      * @return String
      */
     public static String parseObject(String attribute, String toLoad){
-        Pattern objectPattern = Pattern.compile("\"" + attribute + "\" *: *{(.*)}");
+        Pattern objectPattern = Pattern.compile("\"" + attribute + "\" *: *(\\{.*)", Pattern.DOTALL);
         Matcher objectMatcher = objectPattern.matcher(toLoad);
-        objectMatcher.find();
-        String string = objectMatcher.group(1);
+        String string;
+        if(objectMatcher.find()){
+            string = objectMatcher.group(1);
+        } else{
+            return null;
+        }
 
         int index = 0;
         char nextChar;
@@ -162,12 +166,14 @@ public class Parser {
                 curlyCount++;
             } else if(nextChar == '}'){
                 curlyCount--;
-            } else if(nextChar ==',' && curlyCount == 0 && squareCount == 1){
+            }
+            
+            if(curlyCount == 0){
                 return string.substring(startIndex, index);
             }
             index++;
 
-        }while(squareCount !=0);
+        }while(curlyCount !=0);
         return null;
     }
 }
