@@ -15,6 +15,10 @@ public class RoomPreset {
         this.descriptionInteractables = descriptionInteractables;
     }
 
+    
+    /** 
+     * @param boss
+     */
     public void addBoss(NPCPreset boss){
         this.boss = Generator.spinNPC(0, 0, boss, 0);
     }

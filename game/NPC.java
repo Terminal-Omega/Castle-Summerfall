@@ -163,10 +163,18 @@ public class NPC extends Actor {
 
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getDescription(){
         return description;
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isBoss(){
         return boss;
     }

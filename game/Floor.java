@@ -192,6 +192,10 @@ public class Floor {
         NPCS.remove(index);
     }
 
+    
+    /** 
+     * @return NPC
+     */
     public NPC getBoss(){
         for(NPC npc : NPCS){
             if(npc.isBoss()){

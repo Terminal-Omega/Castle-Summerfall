@@ -236,6 +236,10 @@ public class Room {
         return getDescriptionInteractable(name, 0);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isStairs(){
         return stairs;
     }

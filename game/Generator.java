@@ -227,6 +227,16 @@ public class Generator {
         return null;
     }
 
+    
+    /** 
+     * @param preset
+     * @param interactableMin
+     * @param interactableMax
+     * @param southDoor
+     * @param eastDoor
+     * @param boss
+     * @return Room
+     */
     public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor, boolean boss){
 
         int range = interactableMax - interactableMin;
@@ -261,6 +271,13 @@ public class Generator {
         return result;
     }
 
+    
+    /** 
+     * @param southDoor
+     * @param eastDoor
+     * @param boss
+     * @return Room
+     */
     public static Room generateRoom(boolean southDoor, boolean eastDoor, boolean boss){
         File filePaths = new File(pathPath);
         String[] files;

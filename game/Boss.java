@@ -68,6 +68,11 @@ public class Boss extends NPC {
         }
     }
 
+    
+    /** 
+     * @param Player
+     * @param FloorSize
+     */
     @Override
     public void npcTurnAllience(Actor Player, int FloorSize){
         bossFight(Player);
