@@ -140,25 +140,31 @@ public class App {
                             System.out.println(j.getMessage());
                         }
                     }
-                    if (null != firstItem) {
-                        while (matcher.find()) {
-                            if (num == 1) {
+                    
+                    while (matcher.find()) {
+                        if (num == 1) {
+                            if(null != firstItem){
                                 if (firstItem instanceof Container) {
                                     Container container = (Container) firstItem;
                                     secondItem = container.getItem(matcher.group(1));
                                 }
+                            }else{
+                                System.out.println("There is no such thing in the container");
                             }
-                            if (num == -1) {
-                                if (null != secondItem) {
-                                    if (secondItem instanceof Container) {
-                                        Container container = (Container) secondItem;
-                                        firstItem = container.getItem(matcher.group(1));
-                                    }
-                                }
-                            }
-                            num = num * -1;
                         }
+                        if (num == -1) {
+                            if (null != secondItem) {
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
                     }
+                    
 
                     if (null != secondItem || null != firstItem){
                         if (num == -1){
@@ -217,25 +223,31 @@ public class App {
 
                    
 
-                    if (null != firstItem){
-                        while(matcher.find()){
-                            if (num == 1){
+                   
+                    while(matcher.find()){
+                        if (num == 1){
+                            if (null != firstItem){
                                 if (firstItem instanceof Container){
                                     Container container = (Container) firstItem;
                                     secondItem = container.getItem(matcher.group(1));
                                 }
+                            }else{
+                                System.out.println("There is no such thing in the container");
                             }
-                            if (num == -1){
-                                if (null != secondItem){
-                                    if (secondItem instanceof Container) {
-                                        Container container = (Container) secondItem;
-                                        firstItem = container.getItem(matcher.group(1));
-                                    }
-                                }
-                            }
-                            num = num * -1;
                         }
+                        if (num == -1){
+                            if (null != secondItem){
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            } else {
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
                     }
+                    
 
                     if (null != secondItem || null != firstItem) {
                         if (num == -1) {
