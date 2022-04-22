@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
+import java.util.Objects;
 
 public class App {
 
@@ -124,26 +125,63 @@ public class App {
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    String output;
+                    String itemString = inspectMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
                     try {
-                        Interactable thing = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(inspectMatch.group(1), 0);
-                        output = thing.getDescription();
-                        output += "\nWeight: " + thing.weight + "\n";
-                        if (thing instanceof Weapon){
-                            Weapon weapon = (Weapon) thing;
-                            output += "Pierce: " + weapon.getPierce() + "\n";
-                            output += "Damage: " + weapon.getDamage() + "\n";
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        if (!(firstItem instanceof Container)) {
+                           System.out.println(firstItem.getDescription());
+                            firstItem = null;
                         }
-
-                        System.out.println(output);
                     } catch (ThingNotFoundException e) {
-                        try {
-                            Interactable description = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(command);
-                            System.out.println(description.getDescription());
-                        }catch (ThingNotFoundException g){
-                            System.out.println(g.getMessage());
+                        try{
+                            Interactable name = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(matcher.group(1));
+                            System.out.println(name.getDescription());
+                        }catch(ThingNotFoundException j){
+                            System.out.println(j.getMessage());
                         }
                     }
+                    
+                    while (matcher.find()) {
+                        if (num == 1) {
+                            if(null != firstItem){
+                                if (firstItem instanceof Container) {
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        if (num == -1) {
+                            if (null != secondItem) {
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
+                    }
+                    
+
+                    if (null != secondItem || null != firstItem){
+                        if (num == -1){
+                            System.out.println(secondItem.getDescription());
+                        }else{
+                            System.out.println(firstItem.getDescription());
+                        }
+                    }
+
+                    
                 }
 
                 commandKnown = false;
@@ -171,31 +209,77 @@ public class App {
                     System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
                     UI.displayEnergy(energy);
                 } else {
+                    String itemString = takeMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
                     try {
-                        Interactable interactable = floor.getRoom(player.getXCoord(), player.getYCoord())
-                                .takeItem(takeMatch.group(1));
-                        player.putItem(interactable);
-                        energy -= energyCost;
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        if (!(firstItem instanceof Container)){
+                            player.putItem(firstItem);
+                            floor.getRoom(player.getXCoord(), player.getYCoord()).takeItem(matcher.group(1));
+                            firstItem = null;
+                        }
                     } catch (ThingNotFoundException e) {
-                        try {
-                            Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
-                            Container Chest = (Container) item;
-                            Interactable thing = Chest.takeItem(takeMatch.group(1));
-                            player.putItem(thing);
-                            energy -= energyCost;
-                        } catch (ThingNotFoundException r) {
-                            try {
-                                Interactable item = floor.getRoom(player.getXCoord(), player.getYCoord())
-                                        .getItem("Crate");
-                                Container Chest = (Container) item;
-                                Interactable thing = Chest.takeItem(takeMatch.group(1));
-                                player.putItem(thing);
-                                energy -= energyCost;
-                            } catch (ThingNotFoundException t) {
-                                System.out.println(t.getMessage());
+                        System.out.print(e.getMessage());
+                    }
+
+                   
+
+                   
+                    while(matcher.find()){
+                        if (num == 1){
+                            if (null != firstItem){
+                                if (firstItem instanceof Container){
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
                             }
                         }
+                        if (num == -1){
+                            if (null != secondItem){
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            } else {
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
                     }
+                    
+
+                    if (null != secondItem || null != firstItem) {
+                        if (num == -1) {
+                            Container temp = (Container) firstItem;
+                            try {
+                                secondItem = temp.takeItem(secondItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            player.putItem(secondItem);
+                        } else {
+                            Container temp = (Container) secondItem;
+                            try {
+                                firstItem = temp.takeItem(firstItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            player.putItem(firstItem);
+                        }
+                    }
+
+                    
+
                 }
 
                 commandKnown = false;
