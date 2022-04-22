@@ -238,7 +238,9 @@ public class UI {
         displayHeath(health, maxHealth);
         System.out.println("\n");
     }
-
+    /**
+     * This is displays the opening sequence of the game
+     */
     public static void displayOpening(){
         System.out.println("\n\nYour breath comes heavy as you break your way out of the haunted forest\nYour goal lies on ahead. A forboding dark castle made of black stone rises like a mountain in front of you.");
         System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man floors the castle actually has, each of them guarded impossible guards going progressively deeper");
@@ -253,7 +255,9 @@ public class UI {
         System.out.println(" \\_____\\__,_|___/\\__|_|\\___| |_____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|  |_| \\__,_|_|_|");
 
     }
-
+    /**
+     * This displays the ending died sequence of the game
+     */
     public static void displayEnding(){
         System.out.println(" __     __           _____  _          _ _   _______                             _      ___  ");
         System.out.println(" \\ \\   / /          |  __ \\(_)        | | | |__   __|                           (_)    |__ \\ ");
@@ -327,6 +331,7 @@ public class UI {
 
     
     /** 
+     * This, in non windows systems, will display return the string with a set of colors given to display that color
      * @param string
      * @param color
      * @return String
@@ -337,6 +342,7 @@ public class UI {
 
     
     /** 
+     * This will print a header bar showing stats of the player, this is displayed on non windows systems
      * @param health
      * @param maxHealth
      * @param energy
