@@ -2,6 +2,9 @@ package game;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * This is the Class where the more expensive big functions in the app go. It also handles some drawing to the screen
+ */
 public class UI {
     enum Commands {
         LOOK_AROUND("look around", 2),
