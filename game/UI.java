@@ -286,7 +286,7 @@ public class UI {
         for (int i = ySize - 1; i >= 0; i--){
             for (int j = 0; j < xSize; j++){
                 String bookmarkString = "";
-                String[] bookmark = floor.getRoom(j, i).getBookmarks();
+                String[] bookmark = floor.getRoom(j, i).getBookmark();
                 if (!bookmark[0].equals("")){
                     bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";

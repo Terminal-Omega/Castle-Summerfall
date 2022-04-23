@@ -1,7 +1,11 @@
 package game;
 import java.util.ArrayList;
-
+/**
+ * @author @Corbanator
+ * This is a special form of interactable that can have other interactables inside of it, such as a chest
+ */
 public class Container extends Interactable {
+
     protected ArrayList<Interactable> inventory;
     protected int inventoryCapacity;
 
@@ -14,6 +18,8 @@ public class Container extends Interactable {
 
     
     /** 
+     *  This method
+     * @Override
      * @return String
      */
     //methods
