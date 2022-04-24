@@ -1,9 +1,13 @@
 package game;
 
 import java.util.ArrayList;
-
+/**
+ * @author @Corbanator
+ * A special InteractablePreset for weapons.
+ */
 public class WeaponPreset extends InteractablePreset{
 
+    //all the various attributes of a weapon.
     public int attackSpeed;
     public int attackSpeedRange;
     public String type;
@@ -27,6 +31,7 @@ public class WeaponPreset extends InteractablePreset{
 
     
     /** 
+     * this is placed seperately from the constructor for ease of creating WeaponPresets.
      * @param attackSpeed
      * @param attackSpeedRange
      * @param type

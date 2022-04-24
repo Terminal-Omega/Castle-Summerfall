@@ -1,11 +1,18 @@
 package game;
 import java.util.ArrayList;
+/**
+ * @author @Corbanator
+ * This class represents any object in the game that does not take actions based on AI or User Input.
+ */
 public class Interactable {
+
     protected int size;
     protected int weight;
     protected boolean canBePickedUp;
     protected String name;
     protected String description;
+
+    //Abilities are included to allow for extensibility; They are set up to allow for a robust system of various items, but aren't actually implemented.
     ArrayList<Ability> abilities;
 
     //Constructors
@@ -18,6 +25,7 @@ public class Interactable {
         this.abilities = abilities;
     }
 
+
     public Interactable(String name, String description, int size, int weight, boolean canBePickedUp){
         this(name, description, size, weight, canBePickedUp, new ArrayList<>());
     }
@@ -28,21 +36,18 @@ public class Interactable {
 
 
     /** 
-     * @return String
+     * @return String the name of the interactable
      */
-    //Methods
     public String getName(){
         return name;
     }
 
     
     /** 
-     * @return String
+     * @return String the description of the interactable
      */
     public String getDescription(){
-        StringBuilder builder = new StringBuilder();
-        builder.append(description);
-        return builder.toString();
+        return description;
     }
 
 }
