@@ -394,6 +394,10 @@ public class App {
                 Updates.actionUpdate(floor);
             }
 
+            if (inputCommand.equals("decend")){
+                System.out.println("You reached the end of the Demo, thanks for playing");
+            }
+
             // Easter eggs
             if (inputCommand.equals("Xyzzyz")) {
                 player.setConstitution(15);
