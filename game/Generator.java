@@ -222,11 +222,11 @@ public class Generator {
                         interactables.add(PresetLoader.loadInteractablePreset(string));
                     }
                 }
-                long totalWeight = 0;
+                int totalWeight = 0;
                 for(InteractablePreset preset : interactables){
                     totalWeight += preset.rarity;
                 }
-                Long choice = rand.nextLong(totalWeight + 1);
+                int choice = rand.nextInt(totalWeight + 1);
 
                 for(InteractablePreset preset : interactables){
                     choice -= preset.rarity;
