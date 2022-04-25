@@ -210,8 +210,9 @@ public class UI {
         } else {
             output = colorString(output, Colors.GREEN);
         }
-        System.out.println(output);
         */
+        System.out.println(output);
+        
     }
 
     
