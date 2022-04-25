@@ -559,7 +559,6 @@ public class Actor {
         while (finalDamage < damageMin) {
             finalDamage = rand.nextInt(damageMax) + 1;
         }
-
         int shieldStart = shield;
         int finalAC = AC - pierce;
         shield -= finalDamage;
