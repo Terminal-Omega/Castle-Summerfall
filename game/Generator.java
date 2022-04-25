@@ -187,11 +187,11 @@ public class Generator {
 
                 // add up the rarity of all items, then get a random number between 0 and that sum.
                 // this gets a random item, but weights it toward items with higher rarities
-                long totalWeight = 0;
+                int totalWeight = 0;
                 for(InteractablePreset preset : containers){
                     totalWeight += preset.rarity;
                 }
-                Long choice = rand.nextLong(totalWeight + 1);
+                int choice = rand.nextInt(totalWeight + 1);
 
                 // actually select the particular item
                 for(InteractablePreset preset : containers){
