@@ -70,6 +70,7 @@ public class Generator {
         int enemyFactor = (xSize * ySize) / 4;
         int enemyCount = rand.nextInt(enemyFactor) + enemyFactor;
 
+        //add the enemies
         for (int i = 0; i < enemyCount; i++) {
             int x = rand.nextInt(xSize);
             int y = rand.nextInt(ySize);
@@ -78,6 +79,7 @@ public class Generator {
             }
         }
         
+        //if there was a boss generated, set the boss' coordinates and then add it
         if(!Objects.isNull(boss)){
             boss.setXCoord(xBoss);
             boss.setYCoord(yBoss);
@@ -87,6 +89,7 @@ public class Generator {
         return result;
     }
 
+    //depricated. Still here because we were transferring these over to the new format.
     private static String[] roomDescriptions = {
             "You look around and see nothing the room is too dark to see much. But you can see that the walls are gray brick that has moss and water dripping from the old stones.",
             "The room is a massive room with wooden beams sweaping up into high arched ceilings. It has bright chandeliers glowing with hundreds of candles.\nThe wood looks dark and varneshed. It reminds you of viking archetecture.",
@@ -141,13 +144,7 @@ public class Generator {
     
     /** 
      * This will generate a random Interactable to go in a room
-     * @param containerWeight
-     * @param commonWeight
-     * @param uncommonWeight
-     * @param rareWeight
-     * @param veryRareWeight
-     * @param legendaryWeight
-     * @param containerValue
+     * @param containerWeight what percentage of interactables should be containers
      * @return Interactable
      */
     // below this is all the interactable generation.
@@ -157,6 +154,7 @@ public class Generator {
         double randNum = rand.nextDouble();
 
         try{
+            //read in the filepaths
             File pathFile = new File(pathPath);
             FileReader pathReader = new FileReader(pathFile);
             int i;
@@ -165,10 +163,13 @@ public class Generator {
                 pathString += (char) i;
             }
             
+            //almost the same code twice, but one is for containers and the other for normal interactables
             if (randNum < containerWeight) {
+                //get the filepath to the containers
                 String[] containerPaths = Parser.trimQuotes(Parser.parseArray("containers", pathString));
                 ArrayList<ContainerPreset> containers = new ArrayList<>();
 
+                //for each file, add the string for each container to the array of all containers
                 for(String path : containerPaths){
                     File file = new File(path);
                     FileReader reader = new FileReader(file);
@@ -183,12 +184,16 @@ public class Generator {
                         containers.add((ContainerPreset)PresetLoader.loadInteractablePreset(string));
                     }
                 }
+
+                // add up the rarity of all items, then get a random number between 0 and that sum.
+                // this gets a random item, but weights it toward items with higher rarities
                 long totalWeight = 0;
                 for(InteractablePreset preset : containers){
                     totalWeight += preset.rarity;
                 }
                 Long choice = rand.nextLong(totalWeight + 1);
 
+                // actually select the particular item
                 for(InteractablePreset preset : containers){
                     choice -= preset.rarity;
                     if(choice<=0){
@@ -197,6 +202,8 @@ public class Generator {
                     }
                 }
                 return null;
+
+            //This entire portion of code repeats the previous portion but for normal interactables instead of containers.
             } else{
                 String[] interactablePaths = Parser.trimQuotes(Parser.parseArray("interactables", pathString));
                 ArrayList<InteractablePreset> interactables = new ArrayList<>();
@@ -239,6 +246,7 @@ public class Generator {
 
     
     /** 
+     * takes in a preset, spins it up, then gives it the proper doors and interactables, as well as returning either a boss or not a boos based on the boss parameter.
      * @param preset
      * @param interactableMin
      * @param interactableMax
@@ -249,6 +257,7 @@ public class Generator {
      */
     public static Room generateRoom(RoomPreset preset, int interactableMin, int interactableMax, boolean southDoor, boolean eastDoor, boolean boss){
 
+        //choose how many interactables to generate in the room.
         int range = interactableMax - interactableMin;
         Random rand = new Random();
         int loopCount;
@@ -258,6 +267,7 @@ public class Generator {
             loopCount = interactableMin;
         }
 
+        //add interactables from the preset
         ArrayList<Interactable> roomInventory = new ArrayList<>();
         for(InteractablePreset interactable : preset.interactables){
             if(!Objects.isNull(spinInteractable(interactable))){
@@ -265,13 +275,16 @@ public class Generator {
             }
         }
 
+        //add description interactables from the preset
         ArrayList<Interactable> descriptionInteractables = new ArrayList<>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
             descriptionInteractables.add(spinInteractable(interactable));
         }
 
+        //spin the room from the preset
         Room result = spinRoom(preset, southDoor, eastDoor);
 
+        // if it's not a boss room, add the room inventory. (Boss rooms don't have interactables in them.)
         if(!boss){
             for (int i = 0; i < loopCount; i++) {
                 result.addItem(generateInteractable());
@@ -283,12 +296,15 @@ public class Generator {
 
     
     /** 
+     * Generates a room with the default values for number of interactables and by loading in all possible presets.
+     * @overload
      * @param southDoor
      * @param eastDoor
      * @param boss
      * @return Room
      */
     public static Room generateRoom(boolean southDoor, boolean eastDoor, boolean boss){
+        // read all the filepaths
         File filePaths = new File(pathPath);
         String[] files;
         String pathString = "";
@@ -305,11 +321,15 @@ public class Generator {
             e.printStackTrace();
         }
 
+        // get the paths to the room preset files
         files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
         
+        //two arraylists, one for boss rooms, so that it can only make boss rooms when told to.
         ArrayList<RoomPreset> presets = new ArrayList<>();
         ArrayList<RoomPreset> bossPresets = new ArrayList<>();
 
+
+        //for each file, read what's in it and load all the roomPresets, then add each of them to the appropriate Arraylist.
         for(String file : files){
             File presetFile = new File(file);
             String presetString = "";
@@ -336,6 +356,7 @@ public class Generator {
 
         }
 
+        //chooses a roompreset from the appropriate arraylist, then spins it up with the default item sets
         Random rand = new Random();
         int choice;
         Room result;
@@ -358,24 +379,35 @@ public class Generator {
 
     
     /** 
+     * Makes a room based on a preset, but doesn't add any interactables to it.
      * @param preset
      * @param southDoor
      * @param eastDoor
      * @return Room
      */
     public static Room spinRoom(RoomPreset preset, boolean southDoor, boolean eastDoor){
+
         Random rand = new Random();
+
+        //add all of the preset's normal interactables to the inventory
         ArrayList<Interactable> interactables = new ArrayList<Interactable>();
         for(InteractablePreset interactable : preset.interactables){
             interactables.add(spinInteractable(interactable));
         }
+
+        // choose one of the possible descriptions at random
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+
+        // add all of the description interactables to the descriptionInteractables
         ArrayList<Interactable> descriptionInteractables = new ArrayList<Interactable>();
         for(InteractablePreset interactable : preset.descriptionInteractables){
             descriptionInteractables.add(spinInteractable(interactable));
         }
+
         Door doorSouth;
         Door doorEast;
+
+        // add doors.
         if(southDoor){
             doorSouth = new Door(true, false, false);
         } else{
@@ -388,15 +420,17 @@ public class Generator {
             doorEast = null;
         }
 
+        // add the boss
         if(!Objects.isNull(preset.boss)){
             boss = preset.boss;
         }
 
+        //actually make the room
         return new Room(interactables, descriptionInteractables, description, doorSouth, doorEast);
     }
     
     /** 
-     * This generate a default Interactable
+     * This generate a default Interactable with the default weight of 20% container chance
      * @return Interactable
      */
     public static Interactable generateInteractable() {
@@ -405,10 +439,12 @@ public class Generator {
 
     
     /** 
+     * Make an actual interactable from a preset
      * @param preset
      * @return Interactable
      */
     public static Interactable spinInteractable(InteractablePreset preset){
+        //return null if the preset is null, to avoid errors
         if(Objects.isNull(preset)){
             return null;
         }
@@ -416,13 +452,18 @@ public class Generator {
         Random rand = new Random();
         String name = preset.name;
 
+        //don't return anything unless it at least has a description
         if(Objects.isNull(preset.descriptions)){
             return null;
         }
 
+        //choose a random description
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+        
+        // add abilities, for future extensibility
         ArrayList<Ability> abilities = new ArrayList<>();
 
+        // add all of the abilities from the abilityOptions
         ArrayList<InteractablePreset.AbilityOption> options = new ArrayList<>();
         for(InteractablePreset.AbilityOption abilityOption : preset.abilityOptions){
             options.add(abilityOption);
@@ -437,6 +478,7 @@ public class Generator {
         }
 
 
+        //if it's a container or weapon, do additional stuff.
         if(preset instanceof ContainerPreset){
             return spinContainer((ContainerPreset)preset);
         }
@@ -449,23 +491,31 @@ public class Generator {
 
     
     /** 
+     * Makes a container based on a containerPreset
      * @param preset
      * @return Container
      */
     public static Container spinContainer(ContainerPreset preset){
+        
         Random rand = new Random();
         String name = preset.name;
+
+        //choose a random description
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+
+        //add an inventory
         ArrayList<Interactable> inventory = new ArrayList<>();
         int loopCount = rand.nextInt(preset.maxItems - preset.minItems) + preset.minItems;
         for(int i = 0; i< loopCount; i++){
             inventory.add(generateInteractable());
         }
+
         return new Container(name, description, preset.size, preset.weight, preset.canBePickedUp, inventory, preset.inventorySize);
     }
 
     
     /** 
+     * Return a weapon based on a weaponPreset
      * @param preset
      * @return Weapon
      */
@@ -474,18 +524,22 @@ public class Generator {
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
         int pierce = 0;
 
+        //each section that looks like this is choosing either a single value or a value from a range, depending on if there's a range.
         if(preset.pierceRange != 0){
             pierce = rand.nextInt(preset.pierceRange) + preset.pierce;
         } else{
             pierce = preset.pierce;
         }
 
+        // minimum damage
         int damage = 0;
         if(preset.damageRange != 0){
             damage = rand.nextInt(preset.damageRange) + preset.damage;
         } else{
             damage = preset.damage;
         }
+
+        // range in which damage can be
         int range = 0;
         if(!(preset.rangeRange <= 0)){
             range = rand.nextInt(preset.rangeRange) + preset.range;
@@ -498,21 +552,27 @@ public class Generator {
 
     
     /** 
+     * Make an NPC from a preset at the coordinates given.
      * @param xCoord
      * @param yCoord
      * @param preset
      * @param challengeRating
      * @return NPC
      */
-    //NPC Time!
 
     public static NPC spinNPC(int xCoord, int yCoord, NPCPreset preset, int challengeRating){
+        //return null if the preset is null. Avoids errors
         if(Objects.isNull(preset)){
             return null;
         }
+
         Random rand = new Random();
         NpcAllience npcAllience = preset.npcAllience;
+
+        //choose a random description
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
+
+        //choose the stats from the possible ranges for each
         int AC = randomFromRange(preset.ACRange);
         int strength = randomFromRange(preset.strRange);
         int dexterity = randomFromRange(preset.dexRange);
@@ -522,9 +582,14 @@ public class Generator {
         int charisma = randomFromRange(preset.chaRange);
         int noise = randomFromRange(preset.noiseRange);
         int shield = randomFromRange(preset.shieldRange);
+
+        //choose a random name
         String name = preset.name[rand.nextInt(preset.name.length)];
         
+        
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield, name, npcAllience, description);
+
+        //Load the NPC's inventory
         for(InteractablePreset itemPreset : preset.inventory){
             result.addInventory(spinInteractable(itemPreset));
         }
@@ -534,6 +599,8 @@ public class Generator {
 
     
     /** 
+     * return a random number from a range, given by a length 2 integer array
+     * index 0 is the min and index 1 is the max
      * @param range
      * @return int
      */
@@ -548,17 +615,20 @@ public class Generator {
 
     
     /** 
+     * generates a random enemy by choosing a preset from the files and puts it in the proper coordinates.
      * @param xCoord
      * @param yCoord
      * @param challenge
      * @return NPC
      */
     private static NPC generateEnemy(int xCoord, int yCoord, int challenge){
+
         Random rand = new Random();
         File filePaths = new File(pathPath);
         String[] files;
         String pathString = "";
 
+        //read in where the files are
         try {
             FileReader pathIn = new FileReader(filePaths);
             int i = 0;
@@ -572,6 +642,8 @@ public class Generator {
         }
 
         files = Parser.trimQuotes(Parser.parseArray("enemy-presets", pathString));
+
+        //for each file, load in all the enemy presets. add them all to a single arraylist
         try{
             ArrayList<String> enemyChoices = new ArrayList<>();
             for(String fileString : files){
@@ -591,12 +663,14 @@ public class Generator {
 
             }
 
+            //choose one of the enemypresets, make it into an enemy, then return it.
             String choice = enemyChoices.get(rand.nextInt(enemyChoices.size()));
             return spinNPC(xCoord, yCoord, PresetLoader.loadNpcPreset(choice), 0);
 
         } catch(Exception e){
             e.printStackTrace();
         }
+        //this should never happen.
         return null;
     }
 
