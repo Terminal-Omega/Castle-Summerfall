@@ -200,7 +200,7 @@ public class UI {
         }
         output += "] " + health;
 
-        /*This doesn't work on windows so comment it out
+        //This doesn't work on windows so comment it out
         double percent = (double) health / maxHealth;
 
         if (percent <= 0.3){
@@ -210,7 +210,7 @@ public class UI {
         } else {
             output = colorString(output, Colors.GREEN);
         }
-        */
+        
         System.out.println(output);
         
     }
