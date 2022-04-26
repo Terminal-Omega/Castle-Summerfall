@@ -356,16 +356,18 @@ public class UI {
      */
     public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
         int width = 100;
+        //This clears the screen before writing it
         System.out.printf("\033[s\033[0;%dH", width);
         for (int i = 0; i < 6; i++){
             System.out.printf("\033[%d;%dH", i, width);
             System.out.print("\033[0K\033[1B");
         }
-        System.out.printf("\033[1;%dH", width);
-        displayHeath(health, maxHealth);
-        System.out.printf("\033[2;%dH", width);
-        System.out.println("\tEnergy left: " + energy);
+        //this writes to the header
         System.out.printf("\033[3;%dH", width);
+        displayHeath(health, maxHealth);
+        System.out.printf("\033[4;%dH", width);
+        System.out.println("\tEnergy left: " + energy);
+        System.out.printf("\033[5;%dH", width);
         System.out.println("\tItems in Inventory: " + inventorySize);
         System.out.print("\033[u");
     }
