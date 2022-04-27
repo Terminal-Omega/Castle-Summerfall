@@ -1,33 +1,53 @@
 package game;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
+/**
+ * @Author @Corbanator
+ * 
+ * Represents a room in the virtual dungeon the player will explore.
+ * Stores the objects in the room, whether it's been visited, whether it's bookmarked,
+ * whether there are stairs, and the doors south and east of it. 
+ * The system of storing doors allows to easily access doors from the floor class because every door that exists will be stored in a room.
+ * It also stores what the room looks like and allows the player to inspect the room further.
+ */
 public class Room {
+
+    // Randomly generate objects, placed seperately in the description
     private ArrayList<Interactable> interactables;
+
+    // Objects already included in the room description; Not designed to be picked up.
+    private ArrayList<Interactable> descriptionInteractables;
     private String description;
+
+    //The doors
     private Door southDoor;
     private Door eastDoor;
+
+    // Stores some booleans about the state of the room, such as if it's been visited
     private boolean visited;
     private String[] bookmark = {"", ""};
+    private boolean stairs;
 
-    public Room(ArrayList<Interactable> interactables, String description, Door southDoor, Door eastDoor) {
+    //Constructors
+    public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables, String description, Door southDoor, Door eastDoor) {
         this.interactables = interactables;
+        this.descriptionInteractables = descriptionInteractables;
         this.description = description;
         this.southDoor = southDoor;
         this.eastDoor = eastDoor;
         visited = false;
+        stairs = false;
     }
 
-    public Room(int seed){
-        
-    }
+
     
     /**
      * very simple, just gets the description of the room, saying which objects are in it.
      * DO NOT USE, you should use the getDescription in the Floor class.
      * 
-     * @return the description of the room
+     * @return the description of the room as a string
      */
     public String getDescription(){
         StringBuilder describe = new StringBuilder();
@@ -58,6 +78,7 @@ public class Room {
 
     /**
      * DO NOT USE THIS METHOD. USE THE ONE IN THE FLOOR CLASS.
+     * This method only exists to allow the Floor class to access its doors.
      * 
      * @param direction the direction you want the door in. Accepts only South and East
      * @return A door corresponding to that direction
@@ -74,10 +95,11 @@ public class Room {
     }
 
     /**
+     * This method gets an item from the room based on a name.
      * 
      * @param name the name of the item
-     * @param index which occurence of the item, starting at 0 for the first occurence.
-     * Defaults to 0 if not set.
+     * @param index which occurence of the item, starting at 0 for the first occurence. Defaults to 0 if not set.
+     * 
      * @return an Interactable corresponding to the name
      * @throws ThingNotFoundException Throws this exception if it's not found.
      */
@@ -102,9 +124,11 @@ public class Room {
 
     
     /** 
+     * 
      * @param name
      * @return Interactable
      * @throws ThingNotFoundException
+     * @see getItem
      */
     public Interactable getItem(String name) throws ThingNotFoundException{
         return getItem(name, 0);
@@ -152,6 +176,7 @@ public class Room {
 
     
     /** 
+     * Adds an item to the room. Designed for when the player drops an item.
      * @param item
      */
     public void addItem(Interactable item){
@@ -160,18 +185,22 @@ public class Room {
 
     
     /** 
-     * @return boolean
+     * @return boolean whether the room has been visited
      */
     public boolean isVisited(){
         return visited;
     }
 
+    /**
+     * mark the room as visited
+     */
     public void visit(){
         visited = true;
     }
 
     
     /** 
+     * make a bookmark for the room to mark it for later. These are visible in the map.
      * @param bookmark
      * @param description
      */
@@ -182,18 +211,71 @@ public class Room {
 
     
     /** 
-     * @return Hashtable<Character, String> returns all of the bookmarks
+     * 
+     * @return  String[] the bookmark in the room
      */
-    public String[] getBookmarks(){
+    public String[] getBookmark(){
         return bookmark;
     }
 
     
     /** 
-     * @param toRemove
+     *  Removes the bookmark placed on the room
      */
     public void removeBookmark(){
         bookmark[0] = "";
         bookmark[1] = "";
+    }
+
+    
+    /** 
+     *  This method gets an interactable just like getItem, but it gets it from the description interactables instead.
+     * @param name
+     * @param index  Index is optional
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
+    public Interactable getDescriptionInteractable(String name, int index) throws ThingNotFoundException{
+        int timesFound = -1;
+        int latestIndex = -1;
+        for(int i = 0;i<descriptionInteractables.size();i++){
+            if(descriptionInteractables.get(i).getName().toLowerCase().equals(name.toLowerCase())){
+                latestIndex = i;
+                timesFound++;
+                if(timesFound == index){
+                    return descriptionInteractables.get(i);
+                }
+            }
+        }
+        if(latestIndex !=-1){
+            return descriptionInteractables.get(latestIndex);
+        } else{
+            throw new ThingNotFoundException("A " + name + " was not found in the room");
+        }
+    }
+
+    
+    /** 
+     * @param name
+     * @return Interactable
+     * @throws ThingNotFoundException
+     */
+    public Interactable getDescriptionInteractable(String name) throws ThingNotFoundException{
+        return getDescriptionInteractable(name, 0);
+    }
+
+    
+    /** 
+     * @return boolean whether there are stairs in the room or not
+     */
+    public boolean isStairs(){
+        return stairs;
+    }
+
+    /**
+     *  marks the room as having stars
+     */
+    public void makeStairs(){
+        stairs = true;
     }
 }

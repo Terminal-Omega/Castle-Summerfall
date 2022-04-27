@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
+import java.util.Objects;
 
 public class App {
 
@@ -11,30 +12,35 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
+        //sorry thomas, needed to test some things so I added a debug option.
+        boolean debug = false;
+
         UI.displayOpening();
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
-        final int FLOORSIZE = 5;
+        final int FLOORSIZE = 3;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-        // Pattern takeChestPat = Pattern.compile("[Tt]ake ([A-Za-z].*?) [Ff].*
-        // ([A-Za-z].*)");
         Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
-        Floor floor1 = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
+        Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
+        if(debug){
+            player = new Player(0,0,100,100,20);
+        }
         int energy = player.getEnergy();
         Random rand = new Random();
         boolean endGame = true;
-        System.out.println(floor1.getDescription(0, 0));
+        System.out.println(floor.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
+        floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
 
         do {
-            System.out.print("> ");
+            System.out.print("\n> ");
             inputCommand = input.nextLine();
             Matcher helpMatch = helpPat.matcher(inputCommand);
             Matcher moveMatch = movePat.matcher(inputCommand);
@@ -62,17 +68,17 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    UI.move(moveMatch.group(1), player, floor1, FLOORSIZE);
+                    UI.move(moveMatch.group(1), player, floor, FLOORSIZE);
                 }
             }
 
             // clear command
             if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
-                int height = 12;
+                int height = 15;
                 if (OSNAME.equals("Windows 10")){
                     System.out.print("\033[H\033[2J\033[5B");
                     System.out.flush();
@@ -89,17 +95,17 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    System.out.println(floor.getDescription(player.getXCoord(), player.getYCoord()));
                 }
             }
 
             // bookmark command
             if (bookMatch.find()) {
-                floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).addBookmark(bookMatch.group(1),
+                floor.getRoom(player.getXCoord(), player.getYCoord()).addBookmark(bookMatch.group(1),
                         bookMatch.group(2));
                 System.out.println("This room is bookmarked with the character: " + bookMatch.group(1).charAt(0));
                 commandKnown = false;
@@ -110,25 +116,67 @@ public class App {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
                 String command = inspectMatch.group(1);
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
-                    String name;
-                    if (command.equals("room") || command.equals("Room")) {
-                        System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-                    } else {
-                        try {
-                            name = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).getDescription();
-                            name += "\nWeight: " + floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                    .getItem(inspectMatch.group(1), 0).weight;
-
-                            System.out.println(name);
-                        } catch (ThingNotFoundException e) {
-                            System.out.println(e.getMessage());
+                    String itemString = inspectMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
+                    try {
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        if (!(firstItem instanceof Container)) {
+                           System.out.println(firstItem.getDescription());
+                            firstItem = null;
+                        }
+                    } catch (ThingNotFoundException e) {
+                        try{
+                            Interactable name = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(matcher.group(1));
+                            System.out.println(name.getDescription());
+                        }catch(ThingNotFoundException j){
+                            System.out.println(j.getMessage());
                         }
                     }
+                    
+                    while (matcher.find()) {
+                        if (num == 1) {
+                            if(null != firstItem){
+                                if (firstItem instanceof Container) {
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        if (num == -1) {
+                            if (null != secondItem) {
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
+                    }
+                    
+
+                    if (null != secondItem || null != firstItem){
+                        if (num == -1){
+                            System.out.println(secondItem.getDescription());
+                        }else{
+                            System.out.println(firstItem.getDescription());
+                        }
+                    }
+
+                    
                 }
 
                 commandKnown = false;
@@ -138,7 +186,7 @@ public class App {
             if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
                 int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
@@ -149,44 +197,84 @@ public class App {
                 commandKnown = false;
             }
 
-            // if (takeChestMatch.find()){
-            // System.out.println(takeChestMatch.group(1) + " " + takeChestMatch.group(2));
-            // commandKnown = false;
-            // continue;
-            // }
-
             // take command
             if (takeMatch.find()) {
                 int energyCost = UI.Commands.TAKE.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
+                    String itemString = takeMatch.group(1);
+                    itemString = " " + itemString;
+                    Pattern takePattern = Pattern.compile("(?<=\\s)(\\w*)");
+                    Matcher matcher = takePattern.matcher(itemString);
+                    Interactable firstItem = null;
+                    Interactable secondItem = null;
+                    int num = 1;
                     try {
-                        Interactable interactable = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                .takeItem(takeMatch.group(1));
-                        player.putItem(interactable);
-                        energy -= energyCost;
+                        matcher.find();
+                        firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
+                        if (!(firstItem instanceof Container)){
+                            player.putItem(firstItem);
+                            floor.getRoom(player.getXCoord(), player.getYCoord()).takeItem(matcher.group(1));
+                            firstItem = null;
+                        }
                     } catch (ThingNotFoundException e) {
-                        try {
-                            Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord()).getItem("Chest");
-                            Container Chest = (Container) item;
-                            Interactable thing = Chest.takeItem(takeMatch.group(1));
-                            player.putItem(thing);
-                            energy -= energyCost;
-                        } catch (ThingNotFoundException r) {
-                            try {
-                                Interactable item = floor1.getRoom(player.getXCoord(), player.getYCoord())
-                                        .getItem("Crate");
-                                Container Chest = (Container) item;
-                                Interactable thing = Chest.takeItem(takeMatch.group(1));
-                                player.putItem(thing);
-                                energy -= energyCost;
-                            } catch (ThingNotFoundException t) {
-                                System.out.println(t.getMessage());
+                        System.out.print(e.getMessage());
+                    }
+
+                   
+
+                   
+                    while(matcher.find()){
+                        if (num == 1){
+                            if (null != firstItem){
+                                if (firstItem instanceof Container){
+                                    Container container = (Container) firstItem;
+                                    secondItem = container.getItem(matcher.group(1));
+                                }
+                            }else{
+                                System.out.println("There is no such thing in the container");
                             }
                         }
+                        if (num == -1){
+                            if (null != secondItem){
+                                if (secondItem instanceof Container) {
+                                    Container container = (Container) secondItem;
+                                    firstItem = container.getItem(matcher.group(1));
+                                }
+                            } else {
+                                System.out.println("There is no such thing in the container");
+                            }
+                        }
+                        num = num * -1;
                     }
+                    
+
+                    if (null != secondItem || null != firstItem) {
+                        if (num == -1) {
+                            Container temp = (Container) firstItem;
+                            try {
+                                secondItem = temp.takeItem(secondItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            player.putItem(secondItem);
+                        } else {
+                            Container temp = (Container) secondItem;
+                            try {
+                                firstItem = temp.takeItem(firstItem.getName());
+                            } catch (ThingNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            player.putItem(firstItem);
+                        }
+                    }
+
+                    
+
                 }
 
                 commandKnown = false;
@@ -196,13 +284,13 @@ public class App {
             if (dropMatch.find()) {
                 int energyCost = UI.Commands.DROP.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
                     try {
                         Interactable item = player.dropItem(dropMatch.group(1), 0);
-                        floor1.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
+                        floor.getRoom(player.getXCoord(), player.getYCoord()).addItem(item);
                         System.out.println("dropped");
                     } catch (ThingNotFoundException e) {
                         System.out.println(e.getMessage());
@@ -219,7 +307,7 @@ public class App {
                 commandKnown = false;
             }
             if (inputCommand.equals("map")) {
-                UI.displayMap(floor1.getXSize(), floor1.getYSize(), player, floor1);
+                UI.displayMap(floor.getXSize(), floor.getYSize(), player, floor);
                 commandKnown = false;
             }
 
@@ -229,13 +317,13 @@ public class App {
                 String weaponString = attackMatch.group(2);
                 int energyCost = UI.Commands.ATTACK.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println(UI.colorString("You don't have enough energy to do this", UI.Colors.RED));
+                    System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
                 } else {
                     if (player.isInInventory(weaponString)) {
                         try {
                             Weapon weapon = (Weapon) player.getItem(weaponString, 0);
-                            NPC badGuy = floor1.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
+                            NPC badGuy = floor.getNPC(actorString, player.getXCoord(), player.getYCoord(), 0);
                             if (player.closeCombat(weapon, badGuy)) {
                             } else {
                                 UI.displayHeath(badGuy.getHealth(), badGuy.getMaxHealth());
@@ -293,10 +381,14 @@ public class App {
                                 "I want a bed you think. Sleeping on the ground has got your back in knots. But you are just too tired to find a bed.");
                 }
 
-                Updates.update(player, floor1);
+                Updates.update(player, floor);
                 energy = player.getEnergy();
             } else {
-                Updates.actionUpdate(floor1);
+                Updates.actionUpdate(floor);
+            }
+
+            if (inputCommand.equals("decend")){
+                System.out.println("You reached the end of the Demo, thanks for playing");
             }
 
             // Easter eggs
@@ -336,7 +428,8 @@ public class App {
             if (!OSNAME.equals("Windows 10")){
                 UI.printHeader(player.getHealth(), player.getMaxHealth(), energy, player.getInventory().size());
             }
-            floor1.getRoom(player.getXCoord(), player.getYCoord() + 1).visit();
+            floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
+            //System.out.println();
 
         } while (endGame);
 

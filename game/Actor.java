@@ -187,6 +187,9 @@ public class Actor {
         setCarryWeight();
     }
 
+    /**
+     * @param amount
+     */
     public void modifiyStrength(int amount) {
         strength += amount;
         setCarryWeight();
@@ -261,6 +264,9 @@ public class Actor {
         setBallisticSkill();
     }
 
+    /**
+     * @param amount
+     */
     public void modifyIntellignce(int amount) {
         intelligence += amount;
         setMana();
@@ -321,7 +327,7 @@ public class Actor {
      * @param speed
      */
     public void setEnergy() {
-        energy = dexterity * 2;
+        energy = dexterity;
         maxEnergy = energy;
     }
 
@@ -336,6 +342,9 @@ public class Actor {
         setEnergy();
     }
 
+    /**
+     * @param amount
+     */
     public void modifyDexterity(int amount) {
         dexterity += amount;
         setWeaponSkill();
@@ -343,7 +352,7 @@ public class Actor {
     }
 
     public void setWeaponSkill() {
-        weaponSkill = dexterity * 2;
+        weaponSkill = dexterity * 3;
     }
 
     /**
@@ -393,6 +402,9 @@ public class Actor {
         this.wisdom = wisdom;
     }
 
+    /**
+     * @param amount
+     */
     public void modifyWisdom(int amount) {
         wisdom += amount;
     }
@@ -417,6 +429,9 @@ public class Actor {
         this.charisma = charisma;
     }
 
+    /**
+     * @param amount
+     */
     public void modifyCharisma(int amount) {
         charisma += amount;
     }
@@ -440,6 +455,9 @@ public class Actor {
         this.AC = AC;
     }
 
+    /**
+     * @param amount
+     */
     public void modifyAC(int amount) {
         AC += amount;
     }
@@ -537,7 +555,10 @@ public class Actor {
      * @return
      */
     public boolean takeDamage(int damageMin, int damageMax, int pierce) {
-        int finalDamage = rand.nextInt(damageMin, damageMax) + 1;
+        int finalDamage = 0;
+        while (finalDamage < damageMin) {
+            finalDamage = rand.nextInt(damageMax) + 1;
+        }
         int shieldStart = shield;
         int finalAC = AC - pierce;
         shield -= finalDamage;
@@ -588,7 +609,7 @@ public class Actor {
     public boolean closeCombat(Weapon weapon, Actor target) {
         if (rand.nextInt(100) + 1 <= weaponSkill) {
             System.out.printf("hit %s%n", target.name);
-            return target.takeDamage(weapon.damage, weapon.pierce);
+            return target.takeDamage(weapon.damage, weapon.range + weapon.damage + 1, weapon.pierce);
         } else {
             System.out.printf("Miss %s%n", target.name);
             return false;

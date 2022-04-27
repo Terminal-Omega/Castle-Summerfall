@@ -1,10 +1,15 @@
 package game;
 
 import java.util.ArrayList;
-
+import java.util.Objects;
+/**
+ * @author @Corbanator
+ * This Class stores a grid of rooms as a 2-dimensional ArrayList, as well as all of the NPCs in the room.
+ * It does special functions only allowed by access to all rooms/NPCS
+ */
 public class Floor {
-    private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the vector.
-    private ArrayList<NPC> NPCS;
+    private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the ArrayList.
+    private ArrayList<NPC> NPCS; //NPCs store their own Coordinates, as 2 NPCs can be in the same room.
 
     public Floor(ArrayList<ArrayList<Room>> rooms) {
         this.rooms = rooms;
@@ -13,6 +18,7 @@ public class Floor {
 
     
     /** 
+     * Adds an NPC to the Floor.
      * @param NPC
      */
     public void addNPC(NPC NPC) {
@@ -21,36 +27,31 @@ public class Floor {
 
     
     /** 
+     * Gets a room based on coordinates
      * @return Room
      */
-    // public Floor(){
-    // ArrayList<ArrayList<Room>> rooms;
-    // ArrayList<Room> roomList;
-    // for (int i = 0; i < 5; i++){
-    // for (int j = 0; j < 5; j++){
-    // Room room = new Room();
-    // roomList.add(room);
-    // }
-    // rooms.add(roomList);
-    // }
-    // Floor(rooms);
-    // }
-
     public Room getRoom(int xCoord, int yCoord) {
         return rooms.get(xCoord).get(yCoord);
     }
 
     
     /** 
+     * gets a door based on coordinates and a direction, or throws an exception if that door doesn't exist.
+     * multiple sets of inputs can obtain the same door, as each door is technically connected to two rooms.
      * @param xCoord
      * @param yCoord
      * @param direction
      * @return Door
+     * @throws ThingNotFoundException
      */
-    // use this to get a door going in a specific direction
     public Door getDoor(int xCoord, int yCoord, Direction direction) throws ThingNotFoundException {
+
         switch (direction) {
             case NORTH:
+                /**
+                 * Both North and West rooms are a bit tricky, as they are stored in a room different from the one with the coordinates given.
+                 * As a result, it is required that I check if this room exists before attempting to get a door from it.
+                 */
                 if (!(yCoord + 1 >= rooms.get(xCoord).size())) {
                     return rooms.get(xCoord).get(yCoord + 1).getDoor(Direction.SOUTH);
                 } else {
@@ -73,18 +74,36 @@ public class Floor {
 
     
     /** 
+     * This method returns the description of a certain room based on location.
+     * It is required to be in the floor class because it must include doors and enemies, both of which are inaccessible from the actual Room itself.
      * @param xCoord
      * @param yCoord
      * @return String
      */
     public String getDescription(int xCoord, int yCoord) {
+       
+
         StringBuilder builder = new StringBuilder(rooms.get(xCoord).get(yCoord).getDescription());
+
+        /**If there are stairs in the room, then add a special portion to the description explaining that 
+         * there is either a boss or that the boss is defeated.
+         */
+        if(rooms.get(xCoord).get(yCoord).isStairs()){
+            if((!Objects.isNull(getBoss()))){
+                builder.append("\nThis is the exit. Fight the boss to escape.");
+            } else{
+                builder.append("\nThe boss has been defeated! Use \"descend\" to move to the next floor.");
+            }
+        }
+
+        //gets all the NPCs at those coordinates and adds them to an ArrayList
         ArrayList<NPC> localNPC = new ArrayList<>();
         for (NPC NPC : NPCS) {
             if (NPC.getXCoord() == xCoord && NPC.getYCoord() == yCoord) {
                 localNPC.add(NPC);
             }
         }
+        //Add all the NPCs into a specially formatted string based on the plurality of enemies to ensure grammatical correctness
         switch (localNPC.size()) {
             case 0:
                 break;
@@ -108,15 +127,8 @@ public class Floor {
                 }
 
         }
-        int i = 0;
-        for (Direction direction : Direction.values())  {
-            try {
-                getDoor(xCoord, yCoord, direction);
-            } catch (Exception e) {
-                
-            }
-        }
 
+        //check each direction for a door, then add it to a string. Has some slight grammatical issues for two doors in particular.
         int j = 0;
         for (Direction direction : Direction.values()) {
             try {
@@ -142,12 +154,14 @@ public class Floor {
             }
         }
         builder.append(".");
+
+        //returns the resulting string to be printed.
         return builder.toString();
     }
 
     
     /** 
-     * @return int
+     * @return int x size of floor
      */
     public int getXSize(){
         return rooms.size();
@@ -155,7 +169,7 @@ public class Floor {
 
     
     /** 
-     * @return int
+     * @return int y size of floor, assuming the floor is rectangular
      */
     public int getYSize(){
         return rooms.get(0).size();
@@ -163,7 +177,7 @@ public class Floor {
 
     
     /** 
-     * @return ArrayList<NPC>
+     * @return ArrayList<NPC> all of the NPCs
      */
     public ArrayList<NPC> getNPCs(){
         return NPCS;
@@ -171,6 +185,8 @@ public class Floor {
 
     
     /** 
+     * Returns an NPC based on name and location. The format for the parameters is designed to make it easy to use on the frontend.
+     * This is because the NPC name passed in by the player can then be passed directly to this method.
      * @param name
      * @param xCoord
      * @param yCoord
@@ -185,5 +201,28 @@ public class Floor {
             }
         }
         throw new ThingNotFoundException("Enemy not found.");
+    }
+
+    
+    /** 
+     * Removes an NPC based on the index of that NPC.
+     * @param index
+     */
+    public void removeNPC(int index){
+        NPCS.remove(index);
+    }
+
+    
+    /** 
+     * Returns the boss, if there is one, or null, if there isn't.
+     * @return NPC
+     */
+    public NPC getBoss(){
+        for(NPC npc : NPCS){
+            if(npc.isBoss()){
+                return npc;
+            }
+        }
+        return null;
     }
 }

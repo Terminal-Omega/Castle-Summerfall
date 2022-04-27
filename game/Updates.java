@@ -8,6 +8,8 @@ import java.lang.Integer;
 public class Updates {
 
     /**
+     * this method is not currently used, but is a work-in-progress for extensibility.
+     * @author @Corbanator @The-Watcher-213
      * @param effect
      * @param target
      */
@@ -68,6 +70,7 @@ public class Updates {
     }
 
     /**
+     * updates the game in between playter turns.
      * @param player
      * @param floor
      */
@@ -75,22 +78,26 @@ public class Updates {
         doPassives(player);
         // TODO: @Corbanator implement noise and LOS
         int size = floor.getNPCs().size();
+        //for each npc, check if they're dead, then activate their AI if they're still alive.
         for (int i = 0; i < size; i++) {
             NPC npc = floor.getNPCs().get(i);
             doPassives(npc);
             if (npc.getHealth() <= 0) {
-                floor.getNPCs().remove(i);
+                floor.removeNPC(i);
                 System.out.println(npc.getName() + " was killed.");
             }
             npc.npcTurnAllience(player, floor.getXSize());
+            npc.setEnergy();
             // TODO: @Corbanator notify player if NPC enters the room
         }
     }
 
     /**
+     * update in-between player actions during the same turn
      * @param floor
      */
     public static void actionUpdate(Floor floor) {
+        //check if enemies are dead
         for (int i = 0; i < floor.getNPCs().size(); i++) {
             NPC npc = floor.getNPCs().get(i);
             if (npc.getHealth() <= 0) {
