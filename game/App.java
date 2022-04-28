@@ -68,7 +68,7 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
                 if (energy - energyCost < 0) {
-                    System.out.println("You don't have enough energy to do this");
+                    System.out.println("You don't have enough energy to do this  ");
                     UI.displayEnergy(energy);
                 } else {
                     energy -= energyCost;
