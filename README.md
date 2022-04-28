@@ -63,7 +63,7 @@ You will need to replace the filename with the file name of your .jar file<br />
 - - - -
 
 # How to play<a name="play"></a>
-The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend. Defeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. You can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. The floors are randomly generated, so you won't the get the samee experience twice.
+The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend. Defeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. You can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. The floors are randomly generated, so you won't the get the same experience twice.
 
 - - - -
 
