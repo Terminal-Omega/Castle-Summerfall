@@ -1,6 +1,5 @@
 # Castle Summerfall
-This game is a text-adventure-inspired roguelike video game. The gameplay takes place in a terminal, where the player enters commands to perform actions and is then given descriptions of what occurs. They will advance through a virtual dungeon, collecting equipment and defeating enemies that they come across in order to advance deeper into the dungeon. The goal is to survive and explore as far as possible, climbing down through multiple procedurally generated floors which will become progressively more difficult. The combat will be turn-based, with the player taking a turn to attack and then being attacked by any enemies that may be within range
-
+This game is a text-adventure-inspired roguelike video game. The gameplay takes place in a terminal, in which the player enters commands to perform actions, and then the terminal will give descriptions of what occurs. They will advance through a virtual dungeon, collecting equipment and defeating enemies that they come across so that they can continue to move deeper into the castle dungeon. The goal is to survive and explore as far as possible, climbing down through multiple procedurally generated floors, which will become progressively more difficult as you get deeper into the castle. The combat will be turn-based, with the player taking a turn to attack and then being attacked by any enemies within range.
 - - - -
 
 ### Go to
@@ -63,7 +62,7 @@ You will need to replace the filename with the file name of your .jar file<br />
 - - - -
 
 # How to play<a name="play"></a>
-The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend. Defeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. You can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. The floors are randomly generated, so you won't the get the same experience twice.
+The game's goal is to save your family at the lowest level of the castle; to do that, you will need to find the stairs on each level to descend deeper into the castle's dungeon. As you dive deeper into the castle's dungeon, you will fight many bosses as the entrance to the stairs to the next level is always guarded by some form of a powerful boss. You can do several things to help yourself beat each floor's boss. You can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. The floors are also randomly generated, so you will never get the same experience twice.
 
 - - - -
 
