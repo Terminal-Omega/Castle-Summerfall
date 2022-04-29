@@ -1,0 +1,281 @@
+{"rooms":[
+    {
+        "descriptions": [
+            "You look around and see nothing, the room is too dark to see much,\nbut you can see that the WALLS are gray brick that has moss and water dripping from the old STONES."
+        ],
+        "description-interactables": [
+            {
+                "name": "walls",
+                "type": "other",
+                "descriptions": [
+                    "these are alarmingly vertical walls",
+                    "these would make good castle walls you think"
+                ],
+                "size":"5",
+                "weight":"5",
+                "canbepickedup":false
+                
+
+            },
+            {
+                "name": "stones",
+                "type": "other",
+                "descriptions": [
+                    "This ain't no philosopher's stone",
+                    "you see a stone that's shaped like a kidney,\nthis must be a kidney stone you think"
+                ],
+                "size":"5",
+                "weight":"5",
+                "canbepickedup":false
+            } 
+
+        ],
+        "interactables":[]
+    },
+    {
+        "descriptions": [
+            "The room is a massive room with WOODEN BEAMS sweeping up into high arched ceilings.\nIt has bright CHANDELIERS glowing with hundreds of candles.\nThe wood looks dark and varnished. It reminds you of viking architecture."
+        ],
+        "description-interactables": [
+            {
+                "name": "chandeliers",
+                "type": "other",
+                "descriptions": [
+                    "They are too bright to look at, so you don't",
+                    "The metal looks like gold. Too bad you don't have a ladder"
+                ],
+                "size":"8",
+                "weight":"9",
+                "canbepickedup":false
+            },
+            {
+                "name": "wooden beams",
+                "type": "other",
+                "descriptions": [
+                    "The wood looks a little rotted, you might want to get out. Fast",
+                    "This wood doesn't look safe enough to be under. You might want to get out, and fast"
+                ],
+                "size":"9",
+                "weight":"10",
+                "canbepickedup":false
+            }
+        ],
+        "interactables":[]
+    },
+    {
+        "descriptions": [
+            "The room you walked into is dark and dank. It smells like mildew and has SLIME covering the FLOOR and walls."
+        ],
+        "description-interactables": [
+            {
+                "name": "Slime",
+                "type": "other",
+                "descriptions": [
+                    "this looks to slimly to touch, you decide to save yourself and not touch it",
+                    "The slime is gelatinous and looks like it could be alive"
+                ],
+                "size":"2",
+                "weight":"5",
+                "canbepickedup":false
+            },
+            {
+                "name": "floor",
+                "type": "other",
+                "descriptions": [
+                    "You look at towards your feet and see that you need new shoes, becoming completely distracted by your shoes",
+                    "The floor is remarkably horizontal"
+                ],
+                "size":"10",
+                "weight":"15",
+                "canbepickedup":false
+            }
+        ],
+        "interactables":[]
+    },
+    {
+        "descriptions": [
+            "You look around and see that this room looks like a storage room. There is CRATES and BARRELS of goods waiting for something to happen to them.",
+            "BARRELS and CRATES stack the side of the dock. There is a roaring RIVER that flows from one end of the cavern to the other."
+        ],
+        "description-interactables": [
+            {
+                "name": "Barrels",
+                "type": "other",
+                "descriptions": [
+                    "It is an impeccably round barrel. It looks like it will roll.",
+                    "These barrels look like their made of wood. Maybe they'll float."
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Crates",
+                "type": "other",
+                "descriptions": [
+                    "Its a box. A completely unremarkable box. It has very boxy features.",
+                    "These crates are great"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            },
+            {
+                "name": "River",
+                "type": "other",
+                "descriptions": [
+                    "The river is as clear as the crystals you see in the walls around you",
+                    "The river is so loud and boisterous you wonder why anybody ships crates down it"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            }
+        ],
+        "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room is what appears to be a bedchamber. There is a massive four poster BED with red velvet CURTAINS.\nYou don't know who would want to sleep in a dungeon though."
+        ],
+        "description-interactables": [
+            {
+                "name": "Bed",
+                "type": "other",
+                "descriptions": [
+                    "This bed looks like it was straight up stolen from wizarding school",
+                    "I wonder what spell you would have to cast to make that bed float"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Curtains",
+                "type": "other",
+                "descriptions": [
+                    "The curtains look bloody and violent",
+                    "The way the curtains moved in the wind looked like a ghost, i would know, I'm friends with a few"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            }
+        ],
+        "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room you walked into feels sterile. It has whitewashed walls with steel TABLES in the center.\nSmaller tables hold all sorts of deadly looking TOOLS."
+        ],
+        "description-interactables": [
+            {
+                "name": "Tables",
+                "type": "other",
+                "descriptions": [
+                    "The steel tables looked as cold and heartless as the enemies you slaughtered on your way to this room",
+                    "This table looks a lot heavier than a duck"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Tools",
+                "type": "other",
+                "descriptions": [
+                    "The tools look deadly, you don't want to move any closer.",
+                    "The tools look razor sharp. Like they could cut down the hearts of your enemies"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": true
+            }
+        ],
+        "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room is a hotel you realize. Torch SCONCES line the very expensive mahogany hallway.\nThe DOORS have brass name PLATES numbering 1 through 25"
+        ],
+        "description-interactables": [
+            {
+                "name": "Sconces",
+                "type": "other",
+                "descriptions": [
+                    "No they are not scones",
+                    "Not what you get at a sconecutter"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": true
+            },
+            {
+                "name": "Plates",
+                "type": "other",
+                "descriptions": [
+                    "It shines like a mirror you wonder who polishes these.",
+                    "The plate is coldly unresponsive"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": true
+            },
+            {
+                "name": "Doors",
+                "type": "other",
+                "descriptions": [
+                    "Do these doors even go anywhere. You eventually conclude these are not doors.",
+                    "These doors are opaque."
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": true
+            }
+        ],
+        "interactables": []
+    },
+    {
+        "descriptions": [
+            "The room you came to is a black stone room with a huge BONFIRE at one end. There were thick wooden TABLES on either end that held INSTRUMENTS of some dark profession."
+        ],
+        "description-interactables": [
+            {
+                "name": "Bonfire",
+                "type": "other",
+                "descriptions": [
+                    "It reminds you of the thing your burned yourself on long ago",
+                    "The fire reminds you of the time you and your brother set fire to the wheat felids, what? you were young"
+                ],
+                "size": "2",
+                "weight": "5",
+                "canbepickedup": false
+            },
+            {
+                "name": "Tables",
+                "type": "other",
+                "descriptions": [
+                    "It has four legs, a strong table top, all made of dark wood. Looks just like a table",
+                    "The table continues to be table, no matter how long you stare"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            },
+            {
+                "name": "Instruments",
+                "type": "other",
+                "descriptions": [
+                    "You are not in a dark profession, so you can't tell what they are",
+                    "These look like they could torture you looked at them wrong. But the metal they are made of doesn't look like steel"
+                ],
+                "size": "10",
+                "weight": "15",
+                "canbepickedup": false
+            }
+        ],
+        "interactables": []
+    }
+    
+    ]
+}

@@ -36,35 +36,23 @@ public class Boss extends NPC {
      * @param player
      */
     public void bossFight(Actor player) {
-        int attackChoice = 0;
-        if (health <= maxHealth / 2) {
-            attackChoice = rand.nextInt(4);
+        int healChance = rand.nextInt(100) + 1;
+        if (health < maxHealth / 2 && healChance <= 30) {
+            int healAmount = rand.nextInt(maxHealth / 4) + maxHealth/4;
+            heal(healAmount);
         } else {
-            attackChoice = rand.nextInt(3);
+            int weaponChoiseInt = rand.nextInt(inventory.size() - 1);
+            Weapon weaponChoise = (Weapon) inventory.get(weaponChoiseInt);
+            closeCombat(weaponChoise, player);
         }
+    }
 
-        switch (attackChoice) {
-            case 0:
-                Weapon weapon1 = (Weapon) inventory.get(0);
-                System.out.println(weapon1.damage + "Slam");
-                closeCombat(weapon1, player);
-            case 1:
-                Weapon weapon2 = (Weapon) inventory.get(1);
-                System.out.println(weapon2.damage + "Swish");
-                closeCombat(weapon2, player);
-            case 2:
-                Weapon weapon3 = (Weapon) inventory.get(2);
-                System.out.println(weapon3.damage + "Smack");
-                closeCombat(weapon3, player);
-            case 3:
-                int healAmountBaseMax = maxHealth / 2;
-                int healAmountBaseMin = maxHealth / 4;
-                int healAmount = rand.nextInt(healAmountBaseMin, healAmountBaseMax);
-                heal(healAmount);
-
-            default:
-                System.out.println("uh Something broke... well that is annoying");
-
-        }
+    /**
+     * @param Player
+     * @param FloorSize
+     */
+    @Override
+    public void npcTurnAllience(Actor Player, int FloorSize) {
+        bossFight(Player);
     }
 }

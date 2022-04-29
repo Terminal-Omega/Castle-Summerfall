@@ -1,7 +1,11 @@
 package game;
 import java.util.ArrayList;
-
+/**
+ * @author @Corbanator
+ * This is a special form of interactable that can have other interactables inside of it, such as a chest
+ */
 public class Container extends Interactable {
+
     protected ArrayList<Interactable> inventory;
     protected int inventoryCapacity;
 
@@ -14,6 +18,8 @@ public class Container extends Interactable {
 
     
     /** 
+     * This method specially obtains what is inside the container and adds that to the description of the object.
+     * @Override
      * @return String
      */
     //methods
@@ -23,6 +29,9 @@ public class Container extends Interactable {
         if(inventory != null){
             builder.append("\nIn the " + name + " is");
             for(int i = 0; i<inventory.size();i++){
+                if(inventory.size() <= 0){
+                    return "";
+                }
                 if(inventory.size() == 1){
                     builder.append(" a " + inventory.get(i).getName() + ".");
                 }else if(i != inventory.size()-1){ 
@@ -37,8 +46,10 @@ public class Container extends Interactable {
 
     
     /** 
+     * This method and those like it match exactly the functionality of those in the Room class.
+     * This one gets an item based on its name
      * @param name
-     * @param index
+     * @param index which instance of items with the same name you want. This is optional due to overloading.
      * @return Interactable
      */
     public Interactable getItem(String name, int index){
@@ -62,6 +73,8 @@ public class Container extends Interactable {
 
     
     /** 
+     * This method and those like it match exactly the functionality of those in the Room class.
+     * This one gets an item based on its name
      * @param name
      * @return Interactable
      */
@@ -71,8 +84,10 @@ public class Container extends Interactable {
     
     
     /** 
+     * This method and those like it match exactly the functionality of those in the Room class.
+     * This one removes and returns an item based on its name.
      * @param name
-     * @param index
+     * @param index which instance of items with the same name you want. This is optional due to overloading.
      * @return Interactable
      * @throws ThingNotFoundException
      */
@@ -101,6 +116,8 @@ public class Container extends Interactable {
 
     
     /** 
+     * This method and those like it match exactly the functionality of those in the Room class.
+     * This one removes and returns an item based on its name.
      * @param name
      * @return Interactable
      * @throws ThingNotFoundException
@@ -111,6 +128,7 @@ public class Container extends Interactable {
 
     
     /** 
+     * Adds an item to the room, for when the player drops it.
      * @param item
      */
     public void addItem(Interactable item){

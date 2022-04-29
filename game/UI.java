@@ -2,6 +2,9 @@ package game;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * This is the Class where the more expensive big functions in the app go. It also handles some drawing to the screen
+ */
 public class UI {
     enum Commands {
         LOOK_AROUND("look around", 2),
@@ -85,7 +88,7 @@ public class UI {
         } else if (command.equals(Commands.MOVE.getStrCommand())) {
             System.out.println("\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move [direction]");
         } else if (command.equals(Commands.ATTACK.getStrCommand())) {
-            System.out.println("\tThis will attack an Actor in the room with a spesificed weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
+            System.out.println("\tThis will attack an Actor in the room with a specified weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
         } else if (command.equals(Commands.CLEAR.getStrCommand())) {
             System.out.println("\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
         } else if (command.equals(Commands.HEALTH.getStrCommand())) {
@@ -120,7 +123,7 @@ public class UI {
 
         // move north
         if (command.equals("N") || command.equals("n")) {
-            if (y < (floorSize - 2) && y >= 0) {
+            if (y < (floorSize - 1) && y >= 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.NORTH).isOpen()){ //Sorry Thomas, had to fix the doors
                         player.setYCoord(y + 1);
@@ -135,7 +138,7 @@ public class UI {
         }
         //move south
         if (command.equals("S") || command.equals("s")) {
-            if (y < floorSize - 1 && y > 0) {
+            if (y <= (floorSize - 1) && y > 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()){
                         player.setYCoord(y - 1);
@@ -150,7 +153,7 @@ public class UI {
         }
         //move east
         if (command.equals("E") || command.equals("e")) {
-            if (x < floorSize - 1 && x >= 0) {
+            if (x < (floorSize - 1) && x >= 0) {
                 try {
                     if (floor1.getDoor(x, y, Direction.EAST).isOpen()){
                         player.setXCoord(x + 1);
@@ -197,6 +200,7 @@ public class UI {
         }
         output += "] " + health;
 
+        //This doesn't work on windows so comment it out
         double percent = (double) health / maxHealth;
 
         if (percent <= 0.3){
@@ -206,7 +210,9 @@ public class UI {
         } else {
             output = colorString(output, Colors.GREEN);
         }
+        
         System.out.println(output);
+        
     }
 
     
@@ -218,9 +224,15 @@ public class UI {
     public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth, int maxWeight){
         String inventoryOutput = "";
         int weight = 0;
-        for (Interactable name : inventory) {
-            inventoryOutput += "\n\t" + name.getName() + ": Weight: " + name.weight + ", Size: " + name.size + ","; //TODO: @yomas000 make this so it will format it
-            weight += name.weight;
+        System.out.println();
+        for (Interactable inter : inventory) {
+            if (inter instanceof Weapon){
+                Weapon weapon = (Weapon) inter;
+                inventoryOutput += String.format("\t%-10s: Weight: %-2d / Pierce: %-2d / Damage: %-2d\n", weapon.getName(), weapon.weight, weapon.getPierce(), weapon.getDamage());
+            }else{
+                inventoryOutput += String.format("\t%-10s: Weight: %-2d\n", inter.getName(), inter.weight);
+            }
+            weight += inter.weight;
         }
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
@@ -230,11 +242,14 @@ public class UI {
         }
         System.out.println();
         displayHeath(health, maxHealth);
+        System.out.println("\n");
     }
-
+    /**
+     * This is displays the opening sequence of the game
+     */
     public static void displayOpening(){
         System.out.println("\n\nYour breath comes heavy as you break your way out of the haunted forest\nYour goal lies on ahead. A forboding dark castle made of black stone rises like a mountain in front of you.");
-        System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man flooors the castle actullay has, each of them gaurded impossible guards going progressivly deeper");
+        System.out.println("You start running along the rough path to the castle. You have to reach the castle, your goal lies inside.\nNobody knows how man floors the castle actually has, each of them guarded impossible guards going progressively deeper");
         System.out.println("But what ever it takes you will reach your goal. The dark wizard of the castle has captured your family because you refused to bow to him.\nAnd now he was going to pay.\n\n");
         System.out.printf("%50s", "WELCOME TO\n\n\n");
 
@@ -246,7 +261,9 @@ public class UI {
         System.out.println(" \\_____\\__,_|___/\\__|_|\\___| |_____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|  |_| \\__,_|_|_|");
 
     }
-
+    /**
+     * This displays the ending died sequence of the game
+     */
     public static void displayEnding(){
         System.out.println(" __     __           _____  _          _ _   _______                             _      ___  ");
         System.out.println(" \\ \\   / /          |  __ \\(_)        | | | |__   __|                           (_)    |__ \\ ");
@@ -268,14 +285,14 @@ public class UI {
      */
     public static void displayMap(int xSize, int ySize, Player player, Floor floor){
         int xP = player.getXCoord();
-        int yP = player.getYCoord() + 1;
+        int yP = player.getYCoord();
         String bookmarkDisplay = "\n\n\n";
        // String bookmarkString = "";
 
-        for (int i = ySize - 1; i > 0; i--){
+        for (int i = ySize - 1; i >= 0; i--){
             for (int j = 0; j < xSize; j++){
                 String bookmarkString = "";
-                String[] bookmark = floor.getRoom(j, i).getBookmarks();
+                String[] bookmark = floor.getRoom(j, i).getBookmark();
                 if (!bookmark[0].equals("")){
                     bookmarkString += "_" + bookmark[0].charAt(0) + "_|";
                     bookmarkDisplay += bookmark[0] + " : " + bookmark[1] + "\n";
@@ -320,6 +337,7 @@ public class UI {
 
     
     /** 
+     * This, in non windows systems, will display return the string with a set of colors given to display that color
      * @param string
      * @param color
      * @return String
@@ -328,18 +346,28 @@ public class UI {
         return color.getAnsii() + string + "\u001B[0m";
     }
 
+    
+    /** 
+     * This will print a header bar showing stats of the player, this is displayed on non windows systems
+     * @param health
+     * @param maxHealth
+     * @param energy
+     * @param inventorySize
+     */
     public static void printHeader(int health, int maxHealth, int energy, int inventorySize){
         int width = 100;
+        //This clears the screen before writing it
         System.out.printf("\033[s\033[0;%dH", width);
         for (int i = 0; i < 6; i++){
             System.out.printf("\033[%d;%dH", i, width);
             System.out.print("\033[0K\033[1B");
         }
-        System.out.printf("\033[1;%dH", width);
-        displayHeath(health, maxHealth);
-        System.out.printf("\033[2;%dH", width);
-        System.out.println("\tEnergy left: " + energy);
+        //this writes to the header
         System.out.printf("\033[3;%dH", width);
+        displayHeath(health, maxHealth);
+        System.out.printf("\033[4;%dH", width);
+        System.out.println("\tEnergy left: " + energy);
+        System.out.printf("\033[5;%dH", width);
         System.out.println("\tItems in Inventory: " + inventorySize);
         System.out.print("\033[u");
     }
