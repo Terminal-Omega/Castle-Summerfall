@@ -39,8 +39,6 @@ public class App {
         final String OSNAME = System.getProperty("os.name");
         floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
 
-        System.out.println(OSNAME);
-
         do {
             System.out.print("\n> ");
             inputCommand = input.nextLine();

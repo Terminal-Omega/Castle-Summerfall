@@ -114,7 +114,7 @@ public class Floor {
             case 2:
                 builder.append("\n");
                 builder.append(String.format("In the room is a %s and a %s", localNPC.get(0).getName(),
-                        localNPC.get(0).getName()));
+                        localNPC.get(1).getName()));
                 break;
             default:
                 builder.append("\n");
