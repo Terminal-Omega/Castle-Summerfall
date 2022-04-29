@@ -173,13 +173,20 @@ public class App {
                     }
                     
 
-                    if (null != secondItem || null != firstItem){
-                        if (num == -1){
-                            System.out.println(secondItem.getDescription());
+                    if (num == -1){
+                        if (null != secondItem){
+                        System.out.println(secondItem.getDescription());
                         }else{
-                            System.out.println(firstItem.getDescription());
+                            System.out.println("Cannot find that Item");
+                        }
+                    }else{
+                        if (null != firstItem){
+                        System.out.println(firstItem.getDescription());
+                        }else{
+                            System.out.println("Cannot find that Item");
                         }
                     }
+                    
 
                     
                 }
@@ -262,8 +269,8 @@ public class App {
                             try {
                                 secondItem = temp.takeItem(secondItem.getName());
                             } catch (ThingNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                               
+                                System.out.println(e.getMessage());
                             }
                             player.putItem(secondItem);
                         } else {
@@ -271,8 +278,8 @@ public class App {
                             try {
                                 firstItem = temp.takeItem(firstItem.getName());
                             } catch (ThingNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                                
+                                System.out.println(e.getMessage());
                             }
                             player.putItem(firstItem);
                         }
