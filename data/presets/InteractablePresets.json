@@ -54,6 +54,24 @@
             "attack-speed": "5",
             "sharp": "false",
             "rarity": "10"
+        },
+        {
+            "type": "weapon",
+            "name": "Musket",
+            "size": "2",
+            "weight": "6",
+            "descriptions": [
+                "It looks like a tube with one end open",
+                "It looks like it shoots balls of lead"
+            ],
+            "canbepickedup": "true",
+            "pierce": "0",
+            "damage": "6-9",
+            "range": "2-4",
+            "weapon-type": "cardboard",
+            "attack-speed": "2",
+            "sharp": "false",
+            "rarity": "15"
         }
     ]
 }
