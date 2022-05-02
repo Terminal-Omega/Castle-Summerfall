@@ -115,6 +115,7 @@ public class App {
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
                 String command = inspectMatch.group(1);
+                boolean itemFind = true;
                 if (energy - energyCost < 0) {
                     System.out.println("You don't have enough energy to do this");
                     UI.displayEnergy(energy);
@@ -127,7 +128,6 @@ public class App {
                     Interactable firstItem = null;
                     Interactable secondItem = null;
                     int num = 1;
-                    boolean itemFind = true;
                     try {
                         matcher.find();
                         firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
@@ -169,18 +169,19 @@ public class App {
                         num = num * -1;
                     }
                     
-
-                    if (num == -1){
-                        if (null != secondItem && itemFind){
-                        System.out.println(secondItem.getDescription());
+                    if (itemFind){
+                        if (num == -1){
+                            if (null != secondItem){
+                            System.out.println(secondItem.getDescription());
+                            }else{
+                                System.out.println("Cannot find that Item");
+                            }
                         }else{
-                            System.out.println("Cannot find that Item");
-                        }
-                    }else{
-                        if (null != firstItem && itemFind){
-                        System.out.println(firstItem.getDescription());
-                        }else{
-                            System.out.println("Cannot find that Item");
+                            if (null != firstItem){
+                            System.out.println(firstItem.getDescription());
+                            }else{
+                                System.out.println("Cannot find that Item");
+                            }
                         }
                     }
                     
