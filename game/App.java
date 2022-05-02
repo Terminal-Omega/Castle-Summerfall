@@ -127,6 +127,7 @@ public class App {
                     Interactable firstItem = null;
                     Interactable secondItem = null;
                     int num = 1;
+                    boolean itemFind = true;
                     try {
                         matcher.find();
                         firstItem = floor.getRoom(player.getXCoord(), player.getYCoord()).getItem(matcher.group(1));
@@ -138,6 +139,7 @@ public class App {
                         try{
                             Interactable name = floor.getRoom(player.getXCoord(), player.getYCoord()).getDescriptionInteractable(matcher.group(1));
                             System.out.println(name.getDescription());
+                            itemFind = false;
                         }catch(ThingNotFoundException j){
                             System.out.println(j.getMessage());
                         }
@@ -169,13 +171,13 @@ public class App {
                     
 
                     if (num == -1){
-                        if (null != secondItem){
+                        if (null != secondItem && itemFind){
                         System.out.println(secondItem.getDescription());
                         }else{
                             System.out.println("Cannot find that Item");
                         }
                     }else{
-                        if (null != firstItem){
+                        if (null != firstItem && itemFind){
                         System.out.println(firstItem.getDescription());
                         }else{
                             System.out.println("Cannot find that Item");
