@@ -19,7 +19,7 @@ public class App {
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
-        final int FLOORSIZE = 3;
+        final int FLOORSIZE = 10;
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
