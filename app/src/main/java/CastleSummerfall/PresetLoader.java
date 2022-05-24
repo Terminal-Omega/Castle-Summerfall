@@ -231,13 +231,13 @@ public class PresetLoader {
         }
 
         String allianceString = Parser.parseString("alliance", toLoad);
-        NpcAllience alliance;
+        NPCAlliance alliance;
         if (allianceString.equals("enemy")) {
-            alliance = NpcAllience.ENEMY;
+            alliance = NPCAlliance.ENEMY;
         } else if (allianceString.equals("friendly")) {
-            alliance = NpcAllience.FRIENDLY;
+            alliance = NPCAlliance.FRIENDLY;
         } else {
-            alliance = NpcAllience.NEUTRAL;
+            alliance = NPCAlliance.NEUTRAL;
         }
 
         // A description will be chosen out of the array at random when the preset is

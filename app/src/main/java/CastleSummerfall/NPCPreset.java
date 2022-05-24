@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class NPCPreset {
 
-    public NpcAllience npcAllience;
+    public NPCAlliance npcAlliance;
     public String[] descriptions;
     // All of the integer arrays will be a length of 2, where the lower index is the
     // min and the upper one is the max.
@@ -26,10 +26,10 @@ public class NPCPreset {
     // NPCPresets are given an inventory so that they will spawn with weapons.
     public ArrayList<InteractablePreset> inventory;
 
-    public NPCPreset(NpcAllience npcAllience, String[] descriptions, int[] ACRange, int[] strRange, int[] dexRange,
+    public NPCPreset(NPCAlliance npcAlliance, String[] descriptions, int[] ACRange, int[] strRange, int[] dexRange,
             int[] conRange, int[] intRange, int[] wisRange, int[] chaRange, int[] noiseRange, int[] shieldRange,
             String[] name, ArrayList<InteractablePreset> inventory) {
-        this.npcAllience = npcAllience;
+        this.npcAlliance = npcAlliance;
         this.descriptions = descriptions;
         this.ACRange = ACRange;
         this.strRange = strRange;

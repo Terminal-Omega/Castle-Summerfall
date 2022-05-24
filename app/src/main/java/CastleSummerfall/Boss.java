@@ -19,13 +19,13 @@ public class Boss extends NPC {
      * @param noise
      * @param shield
      * @param name
-     * @param npcAllience
+     * @param npcAlliance
      * @param description
      */
     public Boss(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
-            int wisdom, int charisma, int noise, int shield, String name, NpcAllience npcAllience, String description) {
+            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description) {
         super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield,
-                name, npcAllience, description);
+                name, npcAlliance, description);
 
     }
 
@@ -50,7 +50,7 @@ public class Boss extends NPC {
      * @param FloorSize
      */
     @Override
-    public void npcTurnAllience(Actor Player, int FloorSize) {
+    public void npcTurnAlliance(Actor Player, int FloorSize) {
         bossFight(Player);
     }
 }

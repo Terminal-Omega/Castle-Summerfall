@@ -3,7 +3,7 @@ package CastleSummerfall;
 import java.util.Random;
 
 public class NPC extends Actor {
-    protected NpcAllience npcAllience;
+    protected NPCAlliance npcAlliance;
     protected String description;
     private Random rand = new Random();
     final int floorsize = 5;
@@ -18,10 +18,10 @@ public class NPC extends Actor {
     }
 
     public NPC(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
-            int wisdom, int charisma, int noise, int shield, String name, NpcAllience npcAllience, String description) {
+            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description) {
         super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield,
                 name);
-        setAllience(npcAllience);
+        setAlliance(npcAlliance);
         setDescription(description);
         setDexterity(dexterity);
         setWeaponSkill();
@@ -30,7 +30,7 @@ public class NPC extends Actor {
     }
 
     /**
-     * 
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -39,20 +39,20 @@ public class NPC extends Actor {
 
     /**
      * This will set the Alliance of a NPC so it will attack/not attack the player
-     * 
-     * @param allience
+     *
+     * @param alliance
      */
-    public void setAllience(NpcAllience allience) {
-        npcAllience = allience;
+    public void setAlliance(NPCAlliance alliance) {
+        npcAlliance = alliance;
     }
 
     /**
      * This will make the NPC attack the player
-     * 
+     *
      * @param player
      * @param floorSize
      */
-    public void npcTurnAllience(Actor player, int floorSize) {
+    public void npcTurnAlliance(Actor player, int floorSize) {
         if (maxShield > 0) {
             shield += shieldRegen;
             if (shield > maxShield) {
@@ -60,7 +60,7 @@ public class NPC extends Actor {
             }
         }
         while (energy >= 0) {
-            if (npcAllience == NpcAllience.ENEMY) {
+            if (npcAlliance == NPCAlliance.ENEMY) {
                 if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
                     enemyTurnCombat(player);
                     energy -= 10;
@@ -68,9 +68,9 @@ public class NPC extends Actor {
                     enemyTurnNoneCombat(floorSize, player);
                     energy -= 10;
                 }
-            } else if (npcAllience == NpcAllience.FRIENDLY) {
+            } else if (npcAlliance == NPCAlliance.FRIENDLY) {
 
-            } else if (npcAllience == NpcAllience.NEUTRAL) {
+            } else if (npcAlliance == NPCAlliance.NEUTRAL) {
 
             }
         }

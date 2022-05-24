@@ -90,7 +90,7 @@ public class Updates {
                 floor.removeNPC(i);
                 System.out.println(npc.getName() + " was killed.");
             }
-            npc.npcTurnAllience(player, floor.getXSize());
+            npc.npcTurnAlliance(player, floor.getXSize());
             npc.setEnergy();
             // TODO: @Corbanator notify player if NPC enters the room
         }

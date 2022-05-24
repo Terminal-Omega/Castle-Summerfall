@@ -1,5 +1,5 @@
 package CastleSummerfall;
 
-public enum NpcAllience {
+public enum NPCAlliance {
     FRIENDLY, ENEMY, BOSS, NEUTRAL
 }
