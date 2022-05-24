@@ -1,15 +1,15 @@
 {
     "interactables":[
-        "data/presets/interactablepresets.json"
+        "../data/presets/InteractablePresets.json"
     ],
     "room-presets" : [
-        "data/presets/roompresets.json",
-        "data/presets/bossroompresets.json"
+        "../data/presets/RoomPresets.json",
+        "../data/presets/bossroompresets.json"
     ],
     "enemy-presets":[
-        "data/presets/EnemyPresets.json"
+        "../data/presets/EnemyPresets.json"
     ],
     "containers":[
-        "data/presets/containerpresets.json"
+        "../data/presets/containerpresets.json"
     ]
 }
