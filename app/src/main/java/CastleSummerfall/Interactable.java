@@ -1,6 +1,7 @@
 package CastleSummerfall;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator This class represents any object in the game that does
@@ -16,11 +17,11 @@ public class Interactable {
 
     // Abilities are included to allow for extensibility; They are set up to allow
     // for a robust system of various items, but aren't actually implemented.
-    ArrayList<Ability> abilities;
+    List<Ability> abilities;
 
     // Constructors
     public Interactable(String name, String description, int size, int weight, boolean canBePickedUp,
-            ArrayList<Ability> abilities) {
+            List<Ability> abilities) {
         this.size = size;
         this.weight = weight;
         this.canBePickedUp = canBePickedUp;

@@ -1,5 +1,6 @@
 package CastleSummerfall;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -9,11 +10,11 @@ import java.util.Objects;
  *         functions only allowed by access to all rooms/NPCS
  */
 public class Floor {
-    private ArrayList<ArrayList<Room>> rooms; // Stores Coordinates literally based on the location within the
-                                              // ArrayList.
-    private ArrayList<NPC> NPCS; // NPCs store their own Coordinates, as 2 NPCs can be in the same room.
+    private List<List<Room>> rooms; // Stores Coordinates literally based on the location within the
+                                    // ArrayList.
+    private List<NPC> NPCS; // NPCs store their own Coordinates, as 2 NPCs can be in the same room.
 
-    public Floor(ArrayList<ArrayList<Room>> rooms) {
+    public Floor(List<List<Room>> rooms) {
         this.rooms = rooms;
         this.NPCS = new ArrayList<>();
     }
@@ -104,7 +105,7 @@ public class Floor {
         }
 
         // gets all the NPCs at those coordinates and adds them to an ArrayList
-        ArrayList<NPC> localNPC = new ArrayList<>();
+        List<NPC> localNPC = new ArrayList<>();
         for (NPC NPC : NPCS) {
             if (NPC.getXCoord() == xCoord && NPC.getYCoord() == yCoord) {
                 localNPC.add(NPC);
@@ -183,9 +184,9 @@ public class Floor {
     }
 
     /**
-     * @return ArrayList<NPC> all of the NPCs
+     * @return List<NPC> all of the NPCs
      */
-    public ArrayList<NPC> getNPCs() {
+    public List<NPC> getNPCs() {
         return NPCS;
     }
 

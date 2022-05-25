@@ -1,6 +1,7 @@
 package CastleSummerfall;
 
 import java.util.Random;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Actor {
@@ -20,9 +21,9 @@ public class Actor {
     protected int charisma;
     protected int noise;
     protected int carryWeight;
-    protected ArrayList<String> effects;
+    protected List<String> effects;
     protected String name;
-    protected ArrayList<Interactable> inventory;
+    protected List<Interactable> inventory;
     protected int shield;
     protected int maxHealth;
     protected int maxEnergy;
@@ -235,9 +236,9 @@ public class Actor {
     /**
      * This will return the inventory of the Actor
      * 
-     * @return ArrayList<Interactable>
+     * @return List<Interactable>
      */
-    public ArrayList<Interactable> getInventory() {
+    public List<Interactable> getInventory() {
         return inventory;
     }
 

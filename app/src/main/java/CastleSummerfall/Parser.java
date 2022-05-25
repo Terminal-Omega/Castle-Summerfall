@@ -3,6 +3,7 @@ package CastleSummerfall;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -109,7 +110,7 @@ public class Parser {
         int startIndex = 1;
         int index = 0;
         char nextChar;
-        ArrayList<String> strings = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
 
         do {
 

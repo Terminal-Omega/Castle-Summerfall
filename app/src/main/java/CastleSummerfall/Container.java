@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator This is a special form of interactable that can have
@@ -8,11 +8,11 @@ import java.util.ArrayList;
  */
 public class Container extends Interactable {
 
-    protected ArrayList<Interactable> inventory;
+    protected List<Interactable> inventory;
     protected int inventoryCapacity;
 
     public Container(String name, String description, int size, int weight, boolean canBePickedUp,
-            ArrayList<Interactable> inventory, int inventoryCapacity) {
+            List<Interactable> inventory, int inventoryCapacity) {
         super(name, description, size, weight, canBePickedUp);
         this.inventory = inventory;
         this.inventoryCapacity = inventoryCapacity;

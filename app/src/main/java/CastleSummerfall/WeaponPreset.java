@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator A special InteractablePreset for weapons.
@@ -20,8 +20,8 @@ public class WeaponPreset extends InteractablePreset {
     public int pierce;
     public int pierceRange;
 
-    public WeaponPreset(String name, String[] descriptions, ArrayList<AbilityOption> abilityOptions, int size,
-            int weight, boolean canBePickedUp, int rarity) {
+    public WeaponPreset(String name, String[] descriptions, List<AbilityOption> abilityOptions, int size, int weight,
+            boolean canBePickedUp, int rarity) {
         super(name, descriptions, abilityOptions, size, weight, canBePickedUp, rarity);
     }
 

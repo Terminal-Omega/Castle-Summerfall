@@ -1,6 +1,7 @@
 package CastleSummerfall;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -20,13 +21,13 @@ public class PresetLoader {
      * array of RoomPresets.
      * 
      * @param toLoad
-     * @return ArrayList<RoomPreset>
+     * @return List<RoomPreset>
      */
-    public static ArrayList<RoomPreset> loadRoomPresets(String toLoad) {
+    public static List<RoomPreset> loadRoomPresets(String toLoad) {
         // uses parseArray to find the array with the key "rooms" and load in each room
         // in that array
         String[] presets = Parser.parseArray("rooms", toLoad);
-        ArrayList<RoomPreset> result = new ArrayList<>();
+        List<RoomPreset> result = new ArrayList<>();
 
         for (String string : presets) {
             result.add(loadRoomPreset(string));
@@ -50,7 +51,7 @@ public class PresetLoader {
 
         // Uses loadInventoryPresets to load in an inventory of interactablePresets, but
         // only if that array is not empty
-        ArrayList<InteractablePreset> descriptionInteractables = new ArrayList<>();
+        List<InteractablePreset> descriptionInteractables = new ArrayList<>();
         InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(
                 Parser.parseArray("description-interactables", toLoad));
         if (!Objects.isNull(descriptionInteractablesArray)) {
@@ -64,7 +65,7 @@ public class PresetLoader {
         // but it is slightly more complicated because this field is optional, so it
         // must check if it exists.
 
-        ArrayList<InteractablePreset> interactables = new ArrayList<>();
+        List<InteractablePreset> interactables = new ArrayList<>();
         InteractablePreset[] interactablesArray;
         if (!Objects.isNull(loadInventoryPresets(Parser.parseArray("interactables", toLoad)))) {
             interactablesArray = loadInventoryPresets(Parser.parseArray("interactables", toLoad));
@@ -135,7 +136,7 @@ public class PresetLoader {
         // loads in abilities. These don't actually do anything yet, but it leaves the
         // door open for more complex interactables going forward.
 
-        ArrayList<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
+        List<InteractablePreset.AbilityOption> abilityOptions = new ArrayList<>();
 
         int rarity = Parser.parseInt("rarity", toLoad)[0];
 
@@ -262,7 +263,7 @@ public class PresetLoader {
         // Loads in the inventory by obtaining an array of strings to then load in as
         // InteractablePresets
         InteractablePreset[] inventoryArray = loadInventoryPresets(Parser.parseArray("inventory", toLoad));
-        ArrayList<InteractablePreset> inventory = new ArrayList<>();
+        List<InteractablePreset> inventory = new ArrayList<>();
         inventory.addAll(Arrays.asList(inventoryArray));
 
         return new NPCPreset(alliance, descriptions, ACRange, strRange, dexRange, conRange, intRange, wisRange,

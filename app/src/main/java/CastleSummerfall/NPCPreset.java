@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator This class is a preset for an NPC that is a template for
@@ -24,11 +24,11 @@ public class NPCPreset {
     public String[] name;
 
     // NPCPresets are given an inventory so that they will spawn with weapons.
-    public ArrayList<InteractablePreset> inventory;
+    public List<InteractablePreset> inventory;
 
     public NPCPreset(NPCAlliance npcAlliance, String[] descriptions, int[] ACRange, int[] strRange, int[] dexRange,
             int[] conRange, int[] intRange, int[] wisRange, int[] chaRange, int[] noiseRange, int[] shieldRange,
-            String[] name, ArrayList<InteractablePreset> inventory) {
+            String[] name, List<InteractablePreset> inventory) {
         this.npcAlliance = npcAlliance;
         this.descriptions = descriptions;
         this.ACRange = ACRange;

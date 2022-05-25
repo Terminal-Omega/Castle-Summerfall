@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Hashtable;
 
 /**
@@ -224,7 +224,7 @@ public class UI {
      * @param inventory
      * @param health
      */
-    public static void displayInventory(ArrayList<Interactable> inventory, int health, int maxHealth, int maxWeight) {
+    public static void displayInventory(List<Interactable> inventory, int health, int maxHealth, int maxWeight) {
         String inventoryOutput = "";
         int weight = 0;
         System.out.println();

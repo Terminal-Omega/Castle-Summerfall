@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator This represents a preset for an interactable, kind of
@@ -12,20 +12,20 @@ public class InteractablePreset {
     public String[] descriptions;
     public int size;
     public int weight;
-    public ArrayList<AbilityOption> abilityOptions;
+    public List<AbilityOption> abilityOptions;
     public boolean canBePickedUp;
     public int rarity;
 
     /**
-     * AbilityOptions are basically an arraylist of abilities and a number of
-     * abilities to choose from that arraylist.
+     * AbilityOptions are basically an list of abilities and a number of abilities
+     * to choose from that list.
      */
     public class AbilityOption implements Cloneable {
         public int number;
-        public ArrayList<Ability> options;
+        public List<Ability> options;
     }
 
-    public InteractablePreset(String name, String[] descriptions, ArrayList<AbilityOption> abilityOptions, int size,
+    public InteractablePreset(String name, String[] descriptions, List<AbilityOption> abilityOptions, int size,
             int weight, boolean canBePickedUp, int rarity) {
         this.name = name;
         this.descriptions = descriptions;

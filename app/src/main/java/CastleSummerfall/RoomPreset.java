@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator A preset for a room, complete with a set of possible
@@ -9,13 +9,13 @@ import java.util.ArrayList;
  */
 public class RoomPreset {
     public String[] descriptions;
-    public ArrayList<InteractablePreset> interactables;
-    public ArrayList<InteractablePreset> descriptionInteractables;
+    public List<InteractablePreset> interactables;
+    public List<InteractablePreset> descriptionInteractables;
     // If the room has a boss, it's a boss room.
     public NPC boss;
 
-    public RoomPreset(String[] descriptions, ArrayList<InteractablePreset> interactables,
-            ArrayList<InteractablePreset> descriptionInteractables) {
+    public RoomPreset(String[] descriptions, List<InteractablePreset> interactables,
+            List<InteractablePreset> descriptionInteractables) {
         this.descriptions = descriptions;
         this.interactables = interactables;
         this.descriptionInteractables = descriptionInteractables;

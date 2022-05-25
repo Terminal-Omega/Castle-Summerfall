@@ -1,8 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Random;
+import java.util.List;
 
 /**
  * @Author @Corbanator
@@ -18,11 +16,11 @@ import java.util.Random;
 public class Room {
 
     // Randomly generate objects, placed seperately in the description
-    private ArrayList<Interactable> interactables;
+    private List<Interactable> interactables;
 
     // Objects already included in the room description; Not designed to be picked
     // up.
-    private ArrayList<Interactable> descriptionInteractables;
+    private List<Interactable> descriptionInteractables;
     private String description;
 
     // The doors
@@ -36,8 +34,8 @@ public class Room {
     private boolean stairs;
 
     // Constructors
-    public Room(ArrayList<Interactable> interactables, ArrayList<Interactable> descriptionInteractables,
-            String description, Door southDoor, Door eastDoor) {
+    public Room(List<Interactable> interactables, List<Interactable> descriptionInteractables, String description,
+            Door southDoor, Door eastDoor) {
         this.interactables = interactables;
         this.descriptionInteractables = descriptionInteractables;
         this.description = description;

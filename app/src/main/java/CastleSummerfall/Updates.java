@@ -1,9 +1,9 @@
 package CastleSummerfall;
 
-import java.util.regex.Pattern;
+import java.lang.Integer;
 import java.util.Random;
 import java.util.regex.Matcher;
-import java.lang.Integer;
+import java.util.regex.Pattern;
 
 public class Updates {
 
@@ -20,15 +20,16 @@ public class Updates {
 
         Pattern damage = Pattern.compile("damage\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern heal = Pattern.compile("heal\\(([0-9]*(-([0-9]*))?)\\)");
-        Pattern damageNoAC = Pattern.compile("damageNoAC\\(([0-9]*(-([0-9]*))?)\\)");
+        Pattern damageNoAC =
+            Pattern.compile("damageNoAC\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern statChanger = Pattern.compile("stat");
 
         Matcher damageMatcher = damage.matcher(effect);
         if (damageMatcher.find()) {
             int damageAmount;
             if (damageMatcher.group(3) != "") {
-                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
-                        + Integer.parseInt(damageMatcher.group(1));
+                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
+                    Integer.parseInt(damageMatcher.group(1));
                 // TODO: @Corbanator make this work once Xander pushes the thing
             } else {
                 damageAmount = Integer.parseInt(damageMatcher.group(1));
@@ -40,8 +41,8 @@ public class Updates {
         if (damageMatcher.find()) {
             int healAmount;
             if (healMatcher.group(3) != "") {
-                healAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
-                        + Integer.parseInt(damageMatcher.group(1));
+                healAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
+                    Integer.parseInt(damageMatcher.group(1));
                 // TODO: @Corbanator make this work once Xander pushes the thing
             } else {
                 healAmount = Integer.parseInt(damageMatcher.group(1));
@@ -53,23 +54,20 @@ public class Updates {
         if (damageNoACMathcer.find()) {
             int damageAmount;
             if (damageNoACMathcer.group(3) != "") {
-                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
-                        + Integer.parseInt(damageMatcher.group(1));
+                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
+                    Integer.parseInt(damageMatcher.group(1));
 
             } else {
                 damageAmount = Integer.parseInt(damageNoACMathcer.group(1));
             }
             target.damageNoAC(damageAmount);
         }
-
     }
 
     /**
      * @param actor
      */
-    public static void doPassives(Actor actor) {
-
-    }
+    public static void doPassives(Actor actor) {}
 
     /**
      * updates the game in between playter turns.
@@ -81,8 +79,8 @@ public class Updates {
         doPassives(player);
         // TODO: @Corbanator implement noise and LOS
         int size = floor.getNPCs().size();
-        // for each npc, check if they're dead, then activate their AI if they're still
-        // alive.
+        // for each npc, check if they're dead, then activate their AI if they're
+        // still alive.
         for (int i = 0; i < size; i++) {
             NPC npc = floor.getNPCs().get(i);
             doPassives(npc);
@@ -111,5 +109,4 @@ public class Updates {
             }
         }
     }
-
 }

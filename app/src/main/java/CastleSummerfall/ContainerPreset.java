@@ -1,6 +1,6 @@
 package CastleSummerfall;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author @Corbanator A special form of InteractablePreset with extra fields
@@ -14,8 +14,8 @@ public class ContainerPreset extends InteractablePreset {
     int minItems;
     int maxItems;
 
-    public ContainerPreset(String name, String[] descriptions, ArrayList<AbilityOption> abilityOptions, int size,
-            int weight, boolean canBePickedUp, int rarity) {
+    public ContainerPreset(String name, String[] descriptions, List<AbilityOption> abilityOptions, int size, int weight,
+            boolean canBePickedUp, int rarity) {
         super(name, descriptions, abilityOptions, size, weight, canBePickedUp, rarity);
     }
 
