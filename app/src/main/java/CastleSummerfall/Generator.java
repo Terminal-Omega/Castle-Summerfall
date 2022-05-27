@@ -394,13 +394,11 @@ public class Generator {
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
 
         // add abilities, for future extensibility
-        List<Ability> abilities = new ArrayList<>();
-
         // randomly pick correct number of abilities
-        preset.abilityOptions.stream().forEach(n -> {
+        List<Ability> abilities = preset.abilityOptions.stream().map(n -> {
             Collections.shuffle(n.options);
-            abilities.addAll(n.options.subList(0, n.number));
-        });
+            return n.options.subList(0, n.number);
+        }).flatMap(n -> n.stream()).collect(Collectors.toList());
 
         // if it's a container or weapon, do additional stuff.
         if (preset instanceof ContainerPreset) {
