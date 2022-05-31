@@ -1,7 +1,8 @@
 package CastleSummerfall;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Hashtable;
+import java.util.stream.Collectors;
 
 /**
  * This is the Class where the more expensive big functions in the app go. It
@@ -9,19 +10,36 @@ import java.util.Hashtable;
  */
 public class UI {
     enum Commands {
-        LOOK_AROUND("look around", 2), INSPECT("inspect", 0), TAKE("take", 4), DROP("drop", 4), MOVE("move", 5),
-        ATTACK("attack", 3),
+        LOOK_AROUND("look around", 2, "\tThis will show the room description again\n\tUse: look around"),
+        INSPECT("inspect", 0, "\tThis will display an object in the rooms description\n\tUse: inspect [object]"),
+        TAKE("take", 4,
+                "\tThis will make your character pick up an object in the room or chest and it will go to inventory\n\tUse: take [object]"),
+        DROP("drop", 4, "\tThis will drop an item from your inventory to the ground\n\tUse: drop (item name)"),
+        MOVE("move", 5,
+                "\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move [direction]"),
+        ATTACK("attack", 3,
+                "\tThis will attack an Actor in the room with a specified weapon in your inventory\n\tUse: attack [Actor] with [weapon]"),
         // DRINK("drink"),
         // CAST("cast"),
-        HELP("help", 0), EXIT("exit", 0), INVENTORY("inventory", 2), CLEAR("clear", 0), USE("use", 3),
-        BOOKMARK("bookmark", 0), ENERGY("energy", 0), REST("rest", 0), HEALTH("health", 0);
+        HELP("help", 0, "haha help go brrrr"), EXIT("exit", 0, "\tThis will exit the game\n\tUse: exit"),
+        INVENTORY("inventory", 2, "\tThis will show you the inventory of your player\n\tUse: inventory"),
+        CLEAR("clear", 0, "\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear"),
+        USE("use", 3, "\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use [item]"),
+        BOOKMARK("bookmark", 0,
+                "\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark [visual character] : [description] / Use: bookmark remove [visual char]\nEx. bookmark a : where the stairs are"),
+        ENERGY("energy", 0, "\tThis will display how much energy you have left for your turn\n\tUse: energy"),
+        REST("rest", 0,
+                "This will make your character rest bringing there energy back to full. But it will make it so enemies can attack you."),
+        HEALTH("health", 0, "\tThis will display your health in a status bar\n\tUse: health");
 
         private String strCommand;
         private int speed;
+        private String help;
 
-        private Commands(String command, int speed) {
+        private Commands(String command, int speed, String help) {
             this.strCommand = command;
             this.speed = speed;
+            this.help = help;
         }
 
         public String getStrCommand() {
@@ -30,6 +48,10 @@ public class UI {
 
         public int getSpeedCommand() {
             return this.speed;
+        }
+
+        public String getHelpMessage() {
+            return this.help;
         }
     }
 
@@ -55,8 +77,8 @@ public class UI {
      */
     public static void helpCommand(String command) {
         if (command.equals("all")) {
-            // System.out.println("\nThis is a text based adventure game where you fight
-            // monsters. How many floors can you decesend?\n");
+            // System.out.println("\nThis is a text based adventure game where you
+            // fight monsters. How many floors can you decesend?\n");
             System.out.println("\nCommands:");
             for (Commands name : Commands.values()) {
                 System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:",
@@ -65,48 +87,10 @@ public class UI {
             System.out.println(colorString(
                     "Use help to get back to this screen\nUse help [command name] to learn about that command",
                     Colors.RED) + "\nYou can alse use [help how to play] for a description how to play\n");
-        } else if (command.equals(Commands.DROP.getStrCommand())) {
-            System.out.println("\tThis will drop an item from your inventory to the ground\n\tUse: drop (item name)");
-        } else if (command.equals(Commands.LOOK_AROUND.getStrCommand())) {
-            System.out.println("\tThis will show the room description again\n\tUse: look around");
-        } else if (command.equals(Commands.INVENTORY.getStrCommand())) {
-            System.out.println("\tThis will show you the inventory of your player\n\tUse: inventory");
-        } else if (command.equals(Commands.CLEAR.getStrCommand())) {
-            System.out.println(
-                    "\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
-        } else if (command.equals(Commands.TAKE.getStrCommand())) {
-            System.out.println(
-                    "\tThis will make your character pick up an object in the room or chest and it will go to inventory\n\tUse: take [object]");
-        } else if (command.equals(Commands.INSPECT.getStrCommand())) {
-            System.out.println("\tThis will display an object in the rooms description\n\tUse: inspect [object]");
-        } else if (command.equals(Commands.EXIT.getStrCommand())) {
-            System.out.println("\tThis will exit the game\n\tUse: exit");
-        } else if (command.equals(Commands.MOVE.getStrCommand())) {
-            System.out.println(
-                    "\tThis will move your character in a direction if possible\n\tDirections (North, north, N, n) / (South, south, S, s) etc..\n\tUse: move [direction]");
-        } else if (command.equals(Commands.ATTACK.getStrCommand())) {
-            System.out.println(
-                    "\tThis will attack an Actor in the room with a specified weapon in your inventory\n\tUse: attack [Actor] with [weapon]");
-        } else if (command.equals(Commands.CLEAR.getStrCommand())) {
-            System.out.println(
-                    "\tThis will clear the output of the console and bring your cursor to the top\n\tUse: clear");
-        } else if (command.equals(Commands.HEALTH.getStrCommand())) {
-            System.out.println("\tThis will display your health in a status bar\n\tUse: health");
-        } else if (command.equals(Commands.USE.getStrCommand())) {
-            System.out.println(
-                    "\tThis will use a special item in your inventory Ex: a map (>use map)\n\tUse: use [item]");
-        } else if (command.equals(Commands.BOOKMARK.getStrCommand())) {
-            System.out.println(
-                    "\tThis will bookmark a room on your map (where you are currently) and save a description of the bookmark\n\tUse: bookmark [visual character] : [description] / Use: bookmark remove [visual char]\nEx. bookmark a : where the stairs are");
-            // System.out.println("\tSorry this isn't currently implemented");
-        } else if (command.equals(Commands.ENERGY.getStrCommand())) {
-            System.out.println("\tThis will display how much energy you have left for your turn\n\tUse: energy");
-        } else if (command.equals("how to play")) {
-            System.out.println(
-                    "The goal of the game is to save your family at the lowest level of the castle. In order to to that you need to find the stairs on each level in order to decend.\nDefeating whatever bosses you meet along the way. There are several things you can do inorder to help yourself beat the bosses and decend the floor. \nYou can look around the floor moving through rooms to find weapons that do more damage. You can also find spells and magic items to boost your stats for a certain amount of time to help beat the boss. \nThe floors are randomly generated, so you won't the get the same experience twice.");
-        } else if (command.equals(Commands.REST.getStrCommand())) {
-            System.out.println(
-                    "This will make your character rest bringing there energy back to full. But it will make it so enemies can attack you.");
+        } else if (Arrays.asList(Commands.values()).stream().map(n -> n.getStrCommand()).collect(Collectors.toList())
+                .contains(command)) {
+            System.out.println(Arrays.asList(Commands.values()).stream().filter(n -> command.equals(n.getStrCommand()))
+                    .collect(Collectors.toList()).get(0).getHelpMessage());
         } else {
             System.out.println("\tSorry I don't know what command you wanted");
         }
@@ -183,7 +167,6 @@ public class UI {
             } else {
                 System.out.println("You don't see a door in that wall. You can't move that way.");
             }
-
         }
     }
 
@@ -215,7 +198,6 @@ public class UI {
         }
 
         System.out.println(output);
-
     }
 
     /**
@@ -269,7 +251,6 @@ public class UI {
         System.out.println("| |___| (_| \\__ \\ |_| |  __/  ____) | |_| | | | | | | | | | | |  __/ |  | || (_| | | |");
         System.out.println(
                 " \\_____\\__,_|___/\\__|_|\\___| |_____/ \\__,_|_| |_| |_|_| |_| |_|\\___|_|  |_| \\__,_|_|_|");
-
     }
 
     /**
@@ -292,7 +273,6 @@ public class UI {
                 "                                                        __/ |         __/ |                  ");
         System.out.println(
                 "                                                       |___/         |___/                   ");
-
     }
 
     /**
@@ -327,12 +307,10 @@ public class UI {
                 } else {
                     System.out.print("    ");
                 }
-
             }
             System.out.println();
         }
         System.out.println(bookmarkDisplay);
-
     }
 
     /**
