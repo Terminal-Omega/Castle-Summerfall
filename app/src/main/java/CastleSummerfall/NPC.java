@@ -68,10 +68,6 @@ public class NPC extends Actor {
                     enemyTurnNoneCombat(floorSize, player);
                     energy -= 10;
                 }
-            } else if (npcAlliance == NPCAlliance.FRIENDLY) {
-
-            } else if (npcAlliance == NPCAlliance.NEUTRAL) {
-
             }
         }
     }

@@ -1,6 +1,7 @@
 package CastleSummerfall;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -105,12 +106,9 @@ public class Floor {
         }
 
         // gets all the NPCs at those coordinates and adds them to an ArrayList
-        List<NPC> localNPC = new ArrayList<>();
-        for (NPC NPC : NPCS) {
-            if (NPC.getXCoord() == xCoord && NPC.getYCoord() == yCoord) {
-                localNPC.add(NPC);
-            }
-        }
+        List<NPC> localNPC = NPCS.stream().filter(n -> n.getXCoord() == xCoord && n.getYCoord() == yCoord)
+                .collect(Collectors.toList());
+
         // Add all the NPCs into a specially formatted string based on the plurality of
         // enemies to ensure grammatical correctness
         switch (localNPC.size()) {
@@ -203,13 +201,13 @@ public class Floor {
      * @throws ThingNotFoundException
      */
     public NPC getNPC(String name, int xCoord, int yCoord, int index) throws ThingNotFoundException {
-        for (NPC npc : NPCS) {
-            if (npc.getName().toLowerCase().equals(name.toLowerCase()) && npc.getXCoord() == xCoord
-                    && npc.getYCoord() == yCoord) {
-                return npc;
-            }
+        List<NPC> match = NPCS.stream().filter(npc -> npc.getName().toLowerCase().equals(name.toLowerCase())
+                && npc.getXCoord() == xCoord && npc.getYCoord() == yCoord).collect(Collectors.toList());
+        if (match.size() != 0) {
+            return match.get(0);
+        } else {
+            throw new ThingNotFoundException("Enemy not found.");
         }
-        throw new ThingNotFoundException("Enemy not found.");
     }
 
     /**
@@ -227,11 +225,7 @@ public class Floor {
      * @return NPC
      */
     public NPC getBoss() {
-        for (NPC npc : NPCS) {
-            if (npc.isBoss()) {
-                return npc;
-            }
-        }
-        return null;
+        List<NPC> match = NPCS.stream().filter(n -> n.isBoss()).collect(Collectors.toList());
+        return match.isEmpty() ? match.get(0) : null;
     }
 }

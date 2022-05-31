@@ -1,15 +1,16 @@
 package CastleSummerfall;
 
 import javax.lang.model.type.NullType;
+import java.util.stream.Collectors;
 
 public class Player extends Actor {
 
     private int maxWeight = 20;
 
-    public Player(int x, int y, int constituion, int energy, int AC) {
+    public Player(int x, int y, int constitution, int energy, int AC) {
         this.setYCoord(y);
         this.setXCoord(x);
-        this.setConstitution(constituion);
+        this.setConstitution(constitution);
         this.setHealth();
         this.setInventory();
         this.setDexterity(energy);
@@ -23,16 +24,15 @@ public class Player extends Actor {
      * @param interactable
      */
     public void putItem(Interactable interactable) {
-        int weight = 0;
-        for (Interactable inter : inventory) {
-            weight += inter.weight;
-        }
+        int weight = inventory.stream().map(n -> n.weight).reduce(0, Integer::sum);
         weight += interactable.weight;
 
         if (weight <= maxWeight) {
             if (inventory.size() < 5) {
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
+            } else {
+                System.out.println("Your bag is too full to add any more");
             }
         } else {
             System.out.println("Your bag feels to heavy. You can't add any more.");
@@ -97,15 +97,8 @@ public class Player extends Actor {
      * @return boolean
      */
     public boolean isInInventory(String interactable) {
-        boolean isFound = false;
-        if (inventory.size() > 0) {
-            for (Interactable inter : inventory) {
-                if (inter.getName().toLowerCase().equals(interactable.toLowerCase())) {
-                    isFound = true;
-                }
-            }
-        }
-        return isFound;
+        return !inventory.stream().filter(n -> n.getName().toLowerCase().equals(interactable.toLowerCase()))
+                .collect(Collectors.toList()).isEmpty();
     }
 
     /**

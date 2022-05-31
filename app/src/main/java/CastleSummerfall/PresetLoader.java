@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author @Corbanator
@@ -26,14 +27,8 @@ public class PresetLoader {
     public static List<RoomPreset> loadRoomPresets(String toLoad) {
         // uses parseArray to find the array with the key "rooms" and load in each room
         // in that array
-        String[] presets = Parser.parseArray("rooms", toLoad);
-        List<RoomPreset> result = new ArrayList<>();
-
-        for (String string : presets) {
-            result.add(loadRoomPreset(string));
-        }
-
-        return result;
+        return Arrays.asList(Parser.parseArray("rooms", toLoad)).stream().map(n -> loadRoomPreset(n))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -55,9 +50,7 @@ public class PresetLoader {
         InteractablePreset[] descriptionInteractablesArray = loadInventoryPresets(
                 Parser.parseArray("description-interactables", toLoad));
         if (!Objects.isNull(descriptionInteractablesArray)) {
-            for (InteractablePreset preset : descriptionInteractablesArray) {
-                descriptionInteractables.add(preset);
-            }
+            descriptionInteractables = Arrays.asList(descriptionInteractablesArray);
         }
 
         // This section does essentially the same thing for normal interactables instead

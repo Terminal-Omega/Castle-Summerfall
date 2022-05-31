@@ -1,6 +1,8 @@
 package CastleSummerfall;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author @Corbanator This is a special form of interactable that can have
@@ -58,20 +60,11 @@ public class Container extends Interactable {
      * @return Interactable
      */
     public Interactable getItem(String name, int index) {
-        int timesFound = -1;
-        int latestIndex = 0;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                latestIndex = i;
-                timesFound++;
-                if (timesFound == index) {
-                    return inventory.get(i);
-                }
-            }
-        }
-        if (latestIndex != 0) {
-            return inventory.get(latestIndex);
-        } else {
+        try {
+            List<Interactable> matches = inventory.stream()
+                    .filter(n -> n.getName().toLowerCase().equals(name.toLowerCase())).collect(Collectors.toList());
+            return matches.get(index);
+        } catch (IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -98,25 +91,12 @@ public class Container extends Interactable {
      * @throws ThingNotFoundException
      */
     public Interactable takeItem(String name, int index) throws ThingNotFoundException {
-        int timesFound = -1;
-        int latestIndex = 0;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                latestIndex = i;
-                timesFound++;
-                if (timesFound == index) {
-                    Interactable result = inventory.get(i);
-                    inventory.remove(i);
-                    return result;
-                }
-            }
-        }
-        if (latestIndex != 0) {
-            Interactable result = inventory.get(latestIndex);
-            inventory.remove(latestIndex);
-            return result;
+        Interactable match = getItem(name, index);
+        if (Objects.nonNull(match)) {
+            inventory.remove(match);
+            return match;
         } else {
-            throw new ThingNotFoundException("A " + name + " was not found in the container");
+            throw new ThingNotFoundException("A " + name + "was not found in the container");
         }
     }
 

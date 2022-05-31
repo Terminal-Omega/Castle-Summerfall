@@ -123,7 +123,7 @@ public class Room {
         if (latestIndex != -1) {
             return interactables.get(latestIndex);
         } else {
-            throw new ThingNotFoundException("A" + name + " was not found in the room");
+            throw new ThingNotFoundException("A " + name + " was not found in the room");
         }
     }
 
