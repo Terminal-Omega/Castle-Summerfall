@@ -3,33 +3,40 @@ package CastleSummerfall;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Actor {
+    // TODO: make position data-type
+    private enum Stat {
+        STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA;
+    }
+
     protected int xCoord;
     protected int yCoord;
+
+    protected int maxHealth;
+    protected int maxEnergy;
     protected int health;
-    protected int AC;
     protected int energy;
+
+    protected int AC;
+    protected int maxShield;
+    protected int shield;
+    protected int shieldRegen;
+    protected int maxMana;
     protected int mana;
-    protected int strength;
-    protected int dexterity;
     protected int ballisticSkill;
     protected int weaponSkill;
-    protected int constitution;
-    protected int intelligence;
-    protected int wisdom;
-    protected int charisma;
+
+    // Stats are always in the order: STR, DEX, CON, INT, WIS, CHA
+    protected Map<Stat, Integer> stats;
+
     protected int noise;
     protected int carryWeight;
     protected List<String> effects;
     protected String name;
     protected List<Interactable> inventory;
-    protected int shield;
-    protected int maxHealth;
-    protected int maxEnergy;
-    protected int maxMana;
-    protected int maxShield;
-    protected int shieldRegen;
     protected Random rand = new Random();
 
     public Actor() {
@@ -37,12 +44,20 @@ public class Actor {
 
     public Actor(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
             int wisdom, int charisma, int noise, int sheild, String name) {
+        stats = new HashMap<>();
+        stats.put(Stat.STRENGTH, 0);
+        stats.put(Stat.DEXTERITY, 0);
+        stats.put(Stat.CONSTITUTION, 0);
+        stats.put(Stat.INTELLIGENCE, 0);
+        stats.put(Stat.WISDOM, 0);
+        stats.put(Stat.CONSTITUTION, 0);
         setStrength(strength);
         setDexterity(dexterity);
         setConstitution(constitution);
         setIntelligence(intelligence);
         setWisdom(wisdom);
         setCharisma(charisma);
+
         setXCoord(xCoord);
         setYCoord(yCoord);
         setAC(AC);
@@ -123,18 +138,8 @@ public class Actor {
      * 
      * @param constituion
      */
-    public void setConstitution(int constituion) {
-        this.constitution = constituion;
-        setHealth();
-    }
-
-    /**
-     * 
-     * 
-     * @param amount
-     */
-    public void modifyConstitution(int amount) {
-        constitution += amount;
+    public void setConstitution(int constitution) {
+        this.stats.replace(Stat.CONSTITUTION, constitution);
         setHealth();
     }
 
@@ -144,7 +149,7 @@ public class Actor {
      * @return int
      */
     public int getConstitution() {
-        return constitution;
+        return this.stats.get(Stat.CONSTITUTION);
     }
 
     /**
@@ -152,7 +157,7 @@ public class Actor {
      * 
      */
     public void setHealth() {
-        health = constitution * 2;
+        health = this.stats.get(Stat.CONSTITUTION) * 2;
         maxHealth = health;
     }
 
@@ -183,20 +188,15 @@ public class Actor {
      * @param strength
      */
     public void setStrength(int strength) {
-        this.strength = strength;
+        stats.replace(Stat.STRENGTH, strength);
         setCarryWeight();
     }
 
     /**
      * @param amount
      */
-    public void modifiyStrength(int amount) {
-        strength += amount;
-        setCarryWeight();
-    }
-
     public void setCarryWeight() {
-        carryWeight = strength * 2;
+        carryWeight = this.stats.get(Stat.STRENGTH) * 2;
     }
 
     /**
@@ -205,7 +205,7 @@ public class Actor {
      * @return int
      */
     public int getStrength() {
-        return strength;
+        return this.stats.get(Stat.STRENGTH);
     }
 
     /**
@@ -259,27 +259,18 @@ public class Actor {
      * @param intelligence
      */
     public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
-        setMana();
-        setBallisticSkill();
-    }
-
-    /**
-     * @param amount
-     */
-    public void modifyIntellignce(int amount) {
-        intelligence += amount;
+        this.stats.replace(Stat.INTELLIGENCE, intelligence);
         setMana();
         setBallisticSkill();
     }
 
     public void setMana() {
-        mana = intelligence * 2;
+        mana = this.stats.get(Stat.INTELLIGENCE) * 2;
         maxMana = mana;
     }
 
     public void setBallisticSkill() {
-        ballisticSkill = intelligence * 2;
+        ballisticSkill = this.stats.get(Stat.INTELLIGENCE) * 2;
     }
 
     /**
@@ -297,7 +288,7 @@ public class Actor {
      * @return int
      */
     public int getIntelligence() {
-        return intelligence;
+        return this.stats.get(Stat.INTELLIGENCE);
     }
 
     /**
@@ -327,7 +318,7 @@ public class Actor {
      * @param speed
      */
     public void setEnergy() {
-        energy = dexterity;
+        energy = this.stats.get(Stat.DEXTERITY);
         maxEnergy = energy;
     }
 
@@ -337,22 +328,13 @@ public class Actor {
      * @param dexterity
      */
     public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-        setWeaponSkill();
-        setEnergy();
-    }
-
-    /**
-     * @param amount
-     */
-    public void modifyDexterity(int amount) {
-        dexterity += amount;
+        this.stats.replace(Stat.DEXTERITY, dexterity);
         setWeaponSkill();
         setEnergy();
     }
 
     public void setWeaponSkill() {
-        weaponSkill = dexterity * 3;
+        weaponSkill = this.stats.get(Stat.DEXTERITY) * 3;
     }
 
     /**
@@ -379,7 +361,7 @@ public class Actor {
      * @return int
      */
     public int getDexterity() {
-        return dexterity;
+        return this.stats.get(Stat.DEXTERITY);
     }
 
     /**
@@ -399,14 +381,7 @@ public class Actor {
      * @param wisdom
      */
     public void setWisdom(int wisdom) {
-        this.wisdom = wisdom;
-    }
-
-    /**
-     * @param amount
-     */
-    public void modifyWisdom(int amount) {
-        wisdom += amount;
+        this.stats.replace(Stat.WISDOM, wisdom);
     }
 
     /**
@@ -415,7 +390,7 @@ public class Actor {
      * @return int
      */
     public int getWisdom() {
-        return wisdom;
+        return this.stats.get(Stat.WISDOM);
     }
 
     // Everything dealing with the charisma of the
@@ -426,14 +401,7 @@ public class Actor {
      * @param charisma
      */
     public void setCharisma(int charisma) {
-        this.charisma = charisma;
-    }
-
-    /**
-     * @param amount
-     */
-    public void modifyCharisma(int amount) {
-        charisma += amount;
+        this.stats.replace(Stat.CHARISMA, charisma);
     }
 
     /**
@@ -442,7 +410,7 @@ public class Actor {
      * @return int
      */
     public int getCharisma() {
-        return charisma;
+        return this.stats.get(Stat.CHARISMA);
     }
 
     // Everything dealing with Armour Class
