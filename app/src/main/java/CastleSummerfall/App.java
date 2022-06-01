@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
-import java.util.Objects;
 
 public class App {
 
@@ -13,13 +12,14 @@ public class App {
      */
     public static void main(String[] args) {
         // sorry thomas, needed to test some things so I added a debug option.
-        boolean debug = false;
+        boolean debug = args.length > 0 ? Boolean.parseBoolean(args[0]) : false;
 
         UI.displayOpening();
         UI.helpCommand("all");
         Scanner input = new Scanner(System.in);
         String inputCommand;
         final int FLOORSIZE = 10;
+        // TODO: make these dynamic
         Pattern helpPat = Pattern.compile("[Hh]elp ([a-z].*)");
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
@@ -27,6 +27,8 @@ public class App {
         Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
+
+        // TODO: make this not laggy
         Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
         Player player = new Player(0, 0, 7, 20, 2);
         if (debug) {
@@ -42,6 +44,7 @@ public class App {
         do {
             System.out.print("\n> ");
             inputCommand = input.nextLine();
+            // TODO: again, make this dynamic
             Matcher helpMatch = helpPat.matcher(inputCommand);
             Matcher moveMatch = movePat.matcher(inputCommand);
             Matcher inspectMatch = inspectPat.matcher(inputCommand);
@@ -68,6 +71,7 @@ public class App {
                 commandKnown = false;
                 int energyCost = UI.Commands.MOVE.getSpeedCommand();
                 if (energy - energyCost < 0) {
+                    // TODO: make these energy checks non-duplicated
                     System.out.println("You don't have enough energy to do this  ");
                     UI.displayEnergy(energy);
                 } else {
@@ -114,7 +118,6 @@ public class App {
             // inspect command
             if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
-                String command = inspectMatch.group(1);
                 boolean itemFind = true;
                 if (energy - energyCost < 0) {
                     System.out.println("You don't have enough energy to do this");
@@ -400,7 +403,6 @@ public class App {
                 player.setHealth();
                 System.out.println("You have found the cheat code. Your health is now 30");
                 commandKnown = false;
-                ;
             }
             if (inputCommand.equals("eat knife")) {
                 if (player.isInInventory("Knife")) {
@@ -415,7 +417,6 @@ public class App {
 
             if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())) {
                 endGame = false;
-                ;
             }
 
             if (player.getHealth() <= 0) {
@@ -435,6 +436,6 @@ public class App {
             // System.out.println();
 
         } while (endGame);
-
+        input.close();
     }
 }

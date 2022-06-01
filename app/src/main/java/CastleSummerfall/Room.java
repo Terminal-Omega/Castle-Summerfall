@@ -1,6 +1,7 @@
 package CastleSummerfall;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author @Corbanator
@@ -109,20 +110,11 @@ public class Room {
      * @throws ThingNotFoundException Throws this exception if it's not found.
      */
     public Interactable getItem(String name, int index) throws ThingNotFoundException {
-        int timesFound = -1;
-        int latestIndex = -1;
-        for (int i = 0; i < interactables.size(); i++) {
-            if (interactables.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                latestIndex = i;
-                timesFound++;
-                if (timesFound == index) {
-                    return interactables.get(i);
-                }
-            }
-        }
-        if (latestIndex != -1) {
-            return interactables.get(latestIndex);
-        } else {
+        try {
+            List<Interactable> matches = interactables.stream()
+                    .filter(n -> n.getName().toLowerCase().equals(name.toLowerCase())).collect(Collectors.toList());
+            return matches.get(index);
+        } catch (IndexOutOfBoundsException e) {
             throw new ThingNotFoundException("A " + name + " was not found in the room");
         }
     }
@@ -148,25 +140,12 @@ public class Room {
      * @throws ThingNotFoundException Throws this exception if it's not found.
      */
     public Interactable takeItem(String name, int index) throws ThingNotFoundException {
-        int timesFound = -1;
-        int latestIndex = -1;
-        for (int i = 0; i < interactables.size(); i++) {
-            if (interactables.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                latestIndex = i;
-                timesFound++;
-                if (timesFound == index) {
-                    Interactable result = interactables.get(i);
-                    interactables.remove(i);
-                    return result;
-                }
-            }
-        }
-        if (latestIndex != -1) {
-            Interactable result = interactables.get(latestIndex);
-            interactables.remove(latestIndex);
-            return result;
-        } else {
-            throw new ThingNotFoundException("a " + name + " was not found in the room");
+        try {
+            Interactable match = getItem(name, index);
+            interactables.remove(match);
+            return match;
+        } catch (ThingNotFoundException e) {
+            throw new ThingNotFoundException("A " + name + " was not found in the room");
         }
     }
 
@@ -240,20 +219,11 @@ public class Room {
      * @throws ThingNotFoundException
      */
     public Interactable getDescriptionInteractable(String name, int index) throws ThingNotFoundException {
-        int timesFound = -1;
-        int latestIndex = -1;
-        for (int i = 0; i < descriptionInteractables.size(); i++) {
-            if (descriptionInteractables.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                latestIndex = i;
-                timesFound++;
-                if (timesFound == index) {
-                    return descriptionInteractables.get(i);
-                }
-            }
-        }
-        if (latestIndex != -1) {
-            return descriptionInteractables.get(latestIndex);
-        } else {
+        try {
+            List<Interactable> matches = descriptionInteractables.stream()
+                    .filter(n -> n.getName().toLowerCase().equals(name.toLowerCase())).collect(Collectors.toList());
+            return matches.get(index);
+        } catch (IndexOutOfBoundsException e) {
             throw new ThingNotFoundException("A " + name + " was not found in the room");
         }
     }

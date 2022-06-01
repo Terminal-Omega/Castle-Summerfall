@@ -51,15 +51,7 @@ public class Generator {
                 boolean southDoor = j != 0;
                 boolean eastDoor = i != xSize - 1;
 
-                // first of two portions making a particular room the boss room.
-                boolean hasBoss = i == xBoss && j == yBoss;
-                Room toAdd = generateRoom(southDoor, eastDoor, hasBoss);
-
-                // second portion making that room the boss room
-                if (hasBoss) {
-                    toAdd.makeStairs();
-                }
-                column.add(toAdd);
+                column.add(generateRoom(southDoor, eastDoor, i == xBoss && j == yBoss));
             }
             rooms.add(column);
         }
@@ -80,7 +72,7 @@ public class Generator {
         }
 
         // if there was a boss generated, set the boss' coordinates and then add it
-        if (!Objects.isNull(boss)) {
+        if (Objects.nonNull(boss)) {
             boss.setXCoord(xBoss);
             boss.setYCoord(yBoss);
             result.addNPC(boss);
@@ -128,11 +120,10 @@ public class Generator {
                     while ((j = reader.read()) != -1) {
                         containerString += (char) j;
                     }
-                    String[] containerStrings = Parser.parseArray("containers", containerString);
-
-                    for (String string : containerStrings) {
-                        containers.add((ContainerPreset) PresetLoader.loadInteractablePreset(string));
-                    }
+                    containers.addAll(Arrays.asList(Parser.parseArray("containers", containerString)).stream()
+                            .map(n -> (ContainerPreset) PresetLoader.loadInteractablePreset(n))
+                            .collect(Collectors.toList()));
+                    reader.close();
                 }
 
                 // add up the rarity of all items, then get a random number between 0
@@ -165,16 +156,11 @@ public class Generator {
                     while ((j = reader.read()) != -1) {
                         interactableString += (char) j;
                     }
-                    String[] interactableStrings = Parser.parseArray("interactables", interactableString);
-
-                    for (String string : interactableStrings) {
-                        interactables.add(PresetLoader.loadInteractablePreset(string));
-                    }
+                    interactables.addAll(Arrays.asList(Parser.parseArray("interactables", interactableString)).stream()
+                            .map(PresetLoader::loadInteractablePreset).collect(Collectors.toList()));
+                    reader.close();
                 }
-                int totalWeight = 0;
-                for (InteractablePreset preset : interactables) {
-                    totalWeight += preset.rarity;
-                }
+                int totalWeight = interactables.stream().map(n -> n.rarity).reduce(0, Integer::sum);
                 int choice = rand.nextInt(totalWeight + 1);
 
                 for (InteractablePreset preset : interactables) {
@@ -218,14 +204,6 @@ public class Generator {
         } else {
             loopCount = interactableMin;
         }
-
-        // add interactables from the preset
-        List<Interactable> roomInventory = preset.interactables.stream().map(n -> spinInteractable(n))
-                .filter(n -> !Objects.isNull(n)).collect(Collectors.toList());
-
-        // add description interactables from the preset
-        List<Interactable> descriptionInteractables = preset.descriptionInteractables.stream()
-                .map(n -> spinInteractable(n)).collect(Collectors.toList());
 
         // spin the room from the preset
         Room result = spinRoom(preset, southDoor, eastDoor);
@@ -293,14 +271,8 @@ public class Generator {
                 e.printStackTrace();
             }
             List<RoomPreset> toAdd = PresetLoader.loadRoomPresets(presetString);
-
-            for (RoomPreset roomPreset : toAdd) {
-                if (Objects.isNull(roomPreset.boss)) {
-                    presets.add(roomPreset);
-                } else {
-                    bossPresets.add(roomPreset);
-                }
-            }
+            presets.addAll(toAdd.stream().filter(n -> Objects.isNull(n.boss)).collect(Collectors.toList()));
+            bossPresets.addAll(toAdd.stream().filter(n -> Objects.nonNull(n.boss)).collect(Collectors.toList()));
         }
 
         // chooses a roompreset from the appropriate arraylist, then spins it up
@@ -311,11 +283,12 @@ public class Generator {
         if (boss) {
             if (bossPresets.size() > 1) {
                 choice = rand.nextInt(bossPresets.size());
-                result = generateRoom(bossPresets.get(choice), 0, 0, southDoor, eastDoor, boss);
             } else {
                 choice = 0;
-                result = generateRoom(bossPresets.get(choice), 0, 0, southDoor, eastDoor, boss);
             }
+            result = generateRoom(bossPresets.get(choice), 0, 0, southDoor, eastDoor, boss);
+            // generate the stairs at the time of boss creation
+            result.makeStairs();
         } else {
             choice = rand.nextInt(presets.size());
             result = generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor, boss);
@@ -383,7 +356,6 @@ public class Generator {
         }
 
         Random rand = new Random();
-        String name = preset.name;
 
         // don't return anything unless it at least has a description
         if (Objects.isNull(preset.descriptions)) {
@@ -407,7 +379,7 @@ public class Generator {
         if (preset instanceof WeaponPreset) {
             return spinWeapon((WeaponPreset) preset);
         }
-        return new Interactable(name, description, preset.size, preset.weight, preset.canBePickedUp, abilities);
+        return new Interactable(preset.name, description, preset.size, preset.weight, preset.canBePickedUp, abilities);
     }
 
     /**
@@ -419,7 +391,6 @@ public class Generator {
     public static Container spinContainer(ContainerPreset preset) {
 
         Random rand = new Random();
-        String name = preset.name;
 
         // choose a random description
         String description = preset.descriptions[rand.nextInt(preset.descriptions.length)];
@@ -431,7 +402,7 @@ public class Generator {
             inventory.add(generateInteractable());
         }
 
-        return new Container(name, description, preset.size, preset.weight, preset.canBePickedUp, inventory,
+        return new Container(preset.name, description, preset.size, preset.weight, preset.canBePickedUp, inventory,
                 preset.inventorySize);
     }
 
@@ -513,11 +484,7 @@ public class Generator {
      */
     private static int randomFromRange(int[] range) {
         Random rand = new Random();
-        if (range[1] > range[0]) {
-            return rand.nextInt(range[1] - range[0]) + range[0];
-        } else {
-            return range[0];
-        }
+        return range[1] > range[0] ? rand.nextInt(range[1] - range[0]) + range[0] : range[0];
     }
 
     /**
@@ -565,8 +532,7 @@ public class Generator {
                     string += (char) i;
                 }
 
-                String[] stringsToAdd = Parser.parseArray("enemy-presets", string);
-                enemyChoices.addAll(Arrays.asList(stringsToAdd));
+                enemyChoices.addAll(Arrays.asList(Parser.parseArray("enemy-presets", string)));
                 reader.close();
             }
 

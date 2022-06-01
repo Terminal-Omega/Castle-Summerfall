@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * @author @Corbanator This Class stores a grid of rooms as a 2-dimensional
- *         ArrayList, as well as all of the NPCs in the room. It does special
+ *         List, as well as all of the NPCs in the room. It does special
  *         functions only allowed by access to all rooms/NPCS
  */
 public class Floor {
@@ -105,7 +105,7 @@ public class Floor {
             }
         }
 
-        // gets all the NPCs at those coordinates and adds them to an ArrayList
+        // gets all the NPCs at those coordinates and adds them to an List
         List<NPC> localNPC = NPCS.stream().filter(n -> n.getXCoord() == xCoord && n.getYCoord() == yCoord)
                 .collect(Collectors.toList());
 

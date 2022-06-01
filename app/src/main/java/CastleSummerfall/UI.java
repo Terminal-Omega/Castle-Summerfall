@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
  */
 public class UI {
     enum Commands {
+        // TODO: add support for aliasing somehow
         LOOK_AROUND("look around", 2, "\tThis will show the room description again\n\tUse: look around"),
         INSPECT("inspect", 0, "\tThis will display an object in the rooms description\n\tUse: inspect [object]"),
         TAKE("take", 4,
@@ -105,6 +106,7 @@ public class UI {
      * @param floorSize
      */
     public static void move(String command, Player player, Floor floor1, int floorSize) {
+        // TODO: make this code not garbage
         int x = player.getXCoord();
         int y = player.getYCoord();
 
@@ -235,6 +237,7 @@ public class UI {
      * This is displays the opening sequence of the game
      */
     public static void displayOpening() {
+        // TODO: make opening sequence a data file, and simply print the file
         System.out.println(
                 "\n\nYour breath comes heavy as you break your way out of the haunted forest\nYour goal lies on ahead. A forboding dark castle made of black stone rises like a mountain in front of you.");
         System.out.println(

@@ -1,6 +1,5 @@
 package CastleSummerfall;
 
-import javax.lang.model.type.NullType;
 import java.util.stream.Collectors;
 
 public class Player extends Actor {
