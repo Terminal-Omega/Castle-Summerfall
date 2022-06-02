@@ -8,6 +8,5 @@ build/
 javadoc/
 .vscode/
 **/bin
-*.jar
 
 app/.*
