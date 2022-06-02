@@ -36,7 +36,7 @@ public class App {
         }
         int energy = player.getEnergy();
         Random rand = new Random();
-        boolean endGame = true;
+        boolean endGame = false;
         System.out.println(floor.getDescription(0, 0));
         final String OSNAME = System.getProperty("os.name");
         floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
@@ -81,7 +81,7 @@ public class App {
             }
 
             // clear command
-            if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.CLEAR.getStrCommand())) {
                 int height = 12;
                 if (!OSNAME.equals("Windows 10")) {
                     System.out.print("\033[H\033[2J\033[5B");
@@ -95,7 +95,7 @@ public class App {
             }
 
             // look around command
-            if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.LOOK_AROUND.getStrCommand())) {
                 commandKnown = false;
                 int energyCost = UI.Commands.LOOK_AROUND.getSpeedCommand();
                 if (energy - energyCost < 0) {
@@ -108,7 +108,7 @@ public class App {
             }
 
             // bookmark command
-            if (bookMatch.find()) {
+            else if (bookMatch.find()) {
                 floor.getRoom(player.getXCoord(), player.getYCoord()).addBookmark(bookMatch.group(1),
                         bookMatch.group(2));
                 System.out.println("This room is bookmarked with the character: " + bookMatch.group(1).charAt(0));
@@ -116,7 +116,7 @@ public class App {
             }
 
             // inspect command
-            if (inspectMatch.find()) {
+            else if (inspectMatch.find()) {
                 int energyCost = UI.Commands.INSPECT.getSpeedCommand();
                 boolean itemFind = true;
                 if (energy - energyCost < 0) {
@@ -195,7 +195,7 @@ public class App {
             }
 
             // inventory command.
-            if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.INVENTORY.getStrCommand())) {
                 int energyCost = UI.Commands.INVENTORY.getSpeedCommand();
                 if (energy - energyCost < 0) {
                     System.out.println("You don't have enough energy to do this");
@@ -210,7 +210,7 @@ public class App {
             }
 
             // take command
-            if (takeMatch.find()) {
+            else if (takeMatch.find()) {
                 int energyCost = UI.Commands.TAKE.getSpeedCommand();
                 if (energy - energyCost < 0) {
                     System.out.println("You don't have enough energy to do this");
@@ -259,7 +259,7 @@ public class App {
                         num = num * -1;
                     }
 
-                    if (null != secondItem || null != firstItem) {
+                    if (null != secondItem && null != firstItem) {
                         if (num == -1) {
                             Container temp = (Container) firstItem;
                             try {
@@ -287,7 +287,7 @@ public class App {
             }
 
             // drop command
-            if (dropMatch.find()) {
+            else if (dropMatch.find()) {
                 int energyCost = UI.Commands.DROP.getSpeedCommand();
                 if (energy - energyCost < 0) {
                     System.out.println("You don't have enough energy to do this");
@@ -308,17 +308,16 @@ public class App {
             }
 
             // health command
-            if (inputCommand.equals(UI.Commands.HEALTH.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.HEALTH.getStrCommand())) {
                 UI.displayHeath(player.getHealth(), player.getMaxHealth());
                 commandKnown = false;
-            }
-            if (inputCommand.equals("map")) {
+            } else if (inputCommand.equals("map")) {
                 UI.displayMap(floor.getXSize(), floor.getYSize(), player, floor);
                 commandKnown = false;
             }
 
             // attack command
-            if (attackMatch.find()) {
+            else if (attackMatch.find()) {
                 String actorString = attackMatch.group(1);
                 String weaponString = attackMatch.group(2);
                 int energyCost = UI.Commands.ATTACK.getSpeedCommand();
@@ -347,21 +346,46 @@ public class App {
             }
 
             // energy command
-            if (inputCommand.equals(UI.Commands.ENERGY.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.ENERGY.getStrCommand())) {
                 System.out.println("\tEnergy: " + energy);
                 UI.displayEnergy(energy);
                 commandKnown = false;
             }
 
-            if (inputCommand.equals(UI.Commands.REST.getStrCommand())) {
+            else if (inputCommand.equals(UI.Commands.REST.getStrCommand())) {
                 commandKnown = false;
                 energy -= energy;
+            } else if (inputCommand.equals("descend")) {
+                System.out.println("You reached the end of the Demo, thanks for playing");
+            }
+
+            // Easter eggs
+            else if (inputCommand.equals("Xyzzyz")) {
+                player.setConstitution(15);
+                player.setHealth();
+                System.out.println("You have found the cheat code. Your health is now 30");
+                commandKnown = false;
+            } else if (inputCommand.equals("eat knife")) {
+                if (player.isInInventory("Knife")) {
+                    player.setConstitution(0);
+                    player.setHealth();
+                    System.out.println("You found the secret ending. PS this was Adam's idea");
+                } else {
+                    System.out.println("You don't have a knife to eat");
+                }
+                commandKnown = false;
+            }
+
+            else if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())) {
+                endGame = true;
             }
 
             // reset turn
             if (energy <= 0) {
                 int randNum = rand.nextInt(5);
                 switch (randNum) {
+                // TODO: move all of these into data file
+                // TODO: make sure data files don't decrease performance
                 case 0:
                     System.out.println(
                             "Your eyes feel tired you can't go on. And so you take a short nap. But it must be quick you think, Your family is waiting");
@@ -393,34 +417,8 @@ public class App {
                 Updates.actionUpdate(floor);
             }
 
-            if (inputCommand.equals("descend")) {
-                System.out.println("You reached the end of the Demo, thanks for playing");
-            }
-
-            // Easter eggs
-            if (inputCommand.equals("Xyzzyz")) {
-                player.setConstitution(15);
-                player.setHealth();
-                System.out.println("You have found the cheat code. Your health is now 30");
-                commandKnown = false;
-            }
-            if (inputCommand.equals("eat knife")) {
-                if (player.isInInventory("Knife")) {
-                    player.setConstitution(0);
-                    player.setHealth();
-                    System.out.println("You found the secret ending. PS this was Adam's idea");
-                } else {
-                    System.out.println("You don't have a knife to eat");
-                }
-                commandKnown = false;
-            }
-
-            if (inputCommand.equals(UI.Commands.EXIT.getStrCommand())) {
-                endGame = false;
-            }
-
             if (player.getHealth() <= 0) {
-                endGame = false;
+                endGame = true;
                 UI.displayEnding();
             }
 
@@ -435,7 +433,7 @@ public class App {
             floor.getRoom(player.getXCoord(), player.getYCoord()).visit();
             // System.out.println();
 
-        } while (endGame);
+        } while (!endGame);
         input.close();
     }
 }
