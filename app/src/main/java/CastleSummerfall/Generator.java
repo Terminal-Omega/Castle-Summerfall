@@ -27,6 +27,23 @@ public class Generator {
     // floor.
     private static NPC boss;
 
+    private static String readFile(String path) {
+        // TODO: batch processing
+        try {
+            File file = new File(path);
+            FileReader reader = new FileReader(file);
+            int i;
+            String data = "";
+            while ((i = reader.read()) != -1) {
+                data += (char) i;
+            }
+            reader.close();
+            return data;
+        } catch (Exception E) {
+            return null;
+        }
+    }
+
     /**
      * This will generate a floor based on the size desired.
      *
@@ -93,16 +110,9 @@ public class Generator {
         Interactable result;
         double randNum = rand.nextDouble();
 
-        try {
-            // read in the filepaths
-            File pathFile = new File(pathPath);
-            FileReader pathReader = new FileReader(pathFile);
-            int i;
-            String pathString = "";
-            while ((i = pathReader.read()) != -1) {
-                pathString += (char) i;
-            }
+        String pathString = readFile(pathPath);
 
+        if (Objects.nonNull(pathString)) {
             // almost the same code twice, but one is for containers and the other for
             // normal interactables
             if (randNum < containerWeight) {
@@ -113,24 +123,15 @@ public class Generator {
                 // for each file, add the string for each container to the array of all
                 // containers
                 for (String path : containerPaths) {
-                    File file = new File(path);
-                    FileReader reader = new FileReader(file);
-                    int j;
-                    String containerString = "";
-                    while ((j = reader.read()) != -1) {
-                        containerString += (char) j;
-                    }
-                    containers.addAll(Arrays.asList(Parser.parseArray("containers", containerString)).stream()
+                    containers.addAll(Arrays.asList(Parser.parseArray("containers", readFile(path))).stream()
                             .map(n -> (ContainerPreset) PresetLoader.loadInteractablePreset(n))
                             .collect(Collectors.toList()));
-                    reader.close();
                 }
 
                 // add up the rarity of all items, then get a random number between 0
                 // and that sum. this gets a random item, but weights it toward items
                 // with higher rarities
-                int totalWeight = containers.stream().map(n -> n.rarity).reduce(0, Integer::sum);
-                int choice = rand.nextInt(totalWeight + 1);
+                int choice = rand.nextInt(containers.stream().map(n -> n.rarity).reduce(0, Integer::sum) + 1);
 
                 // actually select the particular item
                 for (InteractablePreset preset : containers) {
@@ -149,19 +150,10 @@ public class Generator {
                 List<InteractablePreset> interactables = new ArrayList<>();
 
                 for (String path : interactablePaths) {
-                    File file = new File(path);
-                    FileReader reader = new FileReader(file);
-                    int j;
-                    String interactableString = "";
-                    while ((j = reader.read()) != -1) {
-                        interactableString += (char) j;
-                    }
-                    interactables.addAll(Arrays.asList(Parser.parseArray("interactables", interactableString)).stream()
+                    interactables.addAll(Arrays.asList(Parser.parseArray("interactables", readFile(path))).stream()
                             .map(PresetLoader::loadInteractablePreset).collect(Collectors.toList()));
-                    reader.close();
                 }
-                int totalWeight = interactables.stream().map(n -> n.rarity).reduce(0, Integer::sum);
-                int choice = rand.nextInt(totalWeight + 1);
+                int choice = rand.nextInt(interactables.stream().map(n -> n.rarity).reduce(0, Integer::sum) + 1);
 
                 for (InteractablePreset preset : interactables) {
                     choice -= preset.rarity;
@@ -172,9 +164,6 @@ public class Generator {
                 }
                 return null;
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -230,47 +219,17 @@ public class Generator {
      * @return Room
      */
     public static Room generateRoom(boolean southDoor, boolean eastDoor, boolean boss) { // read all the filepaths
-        File filePaths = new File(pathPath);
-        String[] files;
-        String pathString = "";
-
-        try {
-            FileReader pathIn = new FileReader(filePaths);
-            int i = 0;
-
-            while ((i = pathIn.read()) != -1) {
-                pathString += (char) i;
-            }
-            pathIn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         // get the paths to the room preset files
-        files = Parser.trimQuotes(Parser.parseArray("room-presets", pathString));
+        String[] files = Parser.trimQuotes(Parser.parseArray("room-presets", readFile(pathPath)));
 
         // two arraylists, one for boss rooms, so that it can only make boss rooms
         // when told to.
         List<RoomPreset> presets = new ArrayList<>();
         List<RoomPreset> bossPresets = new ArrayList<>();
 
-        // for each file, read what's in it and load all the roomPresets, then add
-        // each of them to the appropriate Arraylist.
+        // for each file, read what's in it and load all the roomPresets
         for (String file : files) {
-            File presetFile = new File(file);
-            String presetString = "";
-            try {
-                FileReader presetIn = new FileReader(presetFile);
-                int i = 0;
-
-                while ((i = presetIn.read()) != -1) {
-                    presetString += (char) i;
-                }
-                presetIn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            List<RoomPreset> toAdd = PresetLoader.loadRoomPresets(presetString);
+            List<RoomPreset> toAdd = PresetLoader.loadRoomPresets(readFile(file));
             presets.addAll(toAdd.stream().filter(n -> Objects.isNull(n.boss)).collect(Collectors.toList()));
             bossPresets.addAll(toAdd.stream().filter(n -> Objects.nonNull(n.boss)).collect(Collectors.toList()));
         }
@@ -497,43 +456,14 @@ public class Generator {
      * @return NPC
      */
     private static NPC generateEnemy(int xCoord, int yCoord, int challenge) {
-
         Random rand = new Random();
-        File filePaths = new File(pathPath);
-        String[] files;
-        String pathString = "";
+        String[] files = Parser.trimQuotes(Parser.parseArray("enemy-presets", readFile(pathPath)));
 
-        // read in where the files are
-        try {
-            FileReader pathIn = new FileReader(filePaths);
-            int i = 0;
-
-            while ((i = pathIn.read()) != -1) {
-                pathString += (char) i;
-            }
-            pathIn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        files = Parser.trimQuotes(Parser.parseArray("enemy-presets", pathString));
-
-        // for each file, load in all the enemy presets. add them all to a single
-        // arraylist
+        // for each file, load in all the enemy presets
         try {
             List<String> enemyChoices = new ArrayList<>();
             for (String fileString : files) {
-                File file = new File(fileString);
-                FileReader reader = new FileReader(file);
-                String string = "";
-
-                int i = 0;
-                while ((i = reader.read()) != -1) {
-                    string += (char) i;
-                }
-
-                enemyChoices.addAll(Arrays.asList(Parser.parseArray("enemy-presets", string)));
-                reader.close();
+                enemyChoices.addAll(Arrays.asList(Parser.parseArray("enemy-presets", readFile(fileString))));
             }
 
             // choose one of the enemypresets, make it into an enemy, then return it.
