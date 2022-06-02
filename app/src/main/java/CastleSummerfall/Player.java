@@ -7,16 +7,11 @@ public class Player extends Actor {
     private int maxWeight = 20;
 
     public Player(int x, int y, int constitution, int energy, int AC) {
-        this.setYCoord(y);
-        this.setXCoord(x);
-        this.setConstitution(constitution);
-        this.setHealth();
+        super(x, y, AC, 0, energy, constitution, 0, 0, 0, 0, 0, "Player");
+
         this.setInventory();
-        this.setDexterity(energy);
-        this.setEnergy();
         this.setWeaponSkill();
         this.setName("Player");
-        this.setAC(AC);
     }
 
     /**
@@ -24,9 +19,8 @@ public class Player extends Actor {
      */
     public void putItem(Interactable interactable) {
         int weight = inventory.stream().map(n -> n.weight).reduce(0, Integer::sum);
-        weight += interactable.weight;
 
-        if (weight <= maxWeight) {
+        if (weight + interactable.weight <= maxWeight) {
             if (inventory.size() < 5) {
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
