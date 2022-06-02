@@ -3,6 +3,8 @@ package CastleSummerfall;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.File;
+import java.io.FileReader;
 
 /**
  * This is the Class where the more expensive big functions in the app go. It
@@ -106,69 +108,61 @@ public class UI {
      * @param floorSize
      */
     public static void move(String command, Player player, Floor floor1, int floorSize) {
-        // TODO: make this code not garbage
+        // TODO: make this code less garbage
         int x = player.getXCoord();
         int y = player.getYCoord();
 
         // move north
-        if (command.equals("N") || command.equals("n")) {
-            if (y < (floorSize - 1) && y >= 0) {
-                try {
+        command = command.toLowerCase();
+        try {
+            if (command.equals("n")) {
+                if (y < (floorSize - 1) && y >= 0) {
                     if (floor1.getDoor(x, y, Direction.NORTH).isOpen()) { // Sorry Thomas, had to fix the doors
                         player.setYCoord(y + 1);
                         System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                     }
-                } catch (ThingNotFoundException e) {
-                    System.out.println("You don't see a door in that wall. You can't move that way.");
+                    return;
                 }
-            } else {
-                System.out.println("You don't see a door in that wall. You can't move that way.");
             }
-        }
-        // move south
-        if (command.equals("S") || command.equals("s")) {
-            if (y <= (floorSize - 1) && y > 0) {
-                try {
+
+            // move south
+            else if (command.equals("s")) {
+                if (y <= (floorSize - 1) && y > 0) {
                     if (floor1.getDoor(x, y, Direction.SOUTH).isOpen()) {
                         player.setYCoord(y - 1);
                     }
-                } catch (ThingNotFoundException e) {
-                    System.out.println("You don't see a door in that wall. You can't move that way.");
+                    System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
+                    return;
                 }
-                System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
-            } else {
-                System.out.println("You don't see a door in that wall. You can't move that way.");
             }
-        }
-        // move east
-        if (command.equals("E") || command.equals("e")) {
-            if (x < (floorSize - 1) && x >= 0) {
-                try {
+
+            // move east
+            else if (command.equals("e")) {
+                if (x < (floorSize - 1) && x >= 0) {
                     if (floor1.getDoor(x, y, Direction.EAST).isOpen()) {
                         player.setXCoord(x + 1);
                         System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                     }
-                } catch (ThingNotFoundException e) {
-                    System.out.println("You don't see a door in that wall. You can't move that way.");
+                    return;
                 }
-            } else {
-                System.out.println("You don't see a door in that wall. You can't move that way.");
             }
-        }
-        // move west
-        if (command.equals("W") || command.equals("w")) {
-            if (x <= floorSize - 1 && x > 0) {
-                try {
+
+            // move west
+            else if (command.equals("w")) {
+                if (x <= floorSize - 1 && x > 0) {
                     if (floor1.getDoor(x, y, Direction.WEST).isOpen()) {
                         player.setXCoord(x - 1);
                         System.out.println(floor1.getDescription(player.getXCoord(), player.getYCoord()));
                     }
-                } catch (ThingNotFoundException e) {
-                    System.out.println("You don't see a door in that wall. You can't move that way.");
+                    return;
                 }
             } else {
-                System.out.println("You don't see a door in that wall. You can't move that way.");
+                System.out.println("That's not a vaild direction");
+                return;
             }
+        } catch (ThingNotFoundException e) {
+        } finally {
+            System.out.println("You don't see a door in that wall. You can't move that way");
         }
     }
 
@@ -179,13 +173,7 @@ public class UI {
      */
     public static void displayHeath(int health, int maxHealth) {
         String output = "\tHealth: [";
-        for (int i = 0; i < maxHealth; i++) {
-            if (i <= health) {
-                output += "-";
-            } else {
-                output += " ";
-            }
-        }
+        output += "-".repeat(health) + " ".repeat(maxHealth - health);
         output += "] " + health;
 
         // This doesn't work on windows so comment it out
@@ -230,7 +218,7 @@ public class UI {
         }
         System.out.println();
         displayHeath(health, maxHealth);
-        System.out.println("\n");
+        System.out.println();
     }
 
     /**

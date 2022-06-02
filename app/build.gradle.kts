@@ -28,6 +28,10 @@ tasks.named<JavaExec>("run") {
     standardInput = System.`in`
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
 application {
     // Define the main class for the application.
     mainClass.set("CastleSummerfall.App")

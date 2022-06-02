@@ -35,8 +35,8 @@ public class Boss extends NPC {
      */
     public void bossFight(Actor player) {
         int healChance = rand.nextInt(100) + 1;
-        if (health < maxHealth / 2 && healChance <= 30) {
-            int healAmount = rand.nextInt(maxHealth / 4) + maxHealth / 4;
+        if (health < this.getMaxHealth() / 2 && healChance <= 30) {
+            int healAmount = rand.nextInt(this.getMaxHealth() / 4) + this.getMaxHealth() / 4;
             heal(healAmount);
         } else {
             int weaponChoiseInt = rand.nextInt(inventory.size() - 1);

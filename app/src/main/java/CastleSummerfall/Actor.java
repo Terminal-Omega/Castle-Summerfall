@@ -15,8 +15,6 @@ public class Actor {
     protected int xCoord;
     protected int yCoord;
 
-    protected int maxHealth;
-    protected int maxEnergy;
     protected int health;
     protected int energy;
 
@@ -24,7 +22,6 @@ public class Actor {
     protected int maxShield;
     protected int shield;
     protected int shieldRegen;
-    protected int maxMana;
     protected int mana;
     protected int ballisticSkill;
     protected int weaponSkill;
@@ -68,9 +65,6 @@ public class Actor {
         inventory = new ArrayList<Interactable>();
     }
 
-    // everything dealing with
-    // xCoord--------------------------------------------------------------------
-
     /**
      * This will set the x coordinate of the Actor
      * 
@@ -88,9 +82,6 @@ public class Actor {
     public int getXCoord() {
         return xCoord;
     }
-
-    // everything dealing with
-    // yCoord---------------------------------------------------------------------
 
     /**
      * This will set the y coordinate of the player
@@ -110,8 +101,6 @@ public class Actor {
         return yCoord;
     }
 
-    // Everything dealing with
-    // name-------------------------------------------------------------------
     /**
      * This will set the name of the Actor
      * 
@@ -129,9 +118,6 @@ public class Actor {
     public String getName() {
         return name;
     }
-
-    // Everything dealing with
-    // Constituion----------------------------------------------------------
 
     /**
      * This will set the constituion of the Actor
@@ -158,7 +144,6 @@ public class Actor {
      */
     public void setHealth() {
         health = this.stats.get(Stat.CONSTITUTION) * 2;
-        maxHealth = health;
     }
 
     /**
@@ -176,12 +161,10 @@ public class Actor {
      * @return int
      */
     public int getMaxHealth() {
-        return maxHealth;
+        return this.stats.get(Stat.CONSTITUTION) * 2;
 
     }
 
-    // Everything dealing with strength of the
-    // Actor------------------------------------------------------
     /**
      * This sets the strength of the Actor
      * 
@@ -217,8 +200,6 @@ public class Actor {
         return carryWeight;
     }
 
-    // Everything dealing with
-    // inventory--------------------------------------------------------------
     public void setInventory() {
         inventory = new ArrayList<Interactable>();
 
@@ -251,8 +232,6 @@ public class Actor {
         inventory.add(interactable);
     }
 
-    // This is everything dealing with intelligence
-    // ---------------------------------------------------------
     /**
      * This sets the intelligence of the Actor
      * 
@@ -266,7 +245,6 @@ public class Actor {
 
     public void setMana() {
         mana = this.stats.get(Stat.INTELLIGENCE) * 2;
-        maxMana = mana;
     }
 
     public void setBallisticSkill() {
@@ -306,11 +284,8 @@ public class Actor {
      * @return int
      */
     public int getMaxMana() {
-        return maxMana;
+        return this.stats.get(Stat.INTELLIGENCE) * 2;
     }
-
-    // Everything dealing with Dexterity
-    // ------------------------------------------------
 
     /**
      * This will set the speed of the Actor
@@ -319,7 +294,6 @@ public class Actor {
      */
     public void setEnergy() {
         energy = this.stats.get(Stat.DEXTERITY);
-        maxEnergy = energy;
     }
 
     /**
@@ -370,11 +344,9 @@ public class Actor {
      * @return int
      */
     public int getMaxEnergy() {
-        return maxEnergy;
+        return this.stats.get(Stat.DEXTERITY);
     }
 
-    // Everything dealing with wisdom of the
-    // Actor------------------------------------------------------
     /**
      * This sets the wisdom of the Actor
      * 
@@ -393,8 +365,6 @@ public class Actor {
         return this.stats.get(Stat.WISDOM);
     }
 
-    // Everything dealing with the charisma of the
-    // Actor---------------------------------------------------
     /**
      * This sets the charisma of the Actor
      * 
@@ -413,7 +383,6 @@ public class Actor {
         return this.stats.get(Stat.CHARISMA);
     }
 
-    // Everything dealing with Armour Class
     /**
      * This will set the Armor Class of the Actor
      * 
@@ -439,8 +408,6 @@ public class Actor {
         return AC;
     }
 
-    // Everything dealing with the noise level of the
-    // Actor----------------------------------------------------------
     /**
      * This sets the Noise level the Actor will make
      * 
@@ -468,19 +435,18 @@ public class Actor {
         return noise;
     }
 
-    // Everything dealing with the shield of the Actor
     /**
      * This sets the sheild value of the Actor
      * 
-     * @param sheild
+     * @param shield
      */
-    public void setShield(int sheild) {
-        this.shield = sheild;
-        maxShield = shield;
+    public void setShield(int shield) {
+        this.shield = shield;
+        this.maxShield = shield;
     }
 
     /**
-     * This will return the sheild strength of the Actor
+     * This will return the shield strength of the Actor
      * 
      * @return int
      */
@@ -488,7 +454,6 @@ public class Actor {
         return shield;
     }
 
-    // Everything dealing with combat and damage/healing
     /**
      * This will make the Actor take damage decreaseing their health
      * 
@@ -549,10 +514,10 @@ public class Actor {
     /**
      * This will heal the Actor, increasing their health
      * 
-     * @param heal
+     * @param amount
      */
-    public void heal(int heal) {
-        health += heal;
+    public void heal(int amount) {
+        health += amount;
 
     }
 
@@ -587,7 +552,9 @@ public class Actor {
 
     /**
      * This will cast a spell on the Actor (Not currently implementaed)
-     * 
+     *
+     * TODO: implement this method
+     *
      * @param castorMana
      * @param type
      * @param spellMana
