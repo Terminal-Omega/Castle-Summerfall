@@ -115,54 +115,38 @@ public class Generator {
         if (Objects.nonNull(pathString)) {
             // almost the same code twice, but one is for containers and the other for
             // normal interactables
+
+            List<InteractablePreset> interactables = new ArrayList<>();
             if (randNum < containerWeight) {
                 // get the filepath to the containers
                 String[] containerPaths = Parser.trimQuotes(Parser.parseArray("containers", pathString));
-                List<ContainerPreset> containers = new ArrayList<>();
 
                 // for each file, add the string for each container to the array of all
                 // containers
                 for (String path : containerPaths) {
-                    containers.addAll(Arrays.asList(Parser.parseArray("containers", readFile(path))).stream()
+                    interactables.addAll(Arrays.asList(Parser.parseArray("containers", readFile(path))).stream()
                             .map(n -> (ContainerPreset) PresetLoader.loadInteractablePreset(n))
                             .collect(Collectors.toList()));
                 }
-
-                // add up the rarity of all items, then get a random number between 0
-                // and that sum. this gets a random item, but weights it toward items
-                // with higher rarities
-                int choice = rand.nextInt(containers.stream().map(n -> n.rarity).reduce(0, Integer::sum) + 1);
-
-                // actually select the particular item
-                for (InteractablePreset preset : containers) {
-                    choice -= preset.rarity;
-                    if (choice <= 0) {
-                        result = spinInteractable(preset);
-                        return result;
-                    }
-                }
-                return null;
-
-                // This entire portion of code repeats the previous portion but for
-                // normal interactables instead of containers.
             } else {
                 String[] interactablePaths = Parser.trimQuotes(Parser.parseArray("interactables", pathString));
-                List<InteractablePreset> interactables = new ArrayList<>();
 
                 for (String path : interactablePaths) {
                     interactables.addAll(Arrays.asList(Parser.parseArray("interactables", readFile(path))).stream()
                             .map(PresetLoader::loadInteractablePreset).collect(Collectors.toList()));
                 }
-                int choice = rand.nextInt(interactables.stream().map(n -> n.rarity).reduce(0, Integer::sum) + 1);
+            }
 
-                for (InteractablePreset preset : interactables) {
-                    choice -= preset.rarity;
-                    if (choice <= 0) {
-                        result = spinInteractable(preset);
-                        return result;
-                    }
+            // add up the rarity of all items, then get a random number between 0
+            // and that sum. this gets a random item, but weights it toward items
+            // with higher rarities
+            int choice = rand.nextInt(interactables.stream().map(n -> n.rarity).reduce(0, Integer::sum) + 1);
+            for (InteractablePreset preset : interactables) {
+                choice -= preset.rarity;
+                if (choice <= 0) {
+                    result = spinInteractable(preset);
+                    return result;
                 }
-                return null;
             }
         }
         return null;
@@ -240,17 +224,12 @@ public class Generator {
         int choice;
         Room result;
         if (boss) {
-            if (bossPresets.size() > 1) {
-                choice = rand.nextInt(bossPresets.size());
-            } else {
-                choice = 0;
-            }
+            choice = bossPresets.size() > 1 ? rand.nextInt(bossPresets.size()) : 0;
             result = generateRoom(bossPresets.get(choice), 0, 0, southDoor, eastDoor, boss);
             // generate the stairs at the time of boss creation
             result.makeStairs();
         } else {
-            choice = rand.nextInt(presets.size());
-            result = generateRoom(presets.get(choice), 1, 3, southDoor, eastDoor, boss);
+            result = generateRoom(presets.get(rand.nextInt(presets.size())), 1, 3, southDoor, eastDoor, boss);
         }
 
         return result;
