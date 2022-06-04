@@ -81,7 +81,7 @@ public class UI {
     public static void helpCommand(String command) {
         if (command.equals("all")) {
             // System.out.println("\nThis is a text based adventure game where you
-            // fight monsters. How many floors can you decesend?\n");
+            // fight monsters. How many floors can you descend?\n");
             System.out.println("\nCommands:");
             for (Commands name : Commands.values()) {
                 System.out.printf("\t%-15s %s %d\n", name.getStrCommand() + ",", "Energy Cost:",
@@ -89,7 +89,7 @@ public class UI {
             }
             System.out.println(colorString(
                     "Use help to get back to this screen\nUse help [command name] to learn about that command",
-                    Colors.RED) + "\nYou can alse use [help how to play] for a description how to play\n");
+                    Colors.RED) + "\nYou can also use [help how to play] for a description how to play\n");
         } else if (Arrays.asList(Commands.values()).stream().map(n -> n.getStrCommand()).collect(Collectors.toList())
                 .contains(command)) {
             System.out.println(Arrays.asList(Commands.values()).stream().filter(n -> command.equals(n.getStrCommand()))
@@ -157,7 +157,7 @@ public class UI {
                     return;
                 }
             } else {
-                System.out.println("That's not a vaild direction");
+                System.out.println("That's not a valid direction");
                 return;
             }
         } catch (ThingNotFoundException e) {
