@@ -50,7 +50,8 @@ public class Boss extends NPC {
      * @param FloorSize
      */
     @Override
-    public void npcTurnAlliance(Actor Player, int FloorSize) {
+    public Activity npcTurnAlliance(Actor Player, int FloorSize) {
         bossFight(Player);
+        return new Activity(0, 0, false);
     }
 }

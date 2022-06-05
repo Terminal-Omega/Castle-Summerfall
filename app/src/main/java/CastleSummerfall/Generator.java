@@ -40,6 +40,7 @@ public class Generator {
             reader.close();
             return data;
         } catch (Exception E) {
+            E.printStackTrace();
             return null;
         }
     }

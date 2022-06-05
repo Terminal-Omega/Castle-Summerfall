@@ -88,7 +88,14 @@ public class Updates {
                 floor.removeNPC(i);
                 System.out.println(npc.getName() + " was killed.");
             }
-            npc.npcTurnAlliance(player, floor.getXSize());
+            int startX = npc.getXCoord();
+            int startY = npc.getYCoord();
+            NPC.Activity action = npc.npcTurnAlliance(player, floor.getXSize());
+            if (action.moved == true && action.x == player.getXCoord() && action.y == player.getYCoord()) {
+                System.out.println(npc.getName() + " entered the room.");
+            } else if (action.moved == true && startX == player.getXCoord() && startY == player.getYCoord()) {
+                System.out.print(npc.getName() + " exited the room.");
+            }
             npc.setEnergy();
             // TODO: @Corbanator notify player if NPC enters the room
         }
