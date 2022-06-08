@@ -74,7 +74,7 @@ public class PresetLoader {
         }
 
         // Loads in the boss to the room, if there is one.
-        NPCPreset boss = loadNpcPreset(Parser.parseObject("boss", toLoad));
+        NPCPreset boss = loadNPCPreset(Parser.parseObject("boss", toLoad));
 
         RoomPreset result = new RoomPreset(descriptions, interactables, descriptionInteractables);
         result.addBoss(boss);
@@ -218,7 +218,7 @@ public class PresetLoader {
      * @param toLoad
      * @return NPCPreset
      */
-    public static NPCPreset loadNpcPreset(String toLoad) {
+    public static NPCPreset loadNPCPreset(String toLoad) {
         // returns null if it is passed a null string, to avoid nullPointerExceptions
         if (Objects.isNull(toLoad)) {
             return null;

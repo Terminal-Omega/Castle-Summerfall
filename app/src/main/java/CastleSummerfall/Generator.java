@@ -454,7 +454,7 @@ public class Generator {
 
             // choose one of the enemypresets, make it into an enemy, then return it.
             String choice = enemyChoices.get(rand.nextInt(enemyChoices.size()));
-            return spinNPC(xCoord, yCoord, PresetLoader.loadNpcPreset(choice), 0);
+            return spinNPC(xCoord, yCoord, PresetLoader.loadNPCPreset(choice), 0);
 
         } catch (Exception e) {
             e.printStackTrace();
