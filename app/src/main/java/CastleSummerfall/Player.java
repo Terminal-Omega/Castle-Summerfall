@@ -1,14 +1,45 @@
 package CastleSummerfall;
 
 import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Player extends Actor {
 
-    private int maxWeight = 20;
-
     public Player(int x, int y, int constitution, int energy, int AC) {
-        super(x, y, AC, 0, energy, constitution, 0, 0, 0, 0, 0, "Player");
+        // create starting stats of all zero
+        // TODO: set correct default stat values
+        HashMap<Stat, Integer> stats = new HashMap<>();
+        stats.put(Stat.CONSTITUTION, 6);
+        stats.put(Stat.DEXTERITY, 19);
+        stats.put(Stat.STRENGTH, 9);
+        stats.put(Stat.CHARISMA, 7);
+        stats.put(Stat.INTELLIGENCE, 7);
+        stats.put(Stat.WISDOM, 7);
+        HashMap<Stat, Range> statGrowth = new HashMap<>();
+        for (Stat stat : Stat.values()) {
+            statGrowth.put(stat, new Range(1, 3));
+        }
 
+        // NOTE: I'm duplicating all of this from the Actor constructor because I'm too
+        // lazy to find a work around
+        setXCoord(xCoord);
+        setYCoord(yCoord);
+        setAC(AC);
+        setNoise(noise);
+        setShield(shield);
+        // TODO: calculation to convert level to exp
+        this.level = 1;
+
+        this.stats = stats;
+        setStrength(stats.get(Stat.STRENGTH) + statGrowth.get(Stat.STRENGTH).random());
+        setDexterity(stats.get(Stat.DEXTERITY) + statGrowth.get(Stat.DEXTERITY).random());
+        setConstitution(stats.get(Stat.CONSTITUTION) + statGrowth.get(Stat.CONSTITUTION).random());
+        setIntelligence(stats.get(Stat.INTELLIGENCE) + statGrowth.get(Stat.INTELLIGENCE).random());
+        setWisdom(stats.get(Stat.WISDOM) + statGrowth.get(Stat.WISDOM).random());
+        setCharisma(stats.get(Stat.CHARISMA) + statGrowth.get(Stat.CHARISMA).random());
+
+        inventory = new ArrayList<Interactable>();
         this.setInventory();
         this.setWeaponSkill();
         this.setName("Player");
@@ -20,7 +51,7 @@ public class Player extends Actor {
     public void putItem(Interactable interactable) {
         int weight = inventory.stream().map(n -> n.weight).reduce(0, Integer::sum);
 
-        if (weight + interactable.weight <= maxWeight) {
+        if (weight + interactable.weight <= carryWeight) {
             if (inventory.size() < 5) {
                 inventory.add(interactable);
                 System.out.println("You put the " + interactable.getName() + " in your bag");
@@ -94,10 +125,14 @@ public class Player extends Actor {
                 .collect(Collectors.toList()).isEmpty();
     }
 
-    /**
-     * @return int
-     */
-    public int getMaxWeight() {
-        return this.maxWeight;
+    public void addExp(long exp) {
+        System.out.println("You gained " + exp + " exp");
+        this.exp += exp;
+        // TODO: calculate growth formula
+    }
+
+    public void levelUp() {
+        this.level += 1;
+        // TODO: stat growth
     }
 }

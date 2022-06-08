@@ -203,7 +203,7 @@ public class App {
                 } else {
                     energy -= energyCost;
                     UI.displayInventory(player.getInventory(), player.getHealth(), player.getMaxHealth(),
-                            player.getMaxWeight());
+                            player.getCarryWeight());
                 }
 
                 commandKnown = false;
@@ -414,7 +414,7 @@ public class App {
                 Updates.update(player, floor);
                 energy = player.getEnergy();
             } else {
-                Updates.actionUpdate(floor);
+                Updates.actionUpdate(floor, player);
             }
 
             if (player.getHealth() <= 0) {

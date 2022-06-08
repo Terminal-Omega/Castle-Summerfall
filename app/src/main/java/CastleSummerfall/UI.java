@@ -196,7 +196,7 @@ public class UI {
      * @param inventory
      * @param health
      */
-    public static void displayInventory(List<Interactable> inventory, int health, int maxHealth, int maxWeight) {
+    public static void displayInventory(List<Interactable> inventory, int health, int maxHealth, int carryWeight) {
         String inventoryOutput = "";
         int weight = 0;
         System.out.println();
@@ -213,7 +213,7 @@ public class UI {
         if (inventoryOutput.equals("")) {
             System.out.println("You don't have anything on you");
         } else {
-            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\n\tMax Weight: " + maxWeight;
+            inventoryOutput += "\n\n\tTotal Weight: " + weight + "\n\tMax Weight: " + carryWeight;
             System.out.println(inventoryOutput);
         }
         System.out.println();

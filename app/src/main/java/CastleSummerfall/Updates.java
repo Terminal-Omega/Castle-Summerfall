@@ -20,16 +20,15 @@ public class Updates {
 
         Pattern damage = Pattern.compile("damage\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern heal = Pattern.compile("heal\\(([0-9]*(-([0-9]*))?)\\)");
-        Pattern damageNoAC =
-            Pattern.compile("damageNoAC\\(([0-9]*(-([0-9]*))?)\\)");
+        Pattern damageNoAC = Pattern.compile("damageNoAC\\(([0-9]*(-([0-9]*))?)\\)");
         Pattern statChanger = Pattern.compile("stat");
 
         Matcher damageMatcher = damage.matcher(effect);
         if (damageMatcher.find()) {
             int damageAmount;
             if (damageMatcher.group(3) != "") {
-                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
-                    Integer.parseInt(damageMatcher.group(1));
+                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
+                        + Integer.parseInt(damageMatcher.group(1));
                 // TODO: @Corbanator make this work once Xander pushes the thing
             } else {
                 damageAmount = Integer.parseInt(damageMatcher.group(1));
@@ -41,8 +40,8 @@ public class Updates {
         if (damageMatcher.find()) {
             int healAmount;
             if (healMatcher.group(3) != "") {
-                healAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
-                    Integer.parseInt(damageMatcher.group(1));
+                healAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
+                        + Integer.parseInt(damageMatcher.group(1));
                 // TODO: @Corbanator make this work once Xander pushes the thing
             } else {
                 healAmount = Integer.parseInt(damageMatcher.group(1));
@@ -54,8 +53,8 @@ public class Updates {
         if (damageNoACMathcer.find()) {
             int damageAmount;
             if (damageNoACMathcer.group(3) != "") {
-                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3))) +
-                    Integer.parseInt(damageMatcher.group(1));
+                damageAmount = rand.nextInt(Integer.parseInt(damageMatcher.group(3)))
+                        + Integer.parseInt(damageMatcher.group(1));
 
             } else {
                 damageAmount = Integer.parseInt(damageNoACMathcer.group(1));
@@ -67,7 +66,8 @@ public class Updates {
     /**
      * @param actor
      */
-    public static void doPassives(Actor actor) {}
+    public static void doPassives(Actor actor) {
+    }
 
     /**
      * updates the game in between playter turns.
@@ -97,7 +97,6 @@ public class Updates {
                 System.out.print(npc.getName() + " exited the room.");
             }
             npc.setEnergy();
-            // TODO: @Corbanator notify player if NPC enters the room
         }
     }
 
@@ -106,12 +105,13 @@ public class Updates {
      *
      * @param floor
      */
-    public static void actionUpdate(Floor floor) {
+    public static void actionUpdate(Floor floor, Player player) {
         // check if enemies are dead
         for (int i = 0; i < floor.getNPCs().size(); i++) {
             NPC npc = floor.getNPCs().get(i);
             if (npc.getHealth() <= 0) {
                 floor.getNPCs().remove(i);
+                player.addExp(npc.getExp());
                 System.out.println(npc.getName() + " was killed.");
             }
         }
