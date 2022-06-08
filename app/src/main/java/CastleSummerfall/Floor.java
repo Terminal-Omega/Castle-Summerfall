@@ -226,6 +226,6 @@ public class Floor {
      */
     public NPC getBoss() {
         List<NPC> match = NPCS.stream().filter(n -> n.isBoss()).collect(Collectors.toList());
-        return match.isEmpty() ? match.get(0) : null;
+        return !match.isEmpty() ? match.get(0) : null;
     }
 }
