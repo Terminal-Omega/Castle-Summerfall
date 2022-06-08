@@ -30,9 +30,13 @@ public class App {
 
         // TODO: make this not laggy
         Floor floor = Generator.generateFloor(FLOORSIZE, FLOORSIZE);
-        Player player = new Player(0, 0, 7, 20, 2);
+        Player player = new Player(0, 0, 2);
         if (debug) {
-            player = new Player(0, 0, 100, 100, 20);
+            // god mode
+            player = new Player(0, 0, 20);
+            for (int i = 0; i < 20; i++) {
+                player.level();
+            }
         }
         int energy = player.getEnergy();
         Random rand = new Random();

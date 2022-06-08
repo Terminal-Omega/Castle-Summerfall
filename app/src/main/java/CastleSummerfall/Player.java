@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 public class Player extends Actor {
 
-    public Player(int x, int y, int constitution, int energy, int AC) {
+    public Player(int x, int y, int AC) {
         // create starting stats of all zero
         // TODO: set correct default stat values
         HashMap<Stat, Integer> stats = new HashMap<>();
         stats.put(Stat.CONSTITUTION, 6);
         stats.put(Stat.DEXTERITY, 19);
         stats.put(Stat.STRENGTH, 9);
-        stats.put(Stat.CHARISMA, 7);
-        stats.put(Stat.INTELLIGENCE, 7);
-        stats.put(Stat.WISDOM, 7);
+        stats.put(Stat.CHARISMA, 9);
+        stats.put(Stat.INTELLIGENCE, 9);
+        stats.put(Stat.WISDOM, 9);
         HashMap<Stat, Range> statGrowth = new HashMap<>();
         for (Stat stat : Stat.values()) {
             statGrowth.put(stat, new Range(1, 3));
@@ -32,6 +32,7 @@ public class Player extends Actor {
         this.level = 1;
 
         this.stats = stats;
+        this.statGrowth = statGrowth;
         setStrength(stats.get(Stat.STRENGTH) + statGrowth.get(Stat.STRENGTH).random());
         setDexterity(stats.get(Stat.DEXTERITY) + statGrowth.get(Stat.DEXTERITY).random());
         setConstitution(stats.get(Stat.CONSTITUTION) + statGrowth.get(Stat.CONSTITUTION).random());
@@ -129,10 +130,5 @@ public class Player extends Actor {
         System.out.println("You gained " + exp + " exp");
         this.exp += exp;
         // TODO: calculate growth formula
-    }
-
-    public void levelUp() {
-        this.level += 1;
-        // TODO: stat growth
     }
 }
