@@ -33,21 +33,23 @@ public class Container extends Interactable {
         StringBuilder builder = new StringBuilder();
         builder.append(description);
         if (inventory != null) {
-            builder.append("\nIn the " + name + " is");
-            for (int i = 0; i < inventory.size(); i++) {
-                if (inventory.size() <= 0) {
-                    return "";
+            if (inventory.size() > 0) {
+                builder.append("\nIn the " + name + " is");
+                for (int i = 0; i < inventory.size(); i++) {
+                    if (inventory.size() <= 0) {
+                        return "";
+                    }
+                    if (inventory.size() == 1) {
+                        builder.append(" a " + inventory.get(i).getName() + ".");
+                    } else if (i != inventory.size() - 1) {
+                        builder.append(" a " + inventory.get(i).getName() + ",");
+                    } else {
+                        builder.append(" and a " + inventory.get(i).getName() + ".");
+                    }
                 }
-                if (inventory.size() == 1) {
-                    builder.append(" a " + inventory.get(i).getName() + ".");
-                } else if (i != inventory.size() - 1) {
-                    builder.append(" a " + inventory.get(i).getName() + ",");
-                } else {
-                    builder.append(" and a " + inventory.get(i).getName() + ".");
-                }
+            } else {
+                builder.append("\nThe " + name + " is empty");
             }
-        } else {
-            builder.append("\nThe " + name + " is empty.");
         }
         return builder.toString();
     }
