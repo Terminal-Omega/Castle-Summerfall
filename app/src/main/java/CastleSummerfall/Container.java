@@ -46,6 +46,8 @@ public class Container extends Interactable {
                     builder.append(" and a " + inventory.get(i).getName() + ".");
                 }
             }
+        } else {
+            builder.append("\nThe " + name + " is empty.");
         }
         return builder.toString();
     }
