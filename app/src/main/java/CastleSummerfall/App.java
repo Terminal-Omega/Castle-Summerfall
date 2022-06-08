@@ -24,7 +24,7 @@ public class App {
         Pattern movePat = Pattern.compile("[Mm]ove ([N|n|S|s|W|w|E|e])");
         Pattern inspectPat = Pattern.compile("[Ii]nspect ([A-Za-z].*)");
         Pattern takePat = Pattern.compile("[tT]ake ([A-Za-z].*)");
-        Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) : ([A-Za-z].*)");
+        Pattern bookPat = Pattern.compile("[Bb]ookmark ([A-Za-z].*?) ?: ?([A-Za-z].*)");
         Pattern dropPat = Pattern.compile("[Dd]rop ([A-Za-z].*)");
         Pattern attackPat = Pattern.compile("[Aa]ttack ([A-Za-z].*?) [Ww].* ([A-Za-z].*)");
 
