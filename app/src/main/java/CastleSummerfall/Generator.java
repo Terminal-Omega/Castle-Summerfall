@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author @Corbanator this is a grouping of methods to randomly generate any
@@ -401,12 +402,13 @@ public class Generator {
         int charisma = randomFromRange(preset.chaRange);
         int noise = randomFromRange(preset.noiseRange);
         int shield = randomFromRange(preset.shieldRange);
+        long exp = randomFromRange(preset.expRange);
 
         // choose a random name
         String name = preset.name[rand.nextInt(preset.name.length)];
 
         NPC result = new NPC(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma,
-                noise, shield, name, npcAlliance, description);
+                noise, shield, name, npcAlliance, description, exp);
 
         // Load the NPC's inventory
         preset.inventory.stream().map(n -> spinInteractable(n)).forEach(result::addInventory);
@@ -424,6 +426,10 @@ public class Generator {
     private static int randomFromRange(int[] range) {
         Random rand = new Random();
         return range[1] > range[0] ? rand.nextInt(range[1] - range[0]) + range[0] : range[0];
+    }
+
+    private static long randomFromRange(long[] range) {
+        return range[1] > range[0] ? ThreadLocalRandom.current().nextLong(range[0], range[1]) : range[0];
     }
 
     /**

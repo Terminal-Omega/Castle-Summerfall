@@ -59,6 +59,22 @@ public class Parser {
         return result;
     }
 
+    public static long[] parseLong(String attribute, String toLoad) {
+        Pattern longPattern = Pattern.compile("\"" + attribute + "\"\\s*?:\\s*?\"([0-9]+)(-([0-9]+))?\"");
+        Matcher longMatcher = longPattern.matcher(toLoad);
+        long[] result = new long[2];
+        if (longMatcher.find()) {
+            result[0] = Long.parseLong(longMatcher.group(1));
+
+            if (!Objects.isNull(longMatcher.group(3))) {
+                result[1] = Long.parseLong(longMatcher.group(3));
+            } else {
+                result[1] = 0;
+            }
+        }
+        return result;
+    }
+
     /**
      * parses a boolean, which must also be enclosed in quotes, based on the key
      * associated with it.

@@ -23,7 +23,7 @@ public class NPC extends Actor {
 
         public boolean moved;
 
-        public Activity (int x, int y, boolean moved) {
+        public Activity(int x, int y, boolean moved) {
             this.x = x;
             this.y = y;
             this.moved = moved;
@@ -31,9 +31,10 @@ public class NPC extends Actor {
     }
 
     public NPC(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
-            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description) {
+            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description,
+            long exp) {
         super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield,
-                name);
+                name, exp);
         setAlliance(npcAlliance);
         setDescription(description);
         setDexterity(dexterity);
@@ -79,15 +80,15 @@ public class NPC extends Actor {
                 if (player.getXCoord() == xCoord && player.getYCoord() == yCoord) {
                     enemyTurnCombat(player);
                     energy -= 10;
-                    
+
                 } else {
                     enemyTurnNoneCombat(floorSize, player);
                     energy -= 10;
-                    
+
                 }
             }
         }
-        if(beginX == xCoord && beginY == yCoord){
+        if (beginX == xCoord && beginY == yCoord) {
             return new Activity(xCoord, yCoord, false);
         } else {
             return new Activity(xCoord, yCoord, true);

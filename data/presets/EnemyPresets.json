@@ -17,6 +17,7 @@
             "cha":"5",
             "noise":"5",
             "shield":"0",
+            "exp":"1000",
             "inventory":[
                 {
                     "type":"weapon",
@@ -56,6 +57,7 @@
             "cha": "5",
             "noise": "5",
             "shield": "0",
+            "exp":"1000",
             "inventory": [
                 {
                     "type": "weapon",
@@ -95,6 +97,7 @@
             "cha": "2",
             "noise": "7",
             "shield": "0",
+            "exp":"1000",
             "inventory": [
                 {
                     "type": "weapon",
@@ -133,6 +136,7 @@
             "cha": "2",
             "noise": "3",
             "shield": "0",
+            "exp":"1000",
             "inventory": [
                 {
                     "type": "weapon",

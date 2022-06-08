@@ -23,9 +23,10 @@ public class Boss extends NPC {
      * @param description
      */
     public Boss(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
-            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description) {
+            int wisdom, int charisma, int noise, int shield, String name, NPCAlliance npcAlliance, String description,
+            long exp) {
         super(xCoord, yCoord, AC, strength, dexterity, constitution, intelligence, wisdom, charisma, noise, shield,
-                name, npcAlliance, description);
+                name, npcAlliance, description, exp);
 
     }
 

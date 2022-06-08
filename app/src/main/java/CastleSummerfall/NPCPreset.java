@@ -21,6 +21,7 @@ public class NPCPreset {
     public int[] chaRange;
     public int[] noiseRange;
     public int[] shieldRange;
+    public long[] expRange;
     public String[] name;
 
     // NPCPresets are given an inventory so that they will spawn with weapons.
@@ -28,7 +29,7 @@ public class NPCPreset {
 
     public NPCPreset(NPCAlliance npcAlliance, String[] descriptions, int[] ACRange, int[] strRange, int[] dexRange,
             int[] conRange, int[] intRange, int[] wisRange, int[] chaRange, int[] noiseRange, int[] shieldRange,
-            String[] name, List<InteractablePreset> inventory) {
+            long[] expRange, String[] name, List<InteractablePreset> inventory) {
         this.npcAlliance = npcAlliance;
         this.descriptions = descriptions;
         this.ACRange = ACRange;
@@ -40,6 +41,7 @@ public class NPCPreset {
         this.chaRange = chaRange;
         this.noiseRange = noiseRange;
         this.shieldRange = shieldRange;
+        this.expRange = expRange;
         this.name = name;
         this.inventory = inventory;
     }

@@ -249,6 +249,7 @@ public class PresetLoader {
         int[] chaRange = Parser.parseInt("cha", toLoad);
         int[] noiseRange = Parser.parseInt("noise", toLoad);
         int[] shieldRange = Parser.parseInt("shield", toLoad);
+        long[] expRange = Parser.parseLong("exp", toLoad);
 
         // A name will be chosen out of the array at random when the preset is generated
         String[] name = Parser.trimQuotes(Parser.parseArray("names", toLoad));
@@ -260,7 +261,7 @@ public class PresetLoader {
         inventory.addAll(Arrays.asList(inventoryArray));
 
         return new NPCPreset(alliance, descriptions, ACRange, strRange, dexRange, conRange, intRange, wisRange,
-                chaRange, noiseRange, shieldRange, name, inventory);
+                chaRange, noiseRange, shieldRange, expRange, name, inventory);
 
     }
 

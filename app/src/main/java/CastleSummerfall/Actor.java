@@ -5,11 +5,32 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Actor {
     // TODO: make position data-type
-    private enum Stat {
+    public enum Stat {
         STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA;
+    }
+
+    public class Range {
+        public int min;
+        public int max;
+
+        public Range(int min, int max) {
+            this.min = min < max ? min : max;
+            this.max = max > min ? max : min;
+        }
+
+        public int random() {
+            // TODO: find some way to represent baseline stats and tweak random number gen
+            // to tend towards baseline for each stat. In other words, add a field
+            // representing average growth rate
+            System.out.printf("Min: %d, Max: %d\n", min, max);
+            int rand = ThreadLocalRandom.current().nextInt(min, max);
+            System.out.println(rand);
+            return rand;
+        }
     }
 
     protected int xCoord;
@@ -28,6 +49,7 @@ public class Actor {
 
     // Stats are always in the order: STR, DEX, CON, INT, WIS, CHA
     protected Map<Stat, Integer> stats;
+    protected Map<Stat, Range> statGrowth;
 
     protected int noise;
     protected int carryWeight;
@@ -36,11 +58,14 @@ public class Actor {
     protected List<Interactable> inventory;
     protected Random rand = new Random();
 
+    protected long exp;
+    protected long level;
+
     public Actor() {
     }
 
     public Actor(int xCoord, int yCoord, int AC, int strength, int dexterity, int constitution, int intelligence,
-            int wisdom, int charisma, int noise, int sheild, String name) {
+            int wisdom, int charisma, int noise, int sheild, String name, long exp) {
         stats = new HashMap<>();
         stats.put(Stat.STRENGTH, 0);
         stats.put(Stat.DEXTERITY, 0);
@@ -63,6 +88,53 @@ public class Actor {
         setHealth();
         setName(name);
         inventory = new ArrayList<Interactable>();
+        this.exp = exp;
+        this.level = 1;
+    }
+
+    public Actor(int x, int y, int AC, Map<Stat, Integer> stats, Map<Stat, Range> statRanges, int noise, int shield,
+            String name, int level) {
+        this.stats = stats;
+        this.statGrowth = statRanges;
+
+        setXCoord(xCoord);
+        setYCoord(yCoord);
+        setAC(AC);
+        setNoise(noise);
+        setShield(shield);
+        setName(name);
+        inventory = new ArrayList<Interactable>();
+        // TODO: calculation to convert level to exp
+        this.exp = level;
+        this.level = level;
+
+        int[] increases = { 0, 0, 0, 0, 0, 0 };
+        for (int i = 0; i < level; i++) {
+            increases[0] += statGrowth.get(Stat.STRENGTH).random();
+            increases[1] += statGrowth.get(Stat.DEXTERITY).random();
+            increases[2] += statGrowth.get(Stat.CONSTITUTION).random();
+            increases[3] += statGrowth.get(Stat.INTELLIGENCE).random();
+            increases[4] += statGrowth.get(Stat.WISDOM).random();
+            increases[5] += statGrowth.get(Stat.CHARISMA).random();
+        }
+        setStrength(this.stats.get(Stat.STRENGTH) + increases[0]);
+        setDexterity(this.stats.get(Stat.DEXTERITY) + increases[1]);
+        setConstitution(this.stats.get(Stat.CONSTITUTION) + increases[2]);
+        setIntelligence(this.stats.get(Stat.INTELLIGENCE) + increases[3]);
+        setWisdom(this.stats.get(Stat.WISDOM) + increases[4]);
+        setCharisma(this.stats.get(Stat.CHARISMA) + increases[5]);
+    }
+
+    // If possible, avoid calling this many times in quick succession for
+    // performance
+    public void level() {
+        this.level += 1;
+        setStrength(this.stats.get(Stat.STRENGTH) + statGrowth.get(Stat.STRENGTH).random());
+        setDexterity(this.stats.get(Stat.DEXTERITY) + statGrowth.get(Stat.DEXTERITY).random());
+        setConstitution(this.stats.get(Stat.CONSTITUTION) + statGrowth.get(Stat.CONSTITUTION).random());
+        setIntelligence(this.stats.get(Stat.INTELLIGENCE) + statGrowth.get(Stat.INTELLIGENCE).random());
+        setWisdom(this.stats.get(Stat.WISDOM) + statGrowth.get(Stat.WISDOM).random());
+        setCharisma(this.stats.get(Stat.CHARISMA) + statGrowth.get(Stat.CHARISMA).random());
     }
 
     /**
@@ -454,6 +526,10 @@ public class Actor {
         return shield;
     }
 
+    public long getExp() {
+        return this.exp;
+    }
+
     /**
      * This will make the Actor take damage decreaseing their health
      * 
@@ -540,7 +616,9 @@ public class Actor {
      * @return boolean
      */
     public boolean closeCombat(Weapon weapon, Actor target) {
-        if (rand.nextInt(100) + 1 <= weaponSkill) {
+        //NOTE: I adjusted this to make the game easier to test
+        //The value it should be is 100
+        if (rand.nextInt(10) + 1 <= weaponSkill) {
             System.out.printf("hit %s%n", target.name);
             return target.takeDamage(weapon.damage, weapon.range + weapon.damage + 1, weapon.pierce);
         } else {
